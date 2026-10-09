@@ -142,6 +142,11 @@ ul.plain li::marker{color:var(--accent)}
 .k{width:14px;height:10px;border-radius:2px;display:inline-block}
 .k-tgt{background:var(--accent-soft);border:1.5px solid var(--accent)}
 .k-home{border:1.2px dashed var(--accent-line)}
+.pay{margin-top:20px;display:grid;gap:8px}
+.pay p{margin:0;max-width:65ch}
+.pay-list{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pay-list li{background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:6px 14px;font-size:14px}
+.pay-list b{font-weight:600;color:var(--deep);margin-right:4px}
 @media (max-width:560px){
   header{padding-block:40px 28px}
   .day{grid-template-columns:1fr;gap:8px}
@@ -429,23 +434,16 @@ ul.plain li::marker{color:var(--accent)}
     <div class="fact"><span class="label">Per person</span><span class="v mono">$282.50</span><span class="s">$4,520.07 ÷ 16</span></div>
     <div class="fact"><span class="label">Per couple</span><span class="v mono">$565.00</span><span class="s">2 × $282.50</span></div>
   </div>
-  <div class="tbl-wrap" style="margin-top:20px">
-    <table>
-      <thead><tr><th>Who</th><th>Share</th></tr></thead>
-      <tbody>
-        <tr><td><b>Travis &amp; Mackenzie</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Gary &amp; Connie</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Jim &amp; Shawn</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Andy &amp; Alyssa</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Lincoln &amp; Ciara</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Glenn &amp; Wendy</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Cody &amp; Abbie</b></td><td class="mono">$565.00</td></tr>
-        <tr><td><b>Angie</b></td><td class="mono">$282.50</td></tr>
-        <tr><td><b>Griffin</b></td><td class="mono">$282.50</td></tr>
-      </tbody>
-    </table>
+  <div class="pay">
+    <span class="label">How to pay</span>
+    <p>Send your share to Travis &amp; Mackenzie after the charge goes through on Oct 12. Shares are rounded to the cent; we'll cover the extra 7¢.</p>
+    <ul class="pay-list">
+      <li><b>Venmo</b> <a href="https://venmo.com/u/Travis-White-366" target="_blank" rel="noopener">@Travis-White-366</a></li>
+      <li><b>Apple Pay</b> to Travis</li>
+      <li><b>Cash</b></li>
+      <li><b>Check</b> made out to Travis White</li>
+    </ul>
   </div>
-  <p class="note" style="margin-top:12px">Shares are rounded to the nearest cent; we'll cover the extra 7¢. Send your share to Travis &amp; Mackenzie once the charge goes through on Oct 12.</p>
   <div class="cols" style="margin-top:28px">
     <div class="block">
       <h3>Gas down and back</h3>
