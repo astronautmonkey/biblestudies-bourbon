@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Schedule, rooms, cars and service notes for our Nov 19–26, 2026 territory trip to Kentucky.">
+<meta name="robots" content="noindex, nofollow">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Bible Studies and Bourbon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: quiet program booklet. Garamond headings on a pale page, jw.org blue as the single accent, hairline rules between sections. */
+:root{
+  --bg:#F7F7F7; --paper:#FFFFFF; --ink:#292929; --muted:#757575; --rule:#E2E5EA;
+  --accent:#4A6DA7; --accent-soft:#E8EFFB; --accent-line:#C2D4F1; --deep:#2B333F;
+  --f-display:"EB Garamond",Garamond,"Times New Roman",serif;
+  --f-body:"Noto Sans","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15181D; --paper:#1C2027; --ink:#E9ECF1; --muted:#9AA3AF; --rule:#2C323B;
+  --accent:#8FAEE0; --accent-soft:#1F2A3D; --accent-line:#34476A; --deep:#C2D4F1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15181D; --paper:#1C2027; --ink:#E9ECF1; --muted:#9AA3AF; --rule:#2C323B;
+  --accent:#8FAEE0; --accent-soft:#1F2A3D; --accent-line:#34476A; --deep:#C2D4F1; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;padding-inline:16px;padding-block:0 72px}
+.wrap{max-width:920px;margin:0 auto}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;text-wrap:balance;margin:0;line-height:1.1;color:var(--deep)}
+.label{font-family:var(--f-body);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+
+/* Header */
+header{padding-block:56px 36px;display:grid;gap:20px;text-align:center;justify-items:center}
+.kicker{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;align-items:center}
+h1{font-size:clamp(44px,8.5vw,82px);font-weight:500;letter-spacing:-.01em}
+h1 span{font-style:italic;color:var(--accent);font-weight:400}
+.verse{margin:0;display:grid;gap:4px;justify-items:center}
+.verse p{margin:0;font-family:var(--f-display);font-style:italic;font-size:22px;color:var(--ink)}
+.verse cite{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.verse::before{content:"";width:40px;height:1px;background:var(--accent-line);margin-bottom:10px}
+.sub{font-size:16px;max-width:56ch;color:var(--muted);margin:0}
+.countdown{font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);padding:3px 12px;border-radius:999px;font-variant-numeric:tabular-nums}
+
+/* Nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-block:1px solid var(--rule);margin-bottom:48px}
+nav ul{list-style:none;margin:0;padding:12px 0;display:flex;justify-content:center;gap:4px 24px;overflow-x:auto;white-space:nowrap}
+nav a{font-size:13px;font-weight:500;text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--accent)}
+@media (max-width:760px){nav ul{justify-content:flex-start}}
+
+section{margin-bottom:64px;scroll-margin-top:64px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:20px}
+h2{font-size:34px}
+.note{color:var(--muted);font-size:13px}
+.disclaimer{margin:0 0 20px;font-size:14px;color:var(--ink);background:var(--accent-soft);border-left:2px solid var(--accent);padding:10px 14px;max-width:72ch}
+
+/* Stay facts */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.fact{background:var(--paper);padding:16px 18px;display:grid;gap:4px;align-content:start;min-width:0}
+.fact .v{font-family:var(--f-display);font-size:21px;line-height:1.2;color:var(--deep);overflow-wrap:anywhere}
+.fact .s{font-size:13px;color:var(--muted)}
+.copy{font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--accent-line);color:var(--accent);padding:3px 10px;border-radius:999px;cursor:pointer;justify-self:start;margin-top:6px}
+.copy:hover{background:var(--accent-soft)}
+.rules{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* Week */
+.day{display:grid;grid-template-columns:88px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid var(--rule)}
+.day:last-of-type{border-bottom:0}
+.date{display:grid;align-content:start;justify-items:start}
+.date .dow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.date .dnum{font-family:var(--f-display);font-size:46px;line-height:1;color:var(--deep)}
+.date .mon{font-size:12px;color:var(--muted)}
+.body{display:grid;gap:10px;min-width:0}
+.body h3{font-size:24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{font:600 10px var(--f-body);letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid transparent}
+.chip.serve{background:var(--accent);color:var(--paper)}
+.chip.free{background:transparent;color:var(--accent);border-color:var(--accent-line)}
+.chip.travel{background:var(--accent-soft);color:var(--accent)}
+.lines{display:grid;gap:6px}
+.line{display:grid;grid-template-columns:80px 1fr;gap:12px;font-size:14px}
+.line .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.tbd{color:var(--muted);font-style:italic}
+
+/* Rooms */
+.floor{display:grid;gap:14px;margin-bottom:28px}
+.floor-head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.suites{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.suite{display:grid;gap:10px;min-width:0;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:16px}
+.suite-head{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}
+.suite-head h3{font-size:22px}
+.rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.suite .rooms{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.room{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;display:grid;gap:2px}
+.suite .room{background:var(--bg);border-color:transparent}
+.room .n{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.room .who{font-family:var(--f-display);font-size:21px;line-height:1.2;color:var(--deep)}
+.room .bed{font-size:13px;color:var(--muted)}
+.room.else{border-style:dashed;background:transparent}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 11px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+td b{font-family:var(--f-display);font-weight:500;font-size:17px;color:var(--deep)}
+tr:last-child td{border-bottom:0}
+td .seats{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.after{font-size:12px;color:var(--accent)}
+
+/* Blocks */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px}
+.block{min-width:0}
+.block h3{font-size:22px;margin-bottom:10px}
+ul.plain{margin:0;padding-left:18px;display:grid;gap:7px}
+ul.plain li::marker{color:var(--accent)}
+.distill{display:grid;gap:0}
+.dist{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.dist b{font-family:var(--f-display);font-weight:500;font-size:21px;color:var(--deep)}
+.dist .mi{font-size:12px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.dist .d{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.placeholder{border:1px dashed var(--accent-line);background:var(--paper);border-radius:4px;padding:32px 20px;color:var(--muted);text-align:center;margin:0;font-family:var(--f-display);font-style:italic;font-size:19px}
+
+.tmap-wrap{margin:0;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:12px;display:grid;gap:12px}
+.tmap{width:100%;height:auto;display:block;max-width:100%}
+.tmap .c-ctx{fill:var(--bg);stroke:var(--rule);stroke-width:1}
+.tmap .c-home{fill:var(--bg);stroke:var(--accent-line);stroke-width:1.2;stroke-dasharray:4 3}
+.tmap .c-tgt{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.6;stroke-linejoin:round}
+.tmap text{font-family:var(--f-body);text-anchor:middle}
+.tmap .t-ctx{font-size:11px;fill:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.tmap .t-tgt{font-family:var(--f-display);font-size:24px;fill:var(--deep)}
+.tmap .t-house{font-family:var(--f-display);font-size:17px;fill:var(--deep)}
+.tmap .t-town{font-size:11px;fill:var(--muted)}
+.tmap .m-house{fill:var(--accent)}
+.tmap .m-ring{fill:none;stroke:var(--accent);stroke-width:1;opacity:.5}
+.tmap .m-town{fill:var(--muted)}
+.tmap-key{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px;color:var(--ink);padding-inline:4px}
+.tmap-key span{display:inline-flex;align-items:center;gap:8px}
+.k{width:14px;height:10px;border-radius:2px;display:inline-block}
+.k-tgt{background:var(--accent-soft);border:1.5px solid var(--accent)}
+.k-home{border:1.2px dashed var(--accent-line)}
+@media (max-width:560px){
+  header{padding-block:40px 28px}
+  .day{grid-template-columns:1fr;gap:8px}
+  .date{grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline}
+  .date .dnum{font-size:34px}
+  .line{grid-template-columns:68px 1fr}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">
+    <span class="label">Territory Seldom Worked · Nov 19–26, 2026</span>
+    <span class="countdown" id="countdown">Nov 19</span>
+  </div>
+  <h1>Bible Studies <span>and</span> Bourbon</h1>
+  <blockquote class="verse"><p>“Here I am! Send me!”</p><cite>Isaiah 6:8</cite></blockquote>
+  <p class="sub">Sixteen of us in one historic house in Lawrenceburg, working unassigned territory in Nelson and Spencer Counties. Everything for the week is on this page.</p>
+</header>
+
+<nav aria-label="Sections"><ul>
+  <li><a href="#stay">The house</a></li>
+  <li><a href="#week">The week</a></li>
+  <li><a href="#rooms">Rooms</a></li>
+  <li><a href="#cars">Cars</a></li>
+  <li><a href="#saturday">Saturday</a></li>
+  <li><a href="#service">Service notes</a></li>
+  <li><a href="#territory">Territory</a></li>
+</ul></nav>
+
+<section id="stay">
+  <div class="sec-head"><h2>The house</h2><span class="note">Historic home · 10,000 sq ft · hot tub, pool table · 16 adults</span></div>
+  <div class="facts">
+    <div class="fact">
+      <span class="label">Address</span>
+      <span class="v" id="addr">321 S Main St, Lawrenceburg, KY 40342</span>
+      <a class="s" href="https://www.google.com/maps/search/?api=1&query=321+S+Main+St+Lawrenceburg+KY+40342" target="_blank" rel="noopener">Open in Maps</a>
+      <button class="copy" id="copy-addr" data-copy="321 S Main St, Lawrenceburg, KY 40342">Copy</button>
+    </div>
+    <div class="fact">
+      <span class="label">Check-in</span>
+      <span class="v">Thu, Nov 19</span>
+      <span class="s mono">after 3:00 PM</span>
+    </div>
+    <div class="fact">
+      <span class="label">Check-out</span>
+      <span class="v">Thu, Nov 26</span>
+      <span class="s mono">by 11:00 AM</span>
+    </div>
+  </div>
+  <div class="rules">
+    <span>No pets</span><span>Quiet hours 11 PM – 7 AM</span><span>Exterior security cameras on property</span><span>Smoke and CO alarms</span>
+  </div>
+</section>
+
+<section id="week">
+  <div class="sec-head"><h2>The week</h2><span class="note">Field service meeting 9:00 AM on service days. Conductors rotate.</span></div>
+  <p class="disclaimer">The territory is about 30–45 minutes from the house. On service days we'll likely pack a lunch and work through into the afternoon before heading back.</p>
+
+  <div class="day">
+    <div class="date"><span class="dow">Thu</span><span class="dnum">19</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Arrive <span class="chip travel">Travel</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">3:00 PM</span><span>House opens for check-in</span></div>
+        <div class="line"><span class="k">Dinner</span><span>On the way down, or pizza when we arrive</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Fri</span><span class="dnum">20</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Field service <span class="chip serve">Service</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">9:00 AM</span><span>Meeting for service · conducted by Travis</span></div>
+        <div class="line"><span class="k">Lunch</span><span>Packed, eaten in the territory</span></div>
+        <div class="line"><span class="k">Dinner</span><span>Chili · Cody &amp; Abbie, Angie &amp; Griffin</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Sat</span><span class="dnum">21</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Free day <span class="chip free">Flexible</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">Idea</span><span>Bourbon tasting at one or two nearby distilleries. <a href="#saturday">See options</a></span></div>
+        <div class="line"><span class="k">Meals</span><span>Eat out or take out</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Sun</span><span class="dnum">22</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Watchtower Study <span class="chip free">Service optional</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">Study</span><span>Conducted by Andy</span></div>
+        <div class="line"><span class="k">After</span><span>Field service for anyone who wants to go, or the rest of the day open</span></div>
+        <div class="line"><span class="k">Meals</span><span>Eat out or take out</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Mon</span><span class="dnum">23</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Field service <span class="chip serve">Service</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">9:00 AM</span><span>Meeting for service · conducted by Cody</span></div>
+        <div class="line"><span class="k">Lunch</span><span>Packed, eaten in the territory</span></div>
+        <div class="line"><span class="k">Dinner</span><span>Travis &amp; Mackenzie, Andy &amp; Alyssa</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Tue</span><span class="dnum">24</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Field service <span class="chip serve">Service</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">9:00 AM</span><span>Meeting for service · conducted by Jim</span></div>
+        <div class="line"><span class="k">Lunch</span><span>Packed, eaten in the territory</span></div>
+        <div class="line"><span class="k">Dinner</span><span>Gary &amp; Connie, Jim &amp; Shawn · chicken burrito bowls with all the fixings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Wed</span><span class="dnum">25</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Field service <span class="chip serve">Last service day</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">9:00 AM</span><span>Meeting for service · conducted by Glenn</span></div>
+        <div class="line"><span class="k">Lunch</span><span>Packed, eaten in the territory</span></div>
+        <div class="line"><span class="k">Dinner</span><span>Glenn &amp; Wendy, Lincoln &amp; Ciara</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="date"><span class="dow">Thu</span><span class="dnum">26</span><span class="mon">Nov</span></div>
+    <div class="body">
+      <h3>Head home <span class="chip travel">Travel</span></h3>
+      <div class="lines">
+        <div class="line"><span class="k">11:00 AM</span><span>Out of the house. Assignment period ends today; no door-to-door after this.</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:14px">Meal teams: once you know what you're making, post it in the group chat so everyone can look forward to it. If your day doesn't work, say so.</p>
+</section>
+
+<section id="rooms">
+  <div class="sec-head"><h2>Rooms</h2><span class="note">Bedrooms are upstairs · first floor is the shared event space, kitchen, bar and pool table</span></div>
+  <p class="disclaimer">This is our best read of the layout from the listing photos and the host's posts. We haven't confirmed exactly which rooms and bathrooms are where, so expect some shuffling once we see the house.</p>
+  <div class="floor">
+    <div class="floor-head"><span class="label">Second floor</span></div>
+    <div class="suites">
+      <div class="suite">
+        <div class="suite-head"><h3>Bridal Suite</h3><span class="note">2 full baths · dressing room</span></div>
+        <div class="rooms">
+          <div class="room"><span class="n">Bedroom 5</span><span class="who">Gary &amp; Connie</span><span class="bed">King</span></div>
+          <div class="room"><span class="n">Bedroom 6</span><span class="who">Jim &amp; Shawn</span><span class="bed">King</span></div>
+        </div>
+      </div>
+      <div class="suite">
+        <div class="suite-head"><h3>Horse Racing Suite</h3><span class="note">1½ baths · kitchen · living room</span></div>
+        <div class="rooms">
+          <div class="room"><span class="n">Bedroom 8</span><span class="who">Travis &amp; Mackenzie</span><span class="bed">King</span></div>
+          <div class="room"><span class="n">Bedroom 7</span><span class="who">Angie</span><span class="bed">Queen</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="floor">
+    <div class="floor-head"><span class="label">Third floor</span></div>
+    <div class="rooms">
+      <div class="room"><span class="n">Bedroom 3</span><span class="who">Andy &amp; Alyssa</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 1</span><span class="who">Glenn &amp; Wendy</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 2</span><span class="who">Lincoln &amp; Ciara</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 4</span><span class="who">Cody &amp; Abbie</span><span class="bed">Queen + full</span></div>
+    </div>
+  </div>
+  <p class="note">Griffin is welcome to the spare full bed in Bedroom 4 with Cody &amp; Abbie, or another spot in the house. His call.</p>
+</section>
+
+<section id="cars">
+  <div class="sec-head"><h2>Cars</h2><span class="note">Proposed · 5 vehicles down, 5 back</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Vehicle</th><th>Down · Nov 19</th><th>Back · Nov 26</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jim &amp; Shawn's CR-V</b></td><td>Gary, Connie, Jim, Shawn <span class="seats">4</span></td><td>Gary, Connie, Jim, Shawn <span class="seats">4</span></td></tr>
+        <tr><td><b>Lincoln &amp; Ciara's Forester</b></td><td>Lincoln, Ciara, Griffin <span class="seats">3</span></td><td>Lincoln, Ciara, Glenn, Wendy <span class="seats">4</span></td></tr>
+        <tr><td><b>Angie's RAV4</b></td><td>Angie, Glenn, Wendy <span class="seats">3</span></td><td>Angie, Griffin, Cody, Abbie <span class="seats">4</span></td></tr>
+        <tr><td><b>Travis &amp; Mackenzie's A4</b><br><span class="after">Continuing to Missouri after</span></td><td>Travis, Mackenzie, Cody, Abbie <span class="seats">4</span></td><td>Travis, Mackenzie <span class="seats">2</span></td></tr>
+        <tr><td><b>Andy &amp; Alyssa's Jeep</b><br><span class="after">Continuing to Pennsylvania after</span></td><td>Andy, Alyssa <span class="seats">2</span></td><td>Andy, Alyssa <span class="seats">2</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:10px">Every car group keeps a copy of the do-not-call list, if one comes with the territory map.</p>
+</section>
+
+<section id="saturday">
+  <div class="sec-head"><h2>Saturday options</h2><span class="note">Drive times from the house are approximate</span></div>
+  <div class="cols">
+    <div class="block distill">
+      <div class="dist"><b>Four Roses</b><span class="mi">Lawrenceburg · ~10 min</span><span class="d">Distillery is just outside town.</span></div>
+      <div class="dist"><b>Wild Turkey</b><span class="mi">Lawrenceburg · ~10 min</span><span class="d">Also right in Lawrenceburg, on the Kentucky River.</span></div>
+      <div class="dist"><b>Woodford Reserve</b><span class="mi">Versailles · ~25 min</span><span class="d">Historic stone distillery in horse country.</span></div>
+      <div class="dist"><b>Buffalo Trace</b><span class="mi">Frankfort · ~25 min</span><span class="d">Large campus; tours fill fast.</span></div>
+    </div>
+    <div class="block">
+      <h3>Booking for 16</h3>
+      <ul class="plain">
+        <li>Tastings are by reservation and group sizes are often capped, so we may need to split into two times.</li>
+        <li>It's the Saturday before Thanksgiving, so book early.</li>
+        <li>Pairing one Lawrenceburg stop with Woodford or Buffalo Trace keeps the driving short.</li>
+        <li>Pick designated drivers per car.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="service">
+  <div class="sec-head"><h2>Service notes</h2><span class="note">From the branch letter, Sept 2, 2026</span></div>
+  <div class="cols">
+    <div class="block">
+      <h3>In the territory</h3>
+      <ul class="plain">
+        <li>Work only inside the boundaries on the Unassigned Territory Boundaries sheet. Don't subdivide it into numbered sections.</li>
+        <li>Offer the <i>Enjoy Life Forever!</i> brochure. If they already have it, other literature is fine.</li>
+        <li>Carry a variety of tracts for not-at-homes and people who decline literature.</li>
+        <li>Call at every home, even if a map shows it uninhabited.</li>
+        <li>Try to start a Bible study on the first call. Make return visits on strong interest; as time allows, revisit not-at-homes and general interest.</li>
+        <li>In bad weather, work a town; rural roads may be unpaved.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Recording interest</h3>
+      <ul class="plain">
+        <li>Record all interest on the Record of Interest form (S-277). Copy it as needed; don't make our own.</li>
+        <li>Give each interested person a unique number in the "Map key" space, and write that number at their location on a fresh map.</li>
+      </ul>
+      <h3 style="margin-top:18px">If police stop us</h3>
+      <ul class="plain">
+        <li>Don't discuss legal rights. Leave politely and promptly if asked.</li>
+        <li>Then Travis and an elder from a neighboring congregation call the Legal Department: <span class="mono">(845) 306-1000</span>.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>After the trip</h3>
+      <ul class="plain">
+        <li>Door-to-door stops when the assignment ends Nov 26. Visiting, calling or writing people who showed interest is still fine.</li>
+        <li>Send the marked maps and Record of Interest forms to the nearest congregation(s), not to the Territory Desk.</li>
+        <li>Report on Territory Seldom Worked (S-273) due <b>before Dec 26, 2026</b>. An elder emails it to the Service Department from jwpub.org with "Territory Desk" in the subject. Experiences go in a separate document.</li>
+        <li>Neighboring publishers who join us in service count on our report.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<section id="territory">
+  <div class="sec-head"><h2>Territory</h2><span class="note">Nelson &amp; Spencer Counties, KY</span></div>
+  <p class="disclaimer">This map is approximate. It shows rough county outlines only. The official boundary sheet from the branch defines exactly where we work, and it will be added here when we have it.</p>
+  <figure class="tmap-wrap">
+    <svg class="tmap" viewBox="0 0 640 520" role="img" aria-labelledby="tmap-t"><title id="tmap-t">Approximate map of Spencer and Nelson Counties, Kentucky, with the house in Lawrenceburg</title><defs><clipPath id="tclip"><rect width="640" height="520"/></clipPath></defs><g clip-path="url(#tclip)"><path d="M310.9,-135.0L481.2,-118.2L504.7,-115.6L479.2,-72.7L477.3,13.6L464.5,37.7L451.8,80.6L419.7,107.2L340.7,67.6L227.5,24L238.4,-64.3L202.2,-80.6L249.1,-97.4L287.5,-98.6Z" class="c-ctx"/><path d="M-56.1,-2.0L-26.0,-34.3L-12.9,-75.1L10.5,-83.4L38.1,-67.7L78.7,-92.8L100.3,-152.5L202.2,-80.6L238.4,-64.3L227.5,24L225.4,46.0L141.9,78.2L56.5,68.8L-46.2,103.2L-78.5,134.8L-82.7,127.6L-69.8,114.0L-58.7,68.7Z" class="c-ctx"/><path d="M-78.5,134.8L-46.2,103.2L56.5,68.8L141.9,78.2L225.4,46.0L199.7,62.2L171.7,126.4L188.8,142.1L160.9,161.5L152.2,189.4L130.8,202.3L135.0,221.8L72.6,274.8L38.2,277.2L-8.6,241.2L-6.3,217.8L-29.6,175.4L-59.5,177.1L-61.4,140.1Z" class="c-ctx"/><path d="M-283.0,439.4L-208.3,285.0L-122.4,270.8L-102.8,227.5L-114.8,133.8L-82.7,127.6L-78.5,134.8L-61.4,140.1L-59.5,177.1L-29.6,175.4L-6.3,217.8L-8.6,241.2L38.2,277.2L44.5,305.1L72.2,337.1L39.7,396.1L0.9,419.2L-12.2,456.2L-44.6,478.7L-55.9,557.2L-148.5,549.3L-152.5,514.2L-186.5,459.9L-225.3,469.3L-257.4,453.3L-265.8,433.1Z" class="c-ctx"/><path d="M72.2,337.1L97.9,364.5L125.8,366.6L121.3,407.5L136.4,408.2L106.0,473.7L142.5,496L149.0,472.6L168.4,472.0L179.1,475.9L200.5,539.7L181.1,526.0L163.8,548.0L129.4,536.2L99.2,534.1L86.1,571.7L-55.9,557.2L-44.6,478.7L-12.2,456.2L0.9,419.2L39.7,396.1Z" class="c-ctx"/><path d="M168.4,472.0L211.7,372.8L239.7,339.0L256.8,360.5L256.8,382.6L276.1,398.9L325.5,414.5L463.1,414.4L456.7,479.4L454.7,580.1L435.3,578.8L403.0,549.0L377.1,539.9L316.8,576.3L312.5,562.6L275.9,536.6L239.3,532.0L200.5,539.7L179.1,475.9Z" class="c-ctx"/><path d="M239.7,339.0L269.8,319.0L267.6,298.8L295.5,291.7L302.0,263.1L357.7,252.1L359.9,212.5L387.7,213.1L404.8,198.2L415.6,215.7L462.7,217.6L479.9,245.5L465.1,378.0L463.1,414.4L325.5,414.5L276.1,398.9L256.8,382.6L256.8,360.5Z" class="c-ctx"/><path d="M462.7,217.6L488.4,206.5L494.7,184.4L516.1,170.7L548.2,180.4L601.7,157.4L601.8,182.7L582.6,198.4L610.4,204.8L619.2,250.2L653.4,239.0L649.3,274.1L662.4,313.7L656.1,337.7L632.6,351.5L465.1,378.0L479.9,245.5Z" class="c-ctx"/><path d="M481.2,-118.2L534.4,-148.2L555.7,-134.6L602.6,-121.2L632.3,-131.7L643.6,-12.9L560.5,28.3L560.6,46.5L537.2,64.8L464.5,37.7L477.3,13.6L479.2,-72.7L504.7,-115.6Z" class="c-ctx"/><path d="M643.6,-12.9L654.3,3.8L688.5,1.1L686.5,25.1L701.5,46.5L682.8,131.7L653.4,239.0L619.2,250.2L610.4,204.8L582.6,198.4L601.8,182.7L601.7,157.4L569.3,99.1L582.1,71.7L560.6,46.5L560.5,28.3Z" class="c-ctx"/><path d="M463.1,414.4L465.1,378.0L632.6,351.5L656.2,363.1L660.7,385.1L684.4,411.0L684.5,423.3L630.9,447.7L630.9,447.7L572.9,476.5L540.7,488.9L478.3,487.8L456.7,479.4Z" class="c-ctx"/><path d="M100.3,-152.5L119.6,-197.2L183.5,-219.0L198.5,-247.6L221.9,-261.2L255.8,-256.5L294.0,-237.0L274.9,-211.7L285.4,-170.1L310.9,-135.0L287.5,-98.6L249.1,-97.4L202.2,-80.6Z" class="c-ctx"/><path d="M294.0,-237.0L313.1,-239.6L379.0,-307.1L434.1,-315.6L476.6,-281.9L461.8,-250.7L491.6,-252.7L485.2,-233.2L504.4,-222.8L500.2,-195.5L549.2,-179.4L540.8,-148.2L555.7,-134.6L534.4,-148.2L481.2,-118.2L310.9,-135.0L285.4,-170.1L274.9,-211.7Z" class="c-ctx"/><path d="M419.7,107.2L451.8,80.6L464.5,37.7L537.2,64.8L560.6,46.5L582.1,71.7L569.3,99.1L601.7,157.4L548.2,180.4L516.1,170.7L494.7,184.4L488.4,206.5L462.7,217.6L415.6,215.7L404.8,198.2L387.7,213.1L379.1,156.6L379.1,137.1L402.7,138.4Z" class="c-home"/><path d="M225.4,46.0L227.5,24L340.7,67.6L419.7,107.2L402.7,138.4L379.1,137.1L379.1,156.6L242.2,180.5L188.8,142.1L171.7,126.4L199.7,62.2Z" class="c-tgt"/><path d="M38.2,277.2L72.6,274.8L135.0,221.8L130.8,202.3L152.2,189.4L160.9,161.5L188.8,142.1L242.2,180.5L379.1,156.6L387.7,213.1L359.9,212.5L357.7,252.1L302.0,263.1L295.5,291.7L267.6,298.8L269.8,319.0L239.7,339.0L211.7,372.8L168.4,472.0L149.0,472.6L142.5,496L106.0,473.7L136.4,408.2L121.3,407.5L125.8,366.6L97.9,364.5L72.2,337.1L44.5,305.1Z" class="c-tgt"/><text x="64.1" y="157.6" class="t-ctx">Bullitt</text><text x="61.3" y="479" class="t-ctx">Larue</text><text x="319.3" y="473.6" class="t-ctx">Marion</text><text x="376.6" y="322.3" class="t-ctx">Washington</text><text x="555.7" y="277.4" class="t-ctx">Mercer</text><text x="559.8" y="419.7" class="t-ctx">Boyle</text><text x="472.8" y="185.2" class="t-ctx">Anderson</text><text x="284.4" y="88.3" class="t-tgt">Spencer County</text><text x="200.9" y="261" class="t-tgt">Nelson County</text><circle cx="541.3" cy="107.1" r="9" class="m-ring"/><circle cx="541.3" cy="107.1" r="4.5" class="m-house"/><text x="541.3" y="131.1" class="t-house">The house</text><text x="541.3" y="145.1" class="t-town">Lawrenceburg</text><circle cx="275.6" cy="111.5" r="3" class="m-town"/><text x="275.6" y="127.5" class="t-town">Taylorsville</text><circle cx="201.2" cy="279.6" r="3" class="m-town"/><text x="201.2" y="295.6" class="t-town">Bardstown</text></g></svg>
+    <figcaption class="tmap-key">
+      <span><i class="k k-tgt"></i>Our territory · Spencer &amp; Nelson Counties</span>
+      <span><i class="k k-home"></i>Anderson County · where we stay</span>
+      <span class="note">Roughly 30–45 minutes from the house</span>
+    </figcaption>
+  </figure>
+</section>
+</div>
+
+<script>
+(function(){
+  var el=document.getElementById('countdown');
+  var start=new Date(2026,10,19), end=new Date(2026,10,26), now=new Date();
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var d=Math.round((start-today)/86400000);
+  if(d>1) el.textContent=d+' days to go';
+  else if(d===1) el.textContent='Tomorrow';
+  else if(today<=end) el.textContent='Happening now';
+  else el.textContent='Trip complete';
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-copy');
+      var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)};
+      try{navigator.clipboard.writeText(t).then(done,function(){sel(b)})}catch(e){sel(b)}
+    });
+  });
+  function sel(b){var v=b.parentNode.querySelector('.v');var r=document.createRange();r.selectNodeContents(v);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+})();
+</script>
+
+</body>
+</html>
