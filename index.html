@@ -147,12 +147,57 @@ ul.plain li::marker{color:var(--accent)}
 .pay-list{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pay-list li{background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:6px 14px;font-size:14px}
 .pay-list b{font-weight:600;color:var(--deep);margin-right:4px}
-@media (max-width:560px){
-  header{padding-block:40px 28px}
-  .day{grid-template-columns:1fr;gap:8px}
-  .date{grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline}
-  .date .dnum{font-size:34px}
-  .line{grid-template-columns:68px 1fr}
+.block-intro{margin:0 0 8px}
+.fields{list-style:none;margin:0 0 10px;padding:0;display:grid;border:1px solid var(--rule);border-radius:4px;background:var(--paper)}
+.fields li{padding:9px 14px;border-bottom:1px solid var(--rule);font-size:14px;display:flex;justify-content:space-between;gap:12px}
+.fields li:last-child{border-bottom:0}
+.fields li::after{content:"";flex:1;max-width:45%;border-bottom:1px dotted var(--accent-line);margin-bottom:4px}
+td .after{display:block;margin-top:2px}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  header{padding-block:36px 24px;gap:14px}
+  h1{font-size:clamp(38px,11vw,52px);line-height:1.05}
+  .verse p{font-size:19px}
+  .sub{font-size:15px}
+  nav{margin-bottom:32px}
+  nav ul{gap:4px 18px;padding:10px 0;scrollbar-width:none}
+  nav ul::-webkit-scrollbar{display:none}
+  section{margin-bottom:44px;scroll-margin-top:52px}
+  h2{font-size:28px}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:2px;margin-bottom:16px}
+  .disclaimer{font-size:13.5px;margin-bottom:16px}
+
+  .facts{grid-template-columns:1fr 1fr}
+  .facts .fact:first-child{grid-column:1/-1}
+  .fact{padding:14px}
+  .fact .v{font-size:19px}
+
+  .day{grid-template-columns:52px 1fr;gap:14px;padding-block:16px}
+  .date{grid-template-columns:none;gap:0;justify-items:center;text-align:center}
+  .date .dnum{font-size:32px}
+  .body h3{font-size:21px;gap:8px}
+  .line{grid-template-columns:62px 1fr;gap:10px;font-size:14px}
+
+  .rooms{grid-template-columns:1fr 1fr;gap:10px}
+  .room{padding:12px}
+  .room .who{font-size:18px}
+
+  .tbl-wrap{border:0;background:none;overflow:visible}
+  .tbl-wrap table{min-width:0}
+  .tbl-wrap thead{display:none}
+  .tbl-wrap tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:14px;margin-bottom:10px}
+  .tbl-wrap td{display:block;padding:0;border:0}
+  .tbl-wrap td:first-child{grid-column:1/-1;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+  .tbl-wrap td[data-label]:not(:first-child)::before{content:attr(data-label);display:block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+
+  .cols{gap:28px}
+  .block h3{font-size:20px}
+  .dist b{font-size:19px}
+  .tmap-wrap{padding:6px}
+  .tmap-key{font-size:12px}
+  .pay-list li{font-size:13px}
+}
 }
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
@@ -201,7 +246,7 @@ ul.plain li::marker{color:var(--accent)}
     </div>
   </div>
   <div class="rules">
-    <span>No pets</span><span>Quiet hours 11 PM – 7 AM</span><span>Exterior security cameras on property</span><span>Smoke and CO alarms</span>
+    <span>Quiet hours 11 PM – 7 AM</span>
   </div>
 </section>
 
@@ -308,21 +353,11 @@ ul.plain li::marker{color:var(--accent)}
   <p class="disclaimer">This is our best read of the layout from the listing photos and the host's posts. We haven't confirmed exactly which rooms and bathrooms are where, so expect some shuffling once we see the house.</p>
   <div class="floor">
     <div class="floor-head"><span class="label">Second floor</span></div>
-    <div class="suites">
-      <div class="suite">
-        <div class="suite-head"><h3>Bridal Suite</h3><span class="note">2 full baths · dressing room</span></div>
-        <div class="rooms">
-          <div class="room"><span class="n">Bedroom 5</span><span class="who">Gary &amp; Connie</span><span class="bed">King</span></div>
-          <div class="room"><span class="n">Bedroom 6</span><span class="who">Jim &amp; Shawn</span><span class="bed">King</span></div>
-        </div>
-      </div>
-      <div class="suite">
-        <div class="suite-head"><h3>Horse Racing Suite</h3><span class="note">1½ baths · kitchen · living room</span></div>
-        <div class="rooms">
-          <div class="room"><span class="n">Bedroom 8</span><span class="who">Travis &amp; Mackenzie</span><span class="bed">King</span></div>
-          <div class="room"><span class="n">Bedroom 7</span><span class="who">Angie</span><span class="bed">Queen</span></div>
-        </div>
-      </div>
+    <div class="rooms">
+      <div class="room"><span class="n">Bedroom 5</span><span class="who">Jim &amp; Shawn</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 6</span><span class="who">Gary &amp; Connie</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 8</span><span class="who">Travis &amp; Mackenzie</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 7</span><span class="who">Angie</span><span class="bed">Queen</span></div>
     </div>
   </div>
   <div class="floor">
@@ -343,11 +378,11 @@ ul.plain li::marker{color:var(--accent)}
     <table>
       <thead><tr><th>Vehicle</th><th>Down · Nov 19</th><th>Back · Nov 26</th></tr></thead>
       <tbody>
-        <tr><td><b>Jim &amp; Shawn's CR-V</b></td><td>Gary, Connie, Jim, Shawn <span class="seats">4</span></td><td>Gary, Connie, Jim, Shawn <span class="seats">4</span></td></tr>
-        <tr><td><b>Lincoln &amp; Ciara's Forester</b></td><td>Lincoln, Ciara, Griffin <span class="seats">3</span></td><td>Lincoln, Ciara, Glenn, Wendy <span class="seats">4</span></td></tr>
-        <tr><td><b>Angie's RAV4</b></td><td>Angie, Glenn, Wendy <span class="seats">3</span></td><td>Angie, Griffin, Cody, Abbie <span class="seats">4</span></td></tr>
-        <tr><td><b>Travis &amp; Mackenzie's A4</b><br><span class="after">Continuing to Missouri after</span></td><td>Travis, Mackenzie, Cody, Abbie <span class="seats">4</span></td><td>Travis, Mackenzie <span class="seats">2</span></td></tr>
-        <tr><td><b>Andy &amp; Alyssa's Jeep</b><br><span class="after">Continuing to Pennsylvania after</span></td><td>Andy, Alyssa <span class="seats">2</span></td><td>Andy, Alyssa <span class="seats">2</span></td></tr>
+        <tr><td data-label="Vehicle"><b>Jim &amp; Shawn's car</b></td><td data-label="Down · Nov 19">Gary, Connie, Jim, Shawn <span class="seats">4</span></td><td data-label="Back · Nov 26">Gary, Connie, Jim, Shawn <span class="seats">4</span></td></tr>
+        <tr><td data-label="Vehicle"><b>Lincoln &amp; Ciara's car</b></td><td data-label="Down · Nov 19">Lincoln, Ciara, Griffin <span class="seats">3</span></td><td data-label="Back · Nov 26">Lincoln, Ciara, Glenn, Wendy <span class="seats">4</span></td></tr>
+        <tr><td data-label="Vehicle"><b>Angie's car</b></td><td data-label="Down · Nov 19">Angie, Glenn, Wendy <span class="seats">3</span></td><td data-label="Back · Nov 26">Angie, Griffin, Cody, Abbie <span class="seats">4</span></td></tr>
+        <tr><td data-label="Vehicle"><b>Travis &amp; Mackenzie's car</b><span class="after">Continuing to Missouri after</span></td><td data-label="Down · Nov 19">Travis, Mackenzie, Cody, Abbie <span class="seats">4</span></td><td data-label="Back · Nov 26">Travis, Mackenzie <span class="seats">2</span></td></tr>
+        <tr><td data-label="Vehicle"><b>Andy &amp; Alyssa's car</b><span class="after">Continuing to Pennsylvania after</span></td><td data-label="Down · Nov 19">Andy, Alyssa <span class="seats">2</span></td><td data-label="Back · Nov 26">Andy, Alyssa <span class="seats">2</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -381,33 +416,27 @@ ul.plain li::marker{color:var(--accent)}
     <div class="block">
       <h3>In the territory</h3>
       <ul class="plain">
-        <li>Work only inside the boundaries on the Unassigned Territory Boundaries sheet. Don't subdivide it into numbered sections.</li>
         <li>Offer the <i>Enjoy Life Forever!</i> brochure. If they already have it, other literature is fine.</li>
         <li>Carry a variety of tracts for not-at-homes and people who decline literature.</li>
-        <li>Call at every home, even if a map shows it uninhabited.</li>
         <li>Try to start a Bible study on the first call. Make return visits on strong interest; as time allows, revisit not-at-homes and general interest.</li>
-        <li>In bad weather, work a town; rural roads may be unpaved.</li>
       </ul>
     </div>
     <div class="block">
       <h3>Recording interest</h3>
-      <ul class="plain">
-        <li>Record all interest on the Record of Interest form (S-277). Copy it as needed; don't make our own.</li>
-        <li>Give each interested person a unique number in the "Map key" space, and write that number at their location on a fresh map.</li>
+      <p class="block-intro">For anyone who shows interest, note:</p>
+      <ul class="fields">
+        <li>Name</li>
+        <li>Map key number</li>
+        <li>Address / location</li>
+        <li>City / State / ZIP code</li>
+        <li>Telephone number</li>
+        <li>Placement and remarks</li>
       </ul>
+      <p class="note">Travis will fill out the S-277 afterward.</p>
       <h3 style="margin-top:18px">If police stop us</h3>
       <ul class="plain">
         <li>Don't discuss legal rights. Leave politely and promptly if asked.</li>
-        <li>Then Travis and an elder from a neighboring congregation call the Legal Department: <span class="mono">(845) 306-1000</span>.</li>
-      </ul>
-    </div>
-    <div class="block">
-      <h3>After the trip</h3>
-      <ul class="plain">
-        <li>Door-to-door stops when the assignment ends Nov 26. Visiting, calling or writing people who showed interest is still fine.</li>
-        <li>Send the marked maps and Record of Interest forms to the nearest congregation(s), not to the Territory Desk.</li>
-        <li>Report on Territory Seldom Worked (S-273) due <b>before Dec 26, 2026</b>. An elder emails it to the Service Department from jwpub.org with "Territory Desk" in the subject. Experiences go in a separate document.</li>
-        <li>Neighboring publishers who join us in service count on our report.</li>
+        <li>Then Travis and an elder from a neighboring congregation contact the Legal Department.</li>
       </ul>
     </div>
   </div>
@@ -436,7 +465,7 @@ ul.plain li::marker{color:var(--accent)}
   </div>
   <div class="pay">
     <span class="label">How to pay</span>
-    <p>Send your share to Travis &amp; Mackenzie after the charge goes through on Oct 12. Shares are rounded to the cent; we'll cover the extra 7¢.</p>
+    <p>Send your share to Travis &amp; Mackenzie.</p>
     <ul class="pay-list">
       <li><b>Venmo</b> <a href="https://venmo.com/u/Travis-White-366" target="_blank" rel="noopener">@Travis-White-366</a></li>
       <li><b>Apple Pay</b> to Travis</li>
