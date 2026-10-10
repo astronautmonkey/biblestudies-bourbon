@@ -188,6 +188,7 @@ td .after{display:block;margin-top:2px}
   .tbl-wrap thead{display:none}
   .tbl-wrap tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:14px;margin-bottom:10px}
   .tbl-wrap td{display:block;padding:0;border:0}
+  .tbl-wrap td .seats{display:none}
   .tbl-wrap td:first-child{grid-column:1/-1;padding-bottom:8px;border-bottom:1px solid var(--rule)}
   .tbl-wrap td[data-label]:not(:first-child)::before{content:attr(data-label);display:block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 
@@ -364,8 +365,8 @@ td .after{display:block;margin-top:2px}
     <div class="floor-head"><span class="label">Third floor</span></div>
     <div class="rooms">
       <div class="room"><span class="n">Bedroom 3</span><span class="who">Andy &amp; Alyssa</span><span class="bed">King</span></div>
-      <div class="room"><span class="n">Bedroom 1</span><span class="who">Glenn &amp; Wendy</span><span class="bed">King</span></div>
-      <div class="room"><span class="n">Bedroom 2</span><span class="who">Lincoln &amp; Ciara</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 1</span><span class="who">Lincoln &amp; Ciara</span><span class="bed">King</span></div>
+      <div class="room"><span class="n">Bedroom 2</span><span class="who">Glenn &amp; Wendy</span><span class="bed">King</span></div>
       <div class="room"><span class="n">Bedroom 4</span><span class="who">Cody &amp; Abbie</span><span class="bed">Queen + full</span></div>
     </div>
   </div>
@@ -373,7 +374,7 @@ td .after{display:block;margin-top:2px}
 </section>
 
 <section id="cars">
-  <div class="sec-head"><h2>Cars</h2><span class="note">Proposed · 5 vehicles down, 5 back</span></div>
+  <div class="sec-head"><h2>Cars</h2><span class="note">Proposed</span></div>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>Vehicle</th><th>Down · Nov 19</th><th>Back · Nov 26</th></tr></thead>
@@ -386,7 +387,7 @@ td .after{display:block;margin-top:2px}
       </tbody>
     </table>
   </div>
-  <p class="note" style="margin-top:10px">Every car group keeps a copy of the do-not-call list, if one comes with the territory map.</p>
+  <p class="note" style="margin-top:10px">Every car group keeps a copy of the do-not-call list.</p>
 </section>
 
 <section id="saturday">
