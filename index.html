@@ -81,7 +81,8 @@ h2{font-size:34px}
 .chip.free{background:transparent;color:var(--accent);border-color:var(--accent-line)}
 .chip.travel{background:var(--accent-soft);color:var(--accent)}
 .lines{display:grid;gap:6px}
-.line{display:grid;grid-template-columns:80px 1fr;gap:12px;font-size:14px}
+.line{display:grid;grid-template-columns:92px 1fr;gap:12px;font-size:14px}
+.line > span:last-child{min-width:0}
 .line .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
 .tbd{color:var(--muted);font-style:italic}
 
@@ -177,7 +178,9 @@ td .after{display:block;margin-top:2px}
   .date{grid-template-columns:none;gap:0;justify-items:center;text-align:center}
   .date .dnum{font-size:32px}
   .body h3{font-size:21px;gap:8px}
-  .line{grid-template-columns:62px 1fr;gap:10px;font-size:14px}
+  .lines{gap:10px}
+  .line{grid-template-columns:1fr;gap:1px;font-size:14px}
+  .line .k{padding-top:0;font-size:10px}
 
   .rooms{grid-template-columns:1fr 1fr;gap:10px}
   .room{padding:12px}
@@ -386,7 +389,6 @@ td .after{display:block;margin-top:2px}
       </tbody>
     </table>
   </div>
-  <p class="note" style="margin-top:10px">Every car group keeps a copy of the do-not-call list.</p>
 </section>
 
 <section id="weekend">
@@ -426,6 +428,7 @@ td .after{display:block;margin-top:2px}
       <ul class="plain">
         <li>Offer the <i>Enjoy Life Forever!</i> brochure. If they already have it, other literature is fine.</li>
         <li>We will keep a variety of tracts for not-at-homes and contact cards, etc.</li>
+        <li>Each car group will keep a copy of the do-not-call list with them.</li>
         <li>Try to start a Bible study on the first call. Make return visits on strong interest; as time allows, revisit not-at-homes and general interest.</li>
       </ul>
     </div>
