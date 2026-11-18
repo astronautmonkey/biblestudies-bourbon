@@ -411,7 +411,13 @@ button.copy:hover{color:#f0c97f}
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,className:'dark-tiles',
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     var poly=L.polygon(TERR,{color:'#f0c97f',weight:2.5,lineJoin:'round',fillColor:'#f0c97f',fillOpacity:.1}).addTo(map);
-    map.fitBounds(poly.getBounds(),{padding:[16,16]});
+    var touched=false,auto=false;
+    function fit(){var el=document.getElementById('tmap');if(touched||!el.offsetWidth)return;auto=true;map.invalidateSize();map.fitBounds(poly.getBounds(),{padding:[16,16],animate:false});auto=false}
+    fit();
+    map.on('dragstart',function(){touched=true});
+    map.on('zoomstart',function(){if(!auto)touched=true});
+    if('ResizeObserver' in window)new ResizeObserver(fit).observe(document.getElementById('tmap'));
+    addEventListener('pageshow',fit);
     [['Taylorsville',38.032,-85.343,1],['Bloomfield',37.910,-85.316],['Fairfield',37.934,-85.386],['Mt Washington',38.050,-85.546],['The house · Lawrenceburg',38.037,-84.897]].forEach(function(t){
       L.marker([t[1],t[2]],{interactive:false,keyboard:false,icon:L.divIcon({className:'tlabel'+(t[3]?' big':''),html:t[0],iconSize:null})}).addTo(map)});
     var me=null,acc=null,btn;
