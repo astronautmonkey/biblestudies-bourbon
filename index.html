@@ -9,6 +9,8 @@
 <title>Bible Studies &amp; Bourbon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,400&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
 /* Layout: a trip guide set like a type specimen. Full-bleed color blocks, one giant
    word per block, hairline rules with small labels, days that stack as you scroll. */
@@ -75,7 +77,7 @@ ul{padding:0;list-style:none}
 /* progress menu: one thin track per section, labels above, fill shows how far you are */
 .prog{position:fixed;z-index:20;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);padding-left:var(--gut-l);padding-right:var(--gut-r);
   background:var(--bar-bg,var(--amber));color:var(--bar-fg,var(--char));transition:background-color .4s ease,color .4s ease}
-.prog ol{list-style:none;margin:0 auto;padding:9px 0 0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;max-width:1680px}
+.prog ol{list-style:none;margin:0 auto;padding:9px 0 0;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;max-width:1680px}
 .prog a{display:grid;gap:6px;text-decoration:none;color:inherit;padding-bottom:9px}
 .prog .t{font-size:.66rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;opacity:.45;transition:opacity .3s ease}
 .prog .bar{height:2px;background:color-mix(in oklab,currentColor 18%,transparent);position:relative;overflow:hidden}
@@ -200,43 +202,89 @@ ul{padding:0;list-style:none}
 .col h3.sub{font-family:var(--f-display);font-weight:600;font-size:var(--t-l);letter-spacing:-.04em;line-height:.95;margin-bottom:16px}
 .col h3.sub.gap{margin-top:clamp(28px,4vw,48px)}
 
+/* people: little pixel faces from the game */
+.p{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap}
+.ava{width:1.25em;height:1.25em;image-rendering:pixelated;image-rendering:crisp-edges;flex:none;border-radius:50%;background:color-mix(in oklab,currentColor 10%,transparent);object-fit:cover;object-position:50% 100%}
+.room .who .ava,.car h3 .ava{width:1.05em;height:1.05em}
+.ppl{display:inline-flex;flex-wrap:wrap;gap:.15em .55em}
+
 /* map */
+.mapgrid{display:grid;grid-template-columns:1fr;gap:28px 48px;align-items:start}
+@media(min-width:1000px){.mapgrid{grid-template-columns:1.4fr 1fr}}
 .tmap-wrap{margin:0;display:grid;gap:12px}
-.tmap{width:100%;height:auto;display:block;max-width:100%}
-.tmap .c-ctx{fill:var(--char);stroke:var(--paper);stroke-opacity:.28;stroke-width:1}
-.tmap .c-home{fill:var(--char);stroke:var(--pink);stroke-width:1.4;stroke-dasharray:4 3}
-.tmap .c-tgt{fill:var(--amber);stroke:var(--char);stroke-width:2;stroke-linejoin:round}
-.tmap text{font-family:var(--f-body);text-anchor:middle}
-.tmap .t-ctx{font-size:11px;fill:var(--paper);fill-opacity:.6;letter-spacing:.12em;text-transform:uppercase}
-.tmap .t-tgt{font-family:var(--f-display);font-weight:600;font-size:19px;letter-spacing:-.03em;fill:var(--char)}
-.tmap .t-house{font-family:var(--f-display);font-weight:600;font-size:17px;fill:var(--pink)}
-.tmap .t-town{font-size:11px;fill:var(--char)}
-.tmap .t-house + .t-town{fill:var(--paper)}
-.tmap .m-house{fill:var(--pink)}
-.tmap .m-ring{fill:none;stroke:var(--pink);stroke-width:1}
-.tmap .m-town{fill:var(--char)}
+#tmap{position:relative;z-index:0;isolation:isolate;width:100%;height:clamp(420px,72vh,760px);background:#e9e7e1;border:1px solid color-mix(in oklab,var(--paper) 30%,transparent)}
+#tmap .leaflet-control-attribution{font:400 10px/1.4 var(--f-body);background:color-mix(in oklab,var(--paper) 85%,transparent);color:var(--char)}
+#tmap .leaflet-control-attribution a{color:var(--char)}
+#tmap .leaflet-bar a{color:var(--char);font-family:var(--f-body)}
+.locate{font:600 .78rem/30px var(--f-body)!important;width:auto!important;padding:0 10px!important;white-space:nowrap}
+.locate.on{background:var(--amber)!important}
+.tlabel{font:600 13px/1.1 var(--f-display);letter-spacing:-.02em;color:var(--char);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;white-space:nowrap}
+.tlabel.big{font-size:18px;letter-spacing:-.03em}
+.me-dot{width:16px;height:16px;border-radius:50%;background:#2a6fd6;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
 .tmap-key{display:flex;flex-wrap:wrap;gap:6px 22px;border-top:1px solid currentColor;padding-top:8px;font-size:.9rem}
 .tmap-key span{display:inline-flex;align-items:center;gap:8px}
 .tmap-key i{width:16px;height:11px;display:inline-block;flex:none}
-.tmap-key .k-tgt{background:var(--amber)}
-.tmap-key .k-home{border:1.4px dashed var(--pink)}
-.mapgrid{display:grid;grid-template-columns:1fr;gap:28px 48px;align-items:end}
-@media(min-width:1000px){.mapgrid{grid-template-columns:1.4fr 1fr}}
+.tmap-key .k-tgt{background:color-mix(in oklab,var(--amber) 70%,transparent);border:2px solid var(--wax-d)}
+.tmap-key .k-me{width:11px;border-radius:50%;background:#2a6fd6;border:2px solid #fff}
+.steps{counter-reset:s;display:grid;list-style:none;margin:0;padding:0}
+.steps > li{counter-increment:s;display:grid;grid-template-columns:2.2em 1fr;gap:4px 10px;border-top:1px solid currentColor;padding-block:12px 16px}
+.steps > li::before{content:counter(s);font-family:var(--f-display);font-weight:600;font-size:var(--t-m);letter-spacing:-.03em;line-height:1.1;color:var(--amber)}
+.steps b{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.15;display:block;margin-bottom:4px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn.solid{background:var(--amber);color:var(--char);border-color:var(--amber)}
+.btn.solid:hover{background:var(--paper);border-color:var(--paper)}
 
-/* cost */
-.money{font-family:var(--f-display);font-weight:600;font-size:clamp(4.2rem,21vw,23rem);letter-spacing:-.06em;line-height:.8;white-space:nowrap;font-variant-numeric:tabular-nums;will-change:transform}
-.money-row{display:flex;justify-content:space-between;gap:8px 24px;flex-wrap:wrap;border-top:1px solid currentColor;padding-top:8px;margin-bottom:6px}
-.sums{display:grid;grid-template-columns:1fr;margin-top:clamp(28px,4vw,56px)}
-@media(min-width:900px){.sums{grid-template-columns:1fr 1fr;column-gap:24px}}
-.pay{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.pay li{border:1px solid currentColor;border-radius:999px;padding:8px 14px;font-weight:500}
+/* do not call */
+.dnc{--bg:#8E3B2B;--fg:var(--paper);background:var(--bg);color:var(--fg)}
+.dnc .w{padding-block:clamp(72px,10vw,160px)}
+.dnc-list{display:grid}
+.dnc-list li{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;border-top:1px solid currentColor;padding-block:16px 20px}
+.dnc-list li:last-child{border-bottom:1px solid currentColor}
+.dnc-x{font-family:var(--f-display);font-weight:600;font-size:var(--t-m);line-height:1;color:var(--amber)}
+.dnc-a{display:grid;gap:2px;min-width:0}
+.dnc-a b{font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.2vw,3rem);letter-spacing:-.04em;line-height:1}
+.dnc-m{grid-column:2;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.dnc .btn:hover{background:var(--paper);color:#8E3B2B}
+@media(min-width:900px){.dnc-list li{grid-template-columns:auto 1fr auto}.dnc-m{grid-column:auto;justify-content:flex-end}}
+
+/* service-day cars */
+.svc{display:grid;margin-top:clamp(64px,9vw,140px)}
+.svc-row{display:grid;grid-template-columns:1fr;gap:10px 32px;border-top:1px solid currentColor;padding-block:16px 22px}
+.svc-row:last-child{border-bottom:1px solid currentColor}
+.svc-row h3{font-family:var(--f-display);font-weight:600;font-size:clamp(1.4rem,2.6vw,2.4rem);letter-spacing:-.04em;line-height:1}
+.svc-row .open{opacity:.65}
+.svc-row > span:nth-child(2){font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.2}
+.svc-row > span.open:nth-child(2){font-family:var(--f-body);font-size:var(--t-s);letter-spacing:0}
+.seat{display:inline-block;width:1.25em;height:1.25em;border-radius:50%;border:1.5px dashed currentColor;vertical-align:-.25em;opacity:.6}
+@media(min-width:900px){.svc-row{grid-template-columns:1fr 2fr 1.2fr;align-items:baseline}}
+
+/* road notes */
+.road{display:grid;grid-template-columns:1fr;gap:clamp(40px,6vw,96px) 72px;margin-top:clamp(64px,9vw,140px)}
+@media(min-width:900px){.road{grid-template-columns:1fr 1fr}}
+.road blockquote{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.15;border-left:2px solid currentColor;padding-left:16px;margin-top:16px}
+.road blockquote cite{display:block;font:600 var(--t-label)/1.4 var(--f-body);letter-spacing:.09em;text-transform:uppercase;font-style:normal;margin-top:10px}
+
+/* game */
+.cast{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px 8px;align-items:end;margin-top:clamp(40px,6vw,88px)}
+@media(min-width:760px){.cast{grid-template-columns:repeat(15,minmax(0,1fr))}}
+.cast figure{margin:0;display:grid;justify-items:center;gap:6px;min-width:0}
+.cast img{width:auto;max-width:100%;height:clamp(64px,6.4vw,104px);object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.cast figure:hover img{transform:translateY(-14px)}
+.cast figcaption{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.cast .lead img{animation:hop 1.6s ease-in-out infinite}
+@keyframes hop{0%,60%,100%{transform:none}30%{transform:translateY(-16px)}}
+.board{display:grid;margin:14px 0 0;padding:0;list-style:none}
+.board li{display:grid;grid-template-columns:2em 1fr auto;gap:10px;align-items:center;border-top:1px solid currentColor;padding-block:10px;font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em}
+.board li:last-child{border-bottom:1px solid currentColor}
+.board .r{font:600 var(--t-label)/1 var(--f-body);letter-spacing:.09em}
+.board .s{font-variant-numeric:tabular-nums}
 
 /* footer */
 .foot .w{padding-bottom:clamp(40px,6vw,80px)}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .pop span,.tile .dot{transition:none}
+  .pop span,.tile .dot,.cast img{transition:none;animation:none!important}
 }
 </style>
 </head>
@@ -249,9 +297,10 @@ ul{padding:0;list-style:none}
   <li><a href="#rooms"><span class="t">Rooms</span><span class="bar"><i></i></span></a></li>
   <li><a href="#cars"><span class="t">Cars</span><span class="bar"><i></i></span></a></li>
   <li><a href="#weekend"><span class="t">Weekend</span><span class="bar"><i></i></span></a></li>
+  <li><a href="#dnc"><span class="t">Do not call</span><span class="bar"><i></i></span></a></li>
   <li><a href="#service"><span class="t">Service</span><span class="bar"><i></i></span></a></li>
   <li><a href="#territory"><span class="t">Territory</span><span class="bar"><i></i></span></a></li>
-  <li><a href="#cost"><span class="t">Cost</span><span class="bar"><i></i></span></a></li>
+  <li><a href="#game"><span class="t">Game</span><span class="bar"><i></i></span></a></li>
 </ol></nav>
 
 <header class="blk hero" id="top" data-mix>
@@ -267,6 +316,7 @@ ul{padding:0;list-style:none}
       <p>Fifteen of us in one historic house in Lawrenceburg, working unassigned territory in Nelson and Spencer Counties.</p>
       <span class="label">Kentucky · Nov 19–26, 2026 · <span id="countdown">Nov 19</span></span>
     </div>
+    <p style="margin-top:18px"><a class="btn" href="#dnc" style="background:#8E3B2B;color:var(--paper);border-color:#8E3B2B">Urgent · Do-not-call list ↓</a></p>
   </div>
   <div class="words" aria-label="Bible Studies and Bourbon">
     <div class="word" data-slide="-9" aria-hidden="true">Bible Studies</div>
@@ -322,6 +372,7 @@ ul{padding:0;list-style:none}
           <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Travis</span></div>
           <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
           <div class="line"><span class="label">Dinner</span><span>Chili · Cody &amp; Abbie, Angie</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span> <span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span> + 2 open seats <a href="#svc">Service cars</a></span></div>
         </div></div>
     </div></article>
 
@@ -354,6 +405,7 @@ ul{padding:0;list-style:none}
           <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Gary</span></div>
           <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
           <div class="line"><span class="label">Dinner</span><span>Travis &amp; Mackenzie, Andy &amp; Alyssa · vodka pasta</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
           <div class="line"><span class="label">Evening</span><span>Watchtower Study · conducted by Andy</span></div>
         </div></div>
     </div></article>
@@ -365,6 +417,7 @@ ul{padding:0;list-style:none}
           <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Jim</span></div>
           <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
           <div class="line"><span class="label">Dinner</span><span>Gary &amp; Connie, Jim &amp; Shawn · chicken burrito bowls with all the fixings</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
         </div></div>
     </div></article>
 
@@ -375,6 +428,7 @@ ul{padding:0;list-style:none}
           <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Glenn</span></div>
           <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
           <div class="line"><span class="label">Dinner</span><span>Glenn &amp; Wendy, Lincoln &amp; Ciara · spaghetti, garlic bread and salad</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span> <span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
         </div></div>
     </div></article>
 
@@ -401,16 +455,16 @@ ul{padding:0;list-style:none}
     </div>
     <div class="floors">
       <div class="floor"><span class="label">Second floor</span>
-        <div class="room"><span class="n">5</span><span class="who">Jim &amp; Shawn</span><span class="label">King</span></div>
-        <div class="room"><span class="n">6</span><span class="who">Gary &amp; Connie</span><span class="label">King</span></div>
-        <div class="room"><span class="n">8</span><span class="who">Travis &amp; Mackenzie</span><span class="label">King</span></div>
-        <div class="room"><span class="n">7</span><span class="who">Angie</span><span class="label">Queen</span></div>
+        <div class="room"><span class="n">5</span><span class="who"><span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> &amp; <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">6</span><span class="who"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> &amp; <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">8</span><span class="who"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> &amp; <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">7</span><span class="who"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span><span class="label">Queen</span></div>
       </div>
       <div class="floor"><span class="label">Third floor</span>
-        <div class="room"><span class="n">3</span><span class="who">Andy &amp; Alyssa</span><span class="label">King</span></div>
-        <div class="room"><span class="n">1</span><span class="who">Lincoln &amp; Ciara</span><span class="label">King</span></div>
-        <div class="room"><span class="n">2</span><span class="who">Glenn &amp; Wendy</span><span class="label">King</span></div>
-        <div class="room"><span class="n">4</span><span class="who">Cody &amp; Abbie</span><span class="label">Queen + full</span></div>
+        <div class="room"><span class="n">3</span><span class="who"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> &amp; <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">1</span><span class="who"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> &amp; <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">2</span><span class="who"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> &amp; <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">4</span><span class="who"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> &amp; <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span><span class="label">Queen + full</span></div>
       </div>
     </div>
   </div>
@@ -428,20 +482,53 @@ ul{padding:0;list-style:none}
     <div class="cars">
       <div class="cars-head label"><span>Car</span><span>Down · Nov 19</span><span>Back · Nov 26</span></div>
       <div class="car"><div class="name"><h3>Jim &amp; Shawn's car</h3></div>
-        <div class="leg"><span class="label">Down · Nov 19</span><b>Gary, Connie, Jim, Shawn</b></div>
-        <div class="leg"><span class="label">Back · Nov 26</span><b>Gary, Connie, Jim, Shawn</b></div></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span></b></div></div>
       <div class="car"><div class="name"><h3>Lincoln &amp; Ciara's car</h3></div>
-        <div class="leg"><span class="label">Down · Nov 19</span><b>Lincoln, Ciara</b></div>
-        <div class="leg"><span class="label">Back · Nov 26</span><b>Lincoln, Ciara, Glenn, Wendy</b></div></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span> <span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span></b></div></div>
       <div class="car"><div class="name"><h3>Angie's car</h3></div>
-        <div class="leg"><span class="label">Down · Nov 19</span><b>Angie, Glenn, Wendy</b></div>
-        <div class="leg"><span class="label">Back · Nov 26</span><b>Angie, Cody, Abbie</b></div></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span> <span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span> <span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span></b></div></div>
       <div class="car"><div class="name"><h3>Travis &amp; Mackenzie's car</h3><span class="after">Continuing to Missouri after</span></div>
-        <div class="leg"><span class="label">Down · Nov 19</span><b>Travis, Mackenzie, Cody, Abbie</b></div>
-        <div class="leg"><span class="label">Back · Nov 26</span><b>Travis, Mackenzie</b></div></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span></span></b></div></div>
       <div class="car"><div class="name"><h3>Andy &amp; Alyssa's car</h3><span class="after">Continuing to Pennsylvania after</span></div>
-        <div class="leg"><span class="label">Down · Nov 19</span><b>Andy, Alyssa</b></div>
-        <div class="leg"><span class="label">Back · Nov 26</span><b>Andy, Alyssa</b></div></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span></b></div></div>
+    </div>
+
+    <div class="head split" id="svc" style="margin-top:clamp(80px,11vw,184px);margin-bottom:clamp(28px,4vw,56px)">
+      <h3 class="disp l">Service<br>days.</h3>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">To the territory · Likely 3 cars of 5</span>
+        <p>On the days a team is cooking dinner, the meal team rides together so they can work side by side and head back to cook when it suits them. Everyone else sorts into the other cars that morning.</p>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-row"><h3>Fri 20</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span> <span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span> <span class="seat" aria-hidden="true"></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Chili tonight · 2 cars open</span></div>
+      <div class="svc-row"><h3>Sat 21</h3><span class="open">No meal team · all 3 cars open</span><span class="open">Eat out or take out</span></div>
+      <div class="svc-row"><h3>Mon 23</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Vodka pasta · 2 cars open</span></div>
+      <div class="svc-row"><h3>Tue 24</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Burrito bowls · 2 cars open</span></div>
+      <div class="svc-row"><h3>Wed 25</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span> <span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Spaghetti · 2 cars open</span></div>
+    </div>
+    <p class="note">Dashed circles are open seats in the meal team's car.</p>
+
+    <div class="road">
+      <div class="col">
+        <h3 class="sub">Gas</h3>
+        <ul class="list">
+          <li><h3>Down and back</h3><p>Split within each car. Each car settles up among its own riders for the drive down on Nov 19 and the drive home on Nov 26.</p></li>
+          <li><h3>Territory days</h3><p><b>Save your receipts</b> for the days we drive out to the territory. We'll total them up at the end of the week and split them evenly.</p></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 class="sub">Go easy on fragrance</h3>
+        <ul class="list">
+          <li><p>Some of us are sensitive to strong scents, and we'll be sharing cars for hours on the way down and back. Please skip strong perfume, cologne and air fresheners on the drive, so everyone can ride comfortably.</p>
+          <blockquote>“Let each one keep seeking, not his own advantage, but that of the other person.”<cite>1 Corinthians 10:24</cite></blockquote></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -479,6 +566,25 @@ ul{padding:0;list-style:none}
   </div>
 </section>
 
+<section class="blk dnc" id="dnc">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl"><span>Do not</span><br><span>call.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Urgent · Please read before going out</span>
+        <p>These householders have asked not to be visited. Skip these addresses, and don't leave literature or tracts. Each car also carries a printed copy.</p>
+      </div>
+    </div>
+    <ul class="dnc-list">
+        <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>801 Yoder Tipton Rd</b><span>Taylorsville, KY 40071</span></span><span class="dnc-m"><span class="label">Added 8/5/2021</span><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=801+Yoder+Tipton+Rd%2C+Taylorsville%2C+KY+40071" target="_blank" rel="noopener">Map</a></span></li>
+        <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>PO Box 269</b><span>Bloomfield, KY 40008</span></span><span class="dnc-m"><span class="label">Added 8/5/2021</span><span class="label">Mailing address</span></span></li>
+        <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>505 Whitfield Ln</b><span>Taylorsville, KY 40071</span></span><span class="dnc-m"><span class="label">Added 8/5/2021</span><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=505+Whitfield+Ln%2C+Taylorsville%2C+KY+40071" target="_blank" rel="noopener">Map</a></span></li>
+        <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>162 Whitetail Dr</b><span>Taylorsville, KY 40071</span></span><span class="dnc-m"><span class="label">Added 8/5/2021</span><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=162+Whitetail+Dr%2C+Taylorsville%2C+KY+40071" target="_blank" rel="noopener">Map</a></span></li>
+        <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>291 Cedar Lake Drive</b><span>Taylorsville, KY 40071</span></span><span class="dnc-m"><span class="label">Added 3/19/2025</span><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=291+Cedar+Lake+Drive%2C+Taylorsville%2C+KY+40071" target="_blank" rel="noopener">Map</a></span></li>
+    </ul>
+  </div>
+</section>
+
 <section class="blk t-paper" id="service">
   <div class="w">
     <div class="head split">
@@ -492,9 +598,10 @@ ul{padding:0;list-style:none}
       <div class="col">
         <h3 class="sub">In the territory</h3>
         <ul class="list big-li">
-          <li>Offer the <i>Enjoy Life Forever!</i> brochure. If they already have it, other literature is fine.</li>
-          <li>We will keep a variety of tracts for not-at-homes and contact cards, etc.</li>
-          <li>Each car group will keep a copy of the do-not-call list with them.</li>
+          <li>Offer the <i>Enjoy Life Forever!</i> brochure. If the householder already has it, any other literature may be offered.</li>
+          <li>Carry a variety of tracts for not-at-homes and for anyone who doesn't accept literature.</li>
+          <li>Each car will have a box of literature and bags for not-at-homes. Keep anything left at a not-at-home discreet: tucked out of sight, not left in plain view.</li>
+          <li>Each car group will keep a copy of the do-not-call list with them. <a href="#dnc">See the list</a></li>
           <li>Try to start a Bible study on the first call. Make return visits on strong interest; as time allows, revisit not-at-homes and general interest.</li>
         </ul>
         <h3 class="sub gap">If police stop us</h3>
@@ -521,56 +628,71 @@ ul{padding:0;list-style:none}
 
 <section class="blk t-char" id="territory">
   <div class="w">
+    <div class="head split">
+      <h2 class="disp xl pop"><span class="c-amber">Our</span> <span>patch</span><br><span>of</span> <span class="c-grass">Kentucky.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Territory 2578 · Spencer, Nelson, Bullitt &amp; Jefferson Counties</span>
+        <p>Mostly Spencer County and the north end of Nelson, plus small corners of Bullitt and Jefferson. Traced from the branch's boundary sheet. Roughly 30–45 minutes from the house.</p>
+      </div>
+    </div>
     <div class="mapgrid">
       <figure class="tmap-wrap">
-        <svg class="tmap" viewBox="0 0 640 520" role="img" aria-labelledby="tmap-t"><title id="tmap-t">Approximate map of Spencer and Nelson Counties, Kentucky, with the house in Lawrenceburg</title><defs><clipPath id="tclip"><rect width="640" height="520"/></clipPath></defs><g clip-path="url(#tclip)"><path d="M310.9,-135.0L481.2,-118.2L504.7,-115.6L479.2,-72.7L477.3,13.6L464.5,37.7L451.8,80.6L419.7,107.2L340.7,67.6L227.5,24L238.4,-64.3L202.2,-80.6L249.1,-97.4L287.5,-98.6Z" class="c-ctx"/><path d="M-56.1,-2.0L-26.0,-34.3L-12.9,-75.1L10.5,-83.4L38.1,-67.7L78.7,-92.8L100.3,-152.5L202.2,-80.6L238.4,-64.3L227.5,24L225.4,46.0L141.9,78.2L56.5,68.8L-46.2,103.2L-78.5,134.8L-82.7,127.6L-69.8,114.0L-58.7,68.7Z" class="c-ctx"/><path d="M-78.5,134.8L-46.2,103.2L56.5,68.8L141.9,78.2L225.4,46.0L199.7,62.2L171.7,126.4L188.8,142.1L160.9,161.5L152.2,189.4L130.8,202.3L135.0,221.8L72.6,274.8L38.2,277.2L-8.6,241.2L-6.3,217.8L-29.6,175.4L-59.5,177.1L-61.4,140.1Z" class="c-ctx"/><path d="M-283.0,439.4L-208.3,285.0L-122.4,270.8L-102.8,227.5L-114.8,133.8L-82.7,127.6L-78.5,134.8L-61.4,140.1L-59.5,177.1L-29.6,175.4L-6.3,217.8L-8.6,241.2L38.2,277.2L44.5,305.1L72.2,337.1L39.7,396.1L0.9,419.2L-12.2,456.2L-44.6,478.7L-55.9,557.2L-148.5,549.3L-152.5,514.2L-186.5,459.9L-225.3,469.3L-257.4,453.3L-265.8,433.1Z" class="c-ctx"/><path d="M72.2,337.1L97.9,364.5L125.8,366.6L121.3,407.5L136.4,408.2L106.0,473.7L142.5,496L149.0,472.6L168.4,472.0L179.1,475.9L200.5,539.7L181.1,526.0L163.8,548.0L129.4,536.2L99.2,534.1L86.1,571.7L-55.9,557.2L-44.6,478.7L-12.2,456.2L0.9,419.2L39.7,396.1Z" class="c-ctx"/><path d="M168.4,472.0L211.7,372.8L239.7,339.0L256.8,360.5L256.8,382.6L276.1,398.9L325.5,414.5L463.1,414.4L456.7,479.4L454.7,580.1L435.3,578.8L403.0,549.0L377.1,539.9L316.8,576.3L312.5,562.6L275.9,536.6L239.3,532.0L200.5,539.7L179.1,475.9Z" class="c-ctx"/><path d="M239.7,339.0L269.8,319.0L267.6,298.8L295.5,291.7L302.0,263.1L357.7,252.1L359.9,212.5L387.7,213.1L404.8,198.2L415.6,215.7L462.7,217.6L479.9,245.5L465.1,378.0L463.1,414.4L325.5,414.5L276.1,398.9L256.8,382.6L256.8,360.5Z" class="c-ctx"/><path d="M462.7,217.6L488.4,206.5L494.7,184.4L516.1,170.7L548.2,180.4L601.7,157.4L601.8,182.7L582.6,198.4L610.4,204.8L619.2,250.2L653.4,239.0L649.3,274.1L662.4,313.7L656.1,337.7L632.6,351.5L465.1,378.0L479.9,245.5Z" class="c-ctx"/><path d="M481.2,-118.2L534.4,-148.2L555.7,-134.6L602.6,-121.2L632.3,-131.7L643.6,-12.9L560.5,28.3L560.6,46.5L537.2,64.8L464.5,37.7L477.3,13.6L479.2,-72.7L504.7,-115.6Z" class="c-ctx"/><path d="M643.6,-12.9L654.3,3.8L688.5,1.1L686.5,25.1L701.5,46.5L682.8,131.7L653.4,239.0L619.2,250.2L610.4,204.8L582.6,198.4L601.8,182.7L601.7,157.4L569.3,99.1L582.1,71.7L560.6,46.5L560.5,28.3Z" class="c-ctx"/><path d="M463.1,414.4L465.1,378.0L632.6,351.5L656.2,363.1L660.7,385.1L684.4,411.0L684.5,423.3L630.9,447.7L630.9,447.7L572.9,476.5L540.7,488.9L478.3,487.8L456.7,479.4Z" class="c-ctx"/><path d="M100.3,-152.5L119.6,-197.2L183.5,-219.0L198.5,-247.6L221.9,-261.2L255.8,-256.5L294.0,-237.0L274.9,-211.7L285.4,-170.1L310.9,-135.0L287.5,-98.6L249.1,-97.4L202.2,-80.6Z" class="c-ctx"/><path d="M294.0,-237.0L313.1,-239.6L379.0,-307.1L434.1,-315.6L476.6,-281.9L461.8,-250.7L491.6,-252.7L485.2,-233.2L504.4,-222.8L500.2,-195.5L549.2,-179.4L540.8,-148.2L555.7,-134.6L534.4,-148.2L481.2,-118.2L310.9,-135.0L285.4,-170.1L274.9,-211.7Z" class="c-ctx"/><path d="M419.7,107.2L451.8,80.6L464.5,37.7L537.2,64.8L560.6,46.5L582.1,71.7L569.3,99.1L601.7,157.4L548.2,180.4L516.1,170.7L494.7,184.4L488.4,206.5L462.7,217.6L415.6,215.7L404.8,198.2L387.7,213.1L379.1,156.6L379.1,137.1L402.7,138.4Z" class="c-home"/><path d="M225.4,46.0L227.5,24L340.7,67.6L419.7,107.2L402.7,138.4L379.1,137.1L379.1,156.6L242.2,180.5L188.8,142.1L171.7,126.4L199.7,62.2Z" class="c-tgt"/><path d="M38.2,277.2L72.6,274.8L135.0,221.8L130.8,202.3L152.2,189.4L160.9,161.5L188.8,142.1L242.2,180.5L379.1,156.6L387.7,213.1L359.9,212.5L357.7,252.1L302.0,263.1L295.5,291.7L267.6,298.8L269.8,319.0L239.7,339.0L211.7,372.8L168.4,472.0L149.0,472.6L142.5,496L106.0,473.7L136.4,408.2L121.3,407.5L125.8,366.6L97.9,364.5L72.2,337.1L44.5,305.1Z" class="c-tgt"/><text x="64.1" y="157.6" class="t-ctx">Bullitt</text><text x="61.3" y="479" class="t-ctx">Larue</text><text x="319.3" y="473.6" class="t-ctx">Marion</text><text x="376.6" y="322.3" class="t-ctx">Washington</text><text x="555.7" y="277.4" class="t-ctx">Mercer</text><text x="559.8" y="419.7" class="t-ctx">Boyle</text><text x="472.8" y="185.2" class="t-ctx">Anderson</text><text x="284.4" y="88.3" class="t-tgt">Spencer County</text><text x="200.9" y="261" class="t-tgt">Nelson County</text><circle cx="541.3" cy="107.1" r="9" class="m-ring"/><circle cx="541.3" cy="107.1" r="4.5" class="m-house"/><text x="541.3" y="131.1" class="t-house">The house</text><text x="541.3" y="145.1" class="t-town">Lawrenceburg</text><circle cx="275.6" cy="111.5" r="3" class="m-town"/><text x="275.6" y="127.5" class="t-town">Taylorsville</text><circle cx="201.2" cy="279.6" r="3" class="m-town"/><text x="201.2" y="295.6" class="t-town">Bardstown</text></g></svg>
+        <div id="tmap" role="region" aria-label="Map of territory 2578"></div>
         <figcaption class="tmap-key">
-          <span><i class="k-tgt"></i>Our territory · Spencer &amp; Nelson Counties</span>
-          <span><i class="k-home"></i>Anderson County · where we stay</span>
+          <span><i class="k-tgt"></i>Our territory</span>
+          <span><i class="k-me"></i>You, after tapping “Where am I?”</span>
         </figcaption>
+        <noscript><p class="note">The map needs JavaScript. Download the GPX file instead.</p></noscript>
       </figure>
-      <div style="display:grid;gap:18px">
-        <span class="label">Territory · Nelson &amp; Spencer Counties, KY</span>
-        <h2 class="disp xl pop"><span class="c-amber">Two</span><br><span>counties.</span></h2>
-        <p class="lede rule" style="padding-top:10px">This map is approximate. It shows rough county outlines only. The official boundary sheet from the branch defines exactly where we work, and it will be added here when we have it.</p>
-        <p class="m">Roughly 30–45 minutes from the house</p>
+      <div style="display:grid;gap:22px">
+        <div>
+          <h3 class="sub disp l" style="margin-bottom:12px">Offline<br>map.</h3>
+          <p class="lede">Signal is spotty out there, and this page needs a connection. Set up <b>Organic Maps</b> before we leave (free, no account) so the boundary and your location show with no signal.</p>
+        </div>
+        <ol class="steps">
+          <li><div><b>Install Organic Maps</b><span class="acts" style="margin-top:8px"><a class="btn" href="https://apps.apple.com/app/id1567437057" target="_blank" rel="noopener">iPhone</a><a class="btn" href="https://play.google.com/store/apps/details?id=app.organicmaps" target="_blank" rel="noopener">Android</a></span></div></li>
+          <li><div><b>Download Kentucky</b>Open the app on Wi-Fi, search “Kentucky” and download the state map.</div></li>
+          <li><div><b>Add our boundary</b>Tap the button below, then open the file in Organic Maps. On iPhone it may land in Downloads or Files first: tap it, then Share → Organic Maps. It saves under Bookmarks &amp; Tracks.<span class="acts" style="margin-top:10px"><a class="btn solid" href="map/territory-2578.gpx" download>Download GPX</a><a class="btn" href="map/territory-2578.kml" download>KML for Google Earth</a></span></div></li>
+          <li><div><b>Test it</b>Turn on airplane mode and open the app. You should still see the map, the boundary and your blue dot.</div></li>
+        </ol>
       </div>
     </div>
   </div>
 </section>
 
-<section class="blk t-grass" id="cost">
+<section class="blk t-grass" id="game">
   <div class="w">
-    <div class="head">
-      <h2 class="disp xl">Covering<br>the house.</h2>
-      <div class="rule row"><span class="label">Cost · Airbnb · 7 nights · 15 guests</span><span class="label">Charged to our card Oct 12</span></div>
-    </div>
-    <div class="money-row"><span class="label">Per person</span><span class="label">$4,520.07 ÷ 15</span></div>
-    <div class="money" data-slide="-5">$301.34</div>
-    <div class="sums">
-      <div class="fact"><span class="label">Per couple</span><span class="v">$602.68</span><span>2 × $301.34</span></div>
-      <div class="fact"><span class="label">Airbnb total</span><span class="v">$4,520.07</span><span>Charged to our card Oct 12</span></div>
-    </div>
-    <p class="note">With one fewer guest, shares went up by $18.84 per person ($37.68 per couple) from the earlier $282.50 / $565.00. If you've already paid, you only owe the difference.</p>
-
-    <div class="two">
-      <div class="col">
-        <h3 class="sub">How to pay</h3>
-        <p>Send your share to Travis &amp; Mackenzie.</p>
-        <ul class="pay">
-          <li><b>Venmo</b> <a href="https://venmo.com/u/Travis-White-366" target="_blank" rel="noopener">@Travis-White-366</a></li>
-          <li><b>Apple Pay</b> to Travis</li>
-          <li><b>Cash</b></li>
-          <li><b>Check</b> made out to Travis White</li>
-        </ul>
+    <div class="head split">
+      <h2 class="disp xl pop"><span>It's</span> <span>your</span><br><span class="c-wax">door!</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">A little game for the week</span>
+        <p>Pick yourself, tap to jump, and see how many doors you can make it to. Scores are shared, so everyone sees the same board.</p>
+        <p><b>Whoever holds the high score at the end of the week wins a prize.</b> Practice on the drive down (passengers only).</p>
+        <span class="acts"><a class="btn" href="door/" style="font-size:.95rem;padding:11px 18px">Play now →</a></span>
       </div>
+    </div>
+    <div class="two" style="margin-top:0">
+      <div><h3 class="disp l">Leader&shy;board</h3></div>
       <div class="col">
-        <h3 class="sub">Gas</h3>
-        <ul class="list">
-          <li><h3>Down and back</h3><p>Split within each car group. Each car settles up among its own riders for the drive down on Nov 19 and the drive home on Nov 26.</p></li>
-          <li><h3>During the week</h3><p>Split by the whole group, since we'll be sharing rides to the territory and around Lawrenceburg. <b>Save your receipts.</b> We'll total them up at the end of the week and divide evenly.</p></li>
-        </ul>
+        <ol class="board" id="board"><li><span class="r">—</span><span>No scores yet. Be the first.</span><span class="s"></span></li></ol>
       </div>
+    </div>
+    <div class="cast" id="cast">
+      <figure data-n="Travis"><img src="img/b/travis.png" alt="" width="43" height="104" loading="lazy"><figcaption>Travis</figcaption></figure>
+      <figure data-n="Mackenzie"><img src="img/b/mackenzie.png" alt="" width="46" height="104" loading="lazy"><figcaption>Mackenzie</figcaption></figure>
+      <figure data-n="Cody"><img src="img/b/cody.png" alt="" width="45" height="104" loading="lazy"><figcaption>Cody</figcaption></figure>
+      <figure data-n="Abbie"><img src="img/b/abbie.png" alt="" width="48" height="104" loading="lazy"><figcaption>Abbie</figcaption></figure>
+      <figure data-n="Andy"><img src="img/b/andy.png" alt="" width="45" height="104" loading="lazy"><figcaption>Andy</figcaption></figure>
+      <figure data-n="Alyssa"><img src="img/b/alyssa.png" alt="" width="45" height="104" loading="lazy"><figcaption>Alyssa</figcaption></figure>
+      <figure data-n="Lincoln"><img src="img/b/lincoln.png" alt="" width="41" height="104" loading="lazy"><figcaption>Lincoln</figcaption></figure>
+      <figure data-n="Ciara"><img src="img/b/ciara.png" alt="" width="40" height="104" loading="lazy"><figcaption>Ciara</figcaption></figure>
+      <figure data-n="Jim"><img src="img/b/jim.png" alt="" width="48" height="104" loading="lazy"><figcaption>Jim</figcaption></figure>
+      <figure data-n="Shawn"><img src="img/b/shawn.png" alt="" width="47" height="104" loading="lazy"><figcaption>Shawn</figcaption></figure>
+      <figure data-n="Gary"><img src="img/b/gary.png" alt="" width="41" height="104" loading="lazy"><figcaption>Gary</figcaption></figure>
+      <figure data-n="Connie"><img src="img/b/connie.png" alt="" width="40" height="104" loading="lazy"><figcaption>Connie</figcaption></figure>
+      <figure data-n="Glenn"><img src="img/b/glenn.png" alt="" width="43" height="104" loading="lazy"><figcaption>Glenn</figcaption></figure>
+      <figure data-n="Wendy"><img src="img/b/wendy.png" alt="" width="44" height="104" loading="lazy"><figcaption>Wendy</figcaption></figure>
+      <figure data-n="Angie"><img src="img/b/angie.png" alt="" width="43" height="104" loading="lazy"><figcaption>Angie</figcaption></figure>
     </div>
   </div>
 </section>
@@ -602,6 +724,50 @@ ul{padding:0;list-style:none}
       try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
     });
   });
+
+
+  // territory map
+  var TERR=[[38.10718,-85.43054],[38.10681,-85.42255],[38.10594,-85.41843],[38.10479,-85.41623],[38.10387,-85.41348],[38.10379,-85.41166],[38.1045,-85.41045],[38.10585,-85.40965],[38.10692,-85.40856],[38.10869,-85.40094],[38.10907,-85.40061],[38.11168,-85.40067],[38.11325,-85.4],[38.11455,-85.39981],[38.11514,-85.39914],[38.11651,-85.40063],[38.11827,-85.40095],[38.12102,-85.40303],[38.12213,-85.40337],[38.12335,-85.40495],[38.12538,-85.40653],[38.12645,-85.40678],[38.12672,-85.40539],[38.12753,-85.40477],[38.12862,-85.4067],[38.13057,-85.40875],[38.1403,-85.4164],[38.1439,-85.42163],[38.15,-85.42719],[38.15869,-85.4401],[38.18378,-85.47287],[38.18568,-85.47459],[38.18807,-85.47537],[38.18985,-85.4756],[38.19096,-85.47669],[38.19175,-85.47412],[38.19157,-85.46483],[38.19089,-85.46156],[38.18415,-85.43612],[38.18378,-85.43269],[38.18421,-85.42956],[38.18863,-85.41825],[38.18876,-85.41721],[38.14744,-85.42405],[38.12165,-85.34081],[38.08943,-85.23241],[38.06007,-85.15954],[38.03727,-85.10165],[38.03686,-85.10254],[38.03546,-85.10311],[38.03471,-85.10384],[38.03307,-85.10472],[38.03286,-85.10513],[38.03074,-85.10649],[38.0296,-85.10861],[38.02805,-85.10928],[38.02717,-85.1093],[38.02564,-85.11313],[38.02595,-85.12043],[38.02576,-85.12083],[38.0253,-85.12105],[38.02464,-85.12098],[38.02322,-85.11962],[38.02168,-85.11896],[38.02129,-85.11893],[38.02095,-85.11924],[38.02082,-85.12099],[38.02125,-85.12307],[38.02063,-85.12622],[38.02029,-85.12645],[38.01639,-85.12564],[38.01544,-85.12478],[38.01277,-85.12431],[38.00984,-85.12322],[38.00366,-85.12637],[38.002,-85.12835],[38.00104,-85.12897],[37.99886,-85.1299],[37.99693,-85.12985],[37.99616,-85.13026],[37.9959,-85.1317],[37.99689,-85.13442],[37.99709,-85.13725],[37.99743,-85.1382],[37.99813,-85.13897],[37.99893,-85.1394],[38.00197,-85.13963],[38.00247,-85.13983],[38.00261,-85.14022],[38.00227,-85.1408],[38.00106,-85.14095],[37.99931,-85.14177],[37.9974,-85.14176],[37.99688,-85.14256],[37.99739,-85.14449],[37.99876,-85.14708],[37.9996,-85.15052],[37.99911,-85.15119],[37.99841,-85.15106],[37.99702,-85.14842],[37.99648,-85.14801],[37.99391,-85.15104],[37.989,-85.15081],[37.98836,-85.15126],[37.98813,-85.15221],[37.98842,-85.15324],[37.98891,-85.15359],[37.9906,-85.15408],[37.99171,-85.15476],[37.99299,-85.15623],[37.99272,-85.15858],[37.99057,-85.16189],[37.99062,-85.16272],[37.9913,-85.16365],[37.99216,-85.1639],[37.99455,-85.16311],[37.99517,-85.1631],[37.99652,-85.16344],[37.99756,-85.16401],[37.99837,-85.16349],[37.99939,-85.16202],[38.00049,-85.16112],[38.00152,-85.16147],[38.00162,-85.16361],[38.00141,-85.16466],[38.00052,-85.16516],[37.99877,-85.16835],[37.99758,-85.16936],[37.99429,-85.17006],[37.99187,-85.16824],[37.99136,-85.16819],[37.99094,-85.16864],[37.99007,-85.16855],[37.98717,-85.16617],[37.98646,-85.16638],[37.98528,-85.16723],[37.98316,-85.16771],[37.98137,-85.16922],[37.98032,-85.16895],[37.97968,-85.16814],[37.97822,-85.16854],[37.97641,-85.16786],[37.97473,-85.1677],[37.97346,-85.16813],[37.97292,-85.16805],[37.89766,-85.1528],[37.89682,-85.15384],[37.89622,-85.1541],[37.895,-85.15399],[37.89251,-85.15116],[37.89028,-85.15055],[37.8898,-85.15117],[37.89084,-85.15227],[37.89079,-85.15293],[37.89051,-85.15312],[37.88894,-85.15301],[37.88766,-85.15175],[37.88726,-85.15187],[37.88558,-85.15382],[37.88568,-85.15753],[37.88638,-85.15883],[37.88697,-85.15931],[37.88778,-85.15973],[37.88872,-85.15957],[37.88976,-85.16035],[37.8912,-85.16473],[37.89078,-85.16598],[37.88786,-85.1688],[37.88746,-85.16984],[37.88749,-85.17073],[37.88783,-85.17218],[37.89097,-85.17599],[37.89243,-85.1814],[37.89241,-85.18462],[37.89191,-85.186],[37.89117,-85.18645],[37.88938,-85.1854],[37.88784,-85.18488],[37.88559,-85.18521],[37.88385,-85.1861],[37.88354,-85.18682],[37.88364,-85.18751],[37.88646,-85.19307],[37.88718,-85.19401],[37.88788,-85.19447],[37.88864,-85.19451],[37.88935,-85.19415],[37.89163,-85.19089],[37.89221,-85.19042],[37.89315,-85.19018],[37.89547,-85.19032],[37.89656,-85.19114],[37.89777,-85.1936],[37.89832,-85.19422],[37.90045,-85.19531],[37.9018,-85.19657],[37.90225,-85.19747],[37.90209,-85.19861],[37.90176,-85.19915],[37.90035,-85.19976],[37.89825,-85.19976],[37.89369,-85.19909],[37.88797,-85.19928],[37.8855,-85.19867],[37.88434,-85.1978],[37.88146,-85.19635],[37.87779,-85.19602],[37.87632,-85.19608],[37.8755,-85.1966],[37.87433,-85.19782],[37.87361,-85.19824],[37.8731,-85.19827],[37.8706,-85.196],[37.86918,-85.19559],[37.86553,-85.19363],[37.86428,-85.19348],[37.86389,-85.19355],[37.86316,-85.19425],[37.86293,-85.195],[37.86306,-85.19574],[37.86352,-85.19648],[37.86516,-85.1972],[37.86653,-85.197],[37.86805,-85.19745],[37.86854,-85.19809],[37.86895,-85.19959],[37.8687,-85.20092],[37.86818,-85.20162],[37.86675,-85.20291],[37.86629,-85.20298],[37.86419,-85.20507],[37.86318,-85.20539],[37.86283,-85.20512],[37.86151,-85.20124],[37.86098,-85.20043],[37.85823,-85.1971],[37.85629,-85.19626],[37.85554,-85.1963],[37.85503,-85.1966],[37.85462,-85.19971],[37.85416,-85.20099],[37.85342,-85.20146],[37.85276,-85.20157],[37.8502,-85.20159],[37.84874,-85.20284],[37.84674,-85.20374],[37.84622,-85.20509],[37.84622,-85.20579],[37.84661,-85.20629],[37.84774,-85.20688],[37.85014,-85.20757],[37.85063,-85.20803],[37.85207,-85.21076],[37.85249,-85.2156],[37.85299,-85.21701],[37.85426,-85.21837],[37.85504,-85.21847],[37.85578,-85.21812],[37.85831,-85.21385],[37.85871,-85.21361],[37.86131,-85.21362],[37.86209,-85.21389],[37.86431,-85.21541],[37.86641,-85.21478],[37.87006,-85.2155],[37.87133,-85.21625],[37.8715,-85.21676],[37.87145,-85.21789],[37.87087,-85.21869],[37.86691,-85.21919],[37.86614,-85.21962],[37.86301,-85.22386],[37.86169,-85.22464],[37.85866,-85.22574],[37.85592,-85.22585],[37.85554,-85.22611],[37.85517,-85.22688],[37.85511,-85.22882],[37.85548,-85.23144],[37.85596,-85.23192],[37.85852,-85.23222],[37.86075,-85.2331],[37.86191,-85.23328],[37.86601,-85.23294],[37.86702,-85.23251],[37.86943,-85.22944],[37.86996,-85.22941],[37.8704,-85.22975],[37.87059,-85.2307],[37.86915,-85.2325],[37.86875,-85.23334],[37.86868,-85.23404],[37.86942,-85.23747],[37.86923,-85.23861],[37.86835,-85.23922],[37.86787,-85.2393],[37.86486,-85.23812],[37.8639,-85.23807],[37.86339,-85.23845],[37.86249,-85.24099],[37.86245,-85.24222],[37.86305,-85.24427],[37.86558,-85.24657],[37.86638,-85.24767],[37.86729,-85.24967],[37.86744,-85.25177],[37.86669,-85.25271],[37.86642,-85.25433],[37.86608,-85.25499],[37.86522,-85.25585],[37.86424,-85.25602],[37.86267,-85.255],[37.86044,-85.25595],[37.85955,-85.25591],[37.85765,-85.25132],[37.85392,-85.24651],[37.851,-85.244],[37.84913,-85.24288],[37.84831,-85.24303],[37.84745,-85.2442],[37.84708,-85.2462],[37.84828,-85.25286],[37.84881,-85.25829],[37.84867,-85.25903],[37.84812,-85.25992],[37.84614,-85.26101],[37.8447,-85.26274],[37.84434,-85.26427],[37.84451,-85.26803],[37.84685,-85.26933],[37.84763,-85.27016],[37.84858,-85.27478],[37.84924,-85.27515],[37.85295,-85.27603],[37.85361,-85.27681],[37.8536,-85.27799],[37.85335,-85.27855],[37.85139,-85.28051],[37.84989,-85.28087],[37.84875,-85.28065],[37.8445,-85.2786],[37.84286,-85.27862],[37.83984,-85.27724],[37.83844,-85.27717],[37.83716,-85.2781],[37.8355,-85.28034],[37.83494,-85.28162],[37.83393,-85.28556],[37.83158,-85.28876],[37.83118,-85.29028],[37.83154,-85.29216],[37.83199,-85.29276],[37.8326,-85.29447],[37.83267,-85.29608],[37.83411,-85.29623],[37.83477,-85.29689],[37.83493,-85.29847],[37.83562,-85.29992],[37.83724,-85.30146],[37.83827,-85.30195],[37.83954,-85.30307],[37.84145,-85.30354],[37.84302,-85.30436],[37.84401,-85.30401],[37.84536,-85.30432],[37.84841,-85.30412],[37.84958,-85.3033],[37.85168,-85.30061],[37.85377,-85.29691],[37.8547,-85.29659],[37.86458,-85.29947],[37.86957,-85.30029],[37.87493,-85.30162],[37.87746,-85.30091],[37.87931,-85.30093],[37.88115,-85.30257],[37.88146,-85.30331],[37.88596,-85.30534],[37.89175,-85.30745],[37.89328,-85.30862],[37.89578,-85.30944],[37.89784,-85.3119],[37.90237,-85.31506],[37.90563,-85.31662],[37.90731,-85.31634],[37.90928,-85.3168],[37.91187,-85.31782],[37.9115,-85.3193],[37.91082,-85.32016],[37.91104,-85.32679],[37.91215,-85.32898],[37.91396,-85.3351],[37.91544,-85.33791],[37.91664,-85.34134],[37.92095,-85.34751],[37.92209,-85.34958],[37.92243,-85.35246],[37.92399,-85.35628],[37.92636,-85.3635],[37.92932,-85.37072],[37.93116,-85.37388],[37.9339,-85.38464],[37.93446,-85.39054],[37.93603,-85.39479],[37.93806,-85.3981],[37.94169,-85.40166],[37.94269,-85.40226],[37.94403,-85.40391],[37.94445,-85.40492],[37.9452,-85.40558],[37.94529,-85.40599],[37.94585,-85.40641],[37.94675,-85.40778],[37.94691,-85.40924],[37.94787,-85.41088],[37.94857,-85.41118],[37.94948,-85.41333],[37.95046,-85.41409],[37.95091,-85.41534],[37.9516,-85.41571],[37.9532,-85.41775],[37.95415,-85.41827],[37.95519,-85.41946],[37.95617,-85.41995],[37.95754,-85.42204],[37.95816,-85.42398],[37.95866,-85.42453],[37.95909,-85.42435],[37.96079,-85.42221],[37.96248,-85.41862],[37.96629,-85.41608],[37.96826,-85.41433],[37.9706,-85.41312],[37.97416,-85.41292],[37.9789,-85.41116],[37.97933,-85.41144],[37.98133,-85.41452],[37.98687,-85.41764],[37.99108,-85.41862],[37.99341,-85.42065],[37.99603,-85.42224],[37.99732,-85.42384],[37.9989,-85.424],[38.00171,-85.42309],[38.00461,-85.42436],[38.00694,-85.42441],[38.0113,-85.42773],[38.01387,-85.42812],[38.01521,-85.42881],[38.01894,-85.42868],[38.02328,-85.43051],[38.02446,-85.43197],[38.02703,-85.43143],[38.02842,-85.42973],[38.02927,-85.42649],[38.03157,-85.42446],[38.03353,-85.42424],[38.03526,-85.42301],[38.037,-85.42896],[38.03703,-85.43239],[38.03964,-85.43875],[38.03974,-85.44089],[38.03937,-85.44495],[38.04168,-85.45201],[38.04205,-85.45384],[38.04349,-85.45567],[38.04534,-85.45591],[38.04699,-85.45552],[38.04868,-85.45622],[38.05363,-85.46309],[38.05481,-85.4668],[38.05607,-85.4691],[38.05902,-85.47203],[38.05976,-85.4739],[38.06007,-85.47687],[38.06139,-85.48053],[38.06163,-85.48381],[38.06242,-85.48664],[38.06323,-85.48797],[38.06472,-85.48971],[38.06499,-85.49068],[38.06487,-85.4955],[38.06274,-85.50321],[38.05884,-85.51208],[38.06903,-85.51115],[38.06734,-85.50625],[38.06727,-85.50233],[38.06701,-85.50159],[38.06892,-85.50154],[38.07059,-85.49996],[38.07383,-85.49823],[38.07598,-85.49766],[38.07755,-85.49825],[38.07939,-85.49731],[38.08113,-85.49524],[38.08418,-85.49308],[38.08688,-85.48972],[38.0878,-85.48598],[38.08862,-85.48413],[38.09091,-85.48087],[38.09636,-85.4702],[38.09573,-85.46486],[38.09588,-85.46287],[38.09624,-85.46211],[38.09706,-85.46138],[38.0987,-85.45801],[38.09923,-85.45753],[38.10231,-85.45187],[38.1027,-85.45052],[38.10155,-85.44708],[38.10219,-85.44152],[38.10191,-85.44022],[38.10193,-85.43804],[38.10295,-85.43631],[38.10445,-85.43651],[38.10556,-85.43513],[38.10674,-85.43228],[38.10718,-85.43054]];
+  function inside(lat,lng){var c=false;for(var i=0,j=TERR.length-1;i<TERR.length;j=i++){var a=TERR[i],b=TERR[j];if(((a[0]>lat)!==(b[0]>lat))&&(lng<(b[1]-a[1])*(lat-a[0])/(b[0]-a[0])+a[1]))c=!c}return c}
+  function initMap(){
+    if(!window.L||!document.getElementById('tmap'))return;
+    var map=L.map('tmap',{scrollWheelZoom:false,zoomSnap:.25,attributionControl:true});
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd',
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+    var poly=L.polygon(TERR,{color:'#A86A55',weight:3,lineJoin:'round',fillColor:'#ECD9B4',fillOpacity:.42}).addTo(map);
+    map.fitBounds(poly.getBounds(),{padding:[16,16]});
+    var towns=[['Taylorsville',38.032,-85.343,1],['Bloomfield',37.910,-85.316],['Fairfield',37.934,-85.386],['Mt Washington',38.050,-85.546],['The house · Lawrenceburg',38.037,-84.897]];
+    towns.forEach(function(t){L.marker([t[1],t[2]],{interactive:false,keyboard:false,icon:L.divIcon({className:'tlabel'+(t[3]?' big':''),html:t[0],iconSize:null})}).addTo(map)});
+    var me=null,acc=null,btn;
+    var Loc=L.Control.extend({options:{position:'topleft'},onAdd:function(){
+      var d=L.DomUtil.create('div','leaflet-bar');btn=L.DomUtil.create('a','locate',d);btn.href='#';btn.setAttribute('role','button');btn.textContent='Where am I?';
+      L.DomEvent.on(btn,'click',function(e){L.DomEvent.preventDefault(e);L.DomEvent.stopPropagation(e);btn.textContent='Finding you…';map.locate({setView:true,maxZoom:14,enableHighAccuracy:true})});
+      return d}});
+    map.addControl(new Loc());
+    map.on('locationfound',function(e){
+      if(me){map.removeLayer(me);map.removeLayer(acc)}
+      acc=L.circle(e.latlng,{radius:e.accuracy,color:'#2a6fd6',weight:1,fillOpacity:.08}).addTo(map);
+      me=L.marker(e.latlng,{icon:L.divIcon({className:'',html:'<div class="me-dot"></div>',iconSize:[16,16],iconAnchor:[8,8]})}).addTo(map);
+      var inn=inside(e.latlng.lat,e.latlng.lng);
+      me.bindPopup(inn?'You’re <b>inside</b> the territory.':'You’re <b>outside</b> the territory.').openPopup();
+      btn.textContent='Where am I?';btn.classList.add('on');
+    });
+    map.on('locationerror',function(){btn.textContent='Location unavailable';setTimeout(function(){btn.textContent='Where am I?'},2500)});
+  }
+  if(document.readyState==='complete')initMap();else addEventListener('load',initMap);
+
+  // shared leaderboard from the game
+  (function(){
+    var board=document.getElementById('board');if(!board||!window.fetch)return;
+    var alias={Ciarra:'Ciara'};
+    fetch('https://scores.blankspac.com/',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+      if(!d||typeof d!=='object'||d.error)return;
+      var rows=Object.keys(d).map(function(k){return [alias[k]||k,Math.floor(+d[k]||0)]}).filter(function(r){return r[1]>0}).sort(function(a,b){return b[1]-a[1]}).slice(0,5);
+      if(!rows.length)return;
+      board.innerHTML=rows.map(function(r,i){var n=r[0];return '<li><span class="r">'+(i+1)+'</span><span class="p"><img class="ava" src="img/p/'+n.toLowerCase()+'.png" alt="" width="45" height="45">'+n+'</span><span class="s">'+r[1].toLocaleString()+'</span></li>'}).join('');
+      var lead=document.querySelector('.cast [data-n="'+rows[0][0]+'"]');if(lead)lead.classList.add('lead');
+    }).catch(function(){});
+  })();
 
   // progress menu
   var items=[].slice.call(document.querySelectorAll('.prog li'));
