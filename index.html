@@ -42,10 +42,11 @@ a:hover .arr{transform:translateX(6px)}
 .hop{animation:wf-hop 3.2s cubic-bezier(.455,.03,.515,.955) infinite}
 @media (prefers-reduced-motion: reduce){.rv,.draw,.hop,#top .rv{animation:none!important}.arr,.zoom > *{transition:none}}
 
-html{color-scheme:dark;background:#080808}
+html{color-scheme:dark;background:#080808;scroll-padding-top:76px}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
 button.copy:hover{color:#f0c97f}
+#tmap .dark-tiles{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.4)}
 #tmap{width:100%;height:clamp(380px,62vh,640px);background:#171717}
 #tmap .leaflet-control-attribution{background:rgba(8,8,8,.7);color:#ababab;font:400 10px/1.4 Geist,Arial,sans-serif}
 #tmap .leaflet-control-attribution a{color:#ababab}
@@ -63,7 +64,33 @@ button.copy:hover{color:#f0c97f}
 .io .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.io .rv{opacity:1;transform:none;transition:none}}
 
-@media (max-width: 760px){header nav{display:none!important}}
+.site-hd{position:sticky;top:0;z-index:1000;background:rgba(8,8,8,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #363636;padding-left:clamp(20px,4.2vw,60px);padding-right:clamp(20px,4.2vw,60px)}
+.hd-in{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:#ffffff;text-decoration:none;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.brand .f{width:28px;height:28px}
+.menu{display:flex;align-items:center;gap:28px}
+.menu ul{display:flex;gap:24px;margin:0;padding:0;list-style:none}
+.menu .nl{color:#ffffff;font-size:15px;font-weight:500;text-decoration:none;padding:8px 0}
+.hd-cta{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:4px;background:#f0c97f;color:#080808!important;font-size:14.5px;font-weight:500;text-decoration:none;white-space:nowrap;transition:opacity .3s cubic-bezier(.455,.03,.515,.955)}
+.hd-cta:hover{opacity:.86}
+.menu-btn{display:none;align-items:center;gap:10px;min-height:44px;padding:0 4px 0 12px;border:0;background:none;color:#ffffff;font:500 15px Geist,Arial,sans-serif;cursor:pointer}
+.bars{position:relative;width:20px;height:14px;display:inline-block}
+.bars i{position:absolute;left:0;width:20px;height:1.5px;background:currentColor;border-radius:2px;transition:transform .3s cubic-bezier(.455,.03,.515,.955),opacity .2s cubic-bezier(.455,.03,.515,.955),top .3s cubic-bezier(.455,.03,.515,.955)}
+.bars i:nth-child(1){top:0}.bars i:nth-child(2){top:6px}.bars i:nth-child(3){top:12px}
+.menu-btn[aria-expanded="true"] .bars i:nth-child(1){top:6px;transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] .bars i:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] .bars i:nth-child(3){top:6px;transform:rotate(-45deg)}
+@media (max-width: 1000px){
+  .menu-btn{display:inline-flex}
+  .menu{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:#080808;border-bottom:1px solid #363636;padding:8px clamp(20px,4.2vw,60px) 24px;visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .3s cubic-bezier(.455,.03,.515,.955),transform .3s cubic-bezier(.455,.03,.515,.955),visibility 0s linear .3s;max-height:calc(100vh - 64px);overflow:auto}
+  .menu.open{visibility:visible;opacity:1;transform:none;transition:opacity .3s cubic-bezier(.455,.03,.515,.955),transform .3s cubic-bezier(.455,.03,.515,.955)}
+  .menu ul{flex-direction:column;gap:0}
+  .menu li{border-top:1px solid #363636}
+  .menu li:first-child{border-top:0}
+  .menu .nl{display:block;padding:16px 0;font-size:22px;font-weight:500;letter-spacing:-.01em}
+  .hd-cta{margin-top:16px;justify-content:center;min-height:48px;font-size:16px}
+}
+@media (prefers-reduced-motion: reduce){.menu,.bars i{transition:none!important}}
 .brow{display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #363636}
 .brow .cap{font-size:12.8px;font-weight:550;letter-spacing:.02em;color:#ababab}
 .brow .who{display:inline-flex;align-items:center;gap:8px;font-size:17px}
@@ -74,11 +101,14 @@ button.copy:hover{color:#f0c97f}
 </head>
 <body>
 <div style="width: 100%; min-height: 100vh; background: #080808; color: #ffffff; font-family: Geist, Arial, sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased">
-<header style="position: sticky; top: 0; z-index: 10; background: rgba(8,8,8,0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #363636; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px)">
-<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; min-height: 68px; padding: 10px 0; box-sizing: border-box">
-<a href="#top" style="display: inline-flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-size: 17px; font-weight: 600; letter-spacing: -0.01em"><span class="f f-travis" style="width: 28px; height: 28px" aria-hidden="true"></span>Bible Studies &amp; Bourbon</a>
-<nav aria-label="Sections" style="display: flex; flex-wrap: wrap; gap: 4px 20px"><a class="nl" href="#week" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Week</a><a class="nl" href="#rooms" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Rooms</a><a class="nl" href="#cars" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Cars</a><a class="nl" href="#weekend" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Weekend</a><a class="nl" href="#service" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Service</a><a class="nl" href="#territory" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Territory</a><a class="nl" href="#game" style="color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 0">Game</a></nav>
-<a class="btn" href="#territory" style="display: inline-flex; align-items: center; padding: 10px 16px; min-height: 44px; box-sizing: border-box; border-radius: 4px; background: #f0c97f; color: #080808; font-size: 15px; font-weight: 500; text-decoration: none">Territory map</a>
+<header class="site-hd">
+<div class="hd-in">
+<a class="brand" href="#top"><span class="f f-travis" style="width: 28px; height: 28px" aria-hidden="true"></span><span>Bible Studies &amp; Bourbon</span></a>
+<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="menu-lbl">Menu</span></button>
+<nav id="site-menu" class="menu" aria-label="Sections">
+<ul><li><a class="nl" href="#week">Week</a></li><li><a class="nl" href="#rooms">Rooms</a></li><li><a class="nl" href="#cars">Cars</a></li><li><a class="nl" href="#weekend">Weekend</a></li><li><a class="nl" href="#service">Service</a></li><li><a class="nl" href="#territory">Territory</a></li><li><a class="nl" href="#game">Game</a></li></ul>
+<a class="hd-cta" href="#dnc">Do-not-call reminder</a>
+</nav>
 </div>
 </header>
 <main>
@@ -351,6 +381,15 @@ button.copy:hover{color:#f0c97f}
     document.querySelectorAll('main .rv').forEach(function(el){if(!el.closest('#top'))io.observe(el)});
   }
 
+  var mb=document.querySelector('.menu-btn'),mn=document.getElementById('site-menu');
+  if(mb&&mn){
+    var setM=function(o){mb.setAttribute('aria-expanded',o?'true':'false');mb.setAttribute('aria-label',o?'Close menu':'Open menu');mn.classList.toggle('open',o)};
+    mb.addEventListener('click',function(){setM(mb.getAttribute('aria-expanded')!=='true')});
+    mn.addEventListener('click',function(e){if(e.target.closest('a'))setM(false)});
+    addEventListener('keydown',function(e){if(e.key==='Escape'&&mn.classList.contains('open')){setM(false);mb.focus()}});
+    addEventListener('resize',function(){if(innerWidth>1000)setM(false)});
+  }
+
   var cd=document.getElementById('countdown');
   if(cd){var start=new Date(2026,10,19),end=new Date(2026,10,26),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),d=Math.round((start-today)/86400000);
     cd.textContent=d>1?d+' days to go':d===1?'Tomorrow':today<=end?'Happening now':'Trip complete';}
@@ -369,8 +408,8 @@ button.copy:hover{color:#f0c97f}
   function initMap(){
     if(!window.L||!document.getElementById('tmap'))return;
     var map=L.map('tmap',{scrollWheelZoom:false,zoomSnap:.25});
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd',
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,className:'dark-tiles',
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     var poly=L.polygon(TERR,{color:'#f0c97f',weight:2.5,lineJoin:'round',fillColor:'#f0c97f',fillOpacity:.1}).addTo(map);
     map.fitBounds(poly.getBounds(),{padding:[16,16]});
     [['Taylorsville',38.032,-85.343,1],['Bloomfield',37.910,-85.316],['Fairfield',37.934,-85.386],['Mt Washington',38.050,-85.546],['The house · Lawrenceburg',38.037,-84.897]].forEach(function(t){
