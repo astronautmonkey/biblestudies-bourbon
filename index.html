@@ -5,416 +5,759 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Schedule, rooms, cars and service notes for our Nov 19–26, 2026 territory trip to Kentucky.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#080808">
+<style>html{color-scheme:light}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Bible Studies &amp; Bourbon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,400&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
-body{margin:0;background:#080808}
-a{color:#ffffff}a:hover{color:#ffffff}
-.f{display:inline-block;flex:none;border-radius:9999px;background-color:#262626;background-image:url(img/heads.png);background-size:1500% 100%;background-repeat:no-repeat;image-rendering:pixelated}
-.b{display:block;width:100%;max-width:54px;aspect-ratio:3/5;background-image:url(img/cast.png);background-size:1500% 100%;background-repeat:no-repeat;image-rendering:pixelated}
-.f-travis,.b-travis{background-position:0.0000% 0}.f-mackenzie,.b-mackenzie{background-position:7.1429% 0}.f-cody,.b-cody{background-position:14.2857% 0}.f-abbie,.b-abbie{background-position:21.4286% 0}.f-andy,.b-andy{background-position:28.5714% 0}.f-alyssa,.b-alyssa{background-position:35.7143% 0}.f-lincoln,.b-lincoln{background-position:42.8571% 0}.f-ciara,.b-ciara{background-position:50.0000% 0}.f-jim,.b-jim{background-position:57.1429% 0}.f-shawn,.b-shawn{background-position:64.2857% 0}.f-gary,.b-gary{background-position:71.4286% 0}.f-connie,.b-connie{background-position:78.5714% 0}.f-glenn,.b-glenn{background-position:85.7143% 0}.f-wendy,.b-wendy{background-position:92.8571% 0}.f-angie,.b-angie{background-position:100.0000% 0}
-.card,.btn,.pill,.fi,.row,.nl,.tl{transition:background-color .3s cubic-bezier(.455,.03,.515,.955),color .3s cubic-bezier(.455,.03,.515,.955),opacity .3s cubic-bezier(.455,.03,.515,.955),box-shadow .3s cubic-bezier(.455,.03,.515,.955)}
-.hov:hover{background-color:#171717}
-.pill:hover{background-color:rgba(240,201,127,.26)}
-.btn:hover{opacity:.86}
-.nl:hover{color:#ababab}
-.fi:hover h3,.tl:hover{color:#f0c97f}
-.fi h3{transition:color .3s cubic-bezier(.455,.03,.515,.955)}
-.arr{transition:transform .3s cubic-bezier(.455,.03,.515,.955)}
-a:hover .arr{transform:translateX(6px)}
-.zoom > *{transition:transform .6s cubic-bezier(.455,.03,.515,.955)}
-.card:hover .zoom > .castrow{transform:scale(1.015)}
-@keyframes wf-scale{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:scale(1)}}
-@keyframes wf-in{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
-@keyframes wf-draw{from{stroke-dasharray:1;stroke-dashoffset:1;fill-opacity:0}to{stroke-dasharray:1;stroke-dashoffset:0;fill-opacity:.1}}
-@keyframes wf-hop{0%,70%,100%{transform:none}80%{transform:translateY(-14%)}}
-#top .rv{animation:wf-scale .9s cubic-bezier(.455,.03,.515,.955) both}
-#top .rv + .rv{animation-delay:.15s}
-@supports (animation-timeline: view()){
-.rv{animation:wf-in linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
-.draw{animation:wf-draw linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+/* Layout: a trip guide set like a type specimen. Full-bleed color blocks, one giant
+   word per block, hairline rules with small labels, days that stack as you scroll. */
+:root{
+  --char:#2A2824;      /* charred oak, softened */
+  --paper:#F5F4F0;     /* label paper */
+  --amber:#ECD9B4;     /* bourbon, diluted */
+  --wax:#E7C2B4;       /* wax seal, faded */
+  --grass:#CAD9C3;     /* bluegrass */
+  --sky:#C9D6E8;       /* Kentucky sky */
+  --pink:#EED6D6;
+  --violet:#D8D2E8;
+  --wax-d:#A86A55;     /* deeper ink for words on light grounds */
+  --sky-d:#577199;
+  --f-display:"Inter","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Inter","Helvetica Neue",Arial,sans-serif;
+  --t-giant:clamp(4.6rem,23.5vw,27rem);
+  --t-xl:clamp(2.6rem,8.6vw,8.5rem);
+  --t-l:clamp(1.9rem,4.6vw,4.2rem);
+  --t-m:clamp(1.25rem,2.1vw,1.9rem);
+  --t-s:clamp(.98rem,1.15vw,1.12rem);
+  --t-label:.76rem;
+  --gut-l:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:light;
 }
-.hop{animation:wf-hop 3.2s cubic-bezier(.455,.03,.515,.955) infinite}
-@media (prefers-reduced-motion: reduce){.rv,.draw,.hop,#top .rv{animation:none!important}.arr,.zoom > *{transition:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--char);color:var(--paper);font-family:var(--f-body);font-size:var(--t-s);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+h1,h2,h3,p,ul,figure,blockquote{margin:0}
+ul{padding:0;list-style:none}
 
-html{color-scheme:dark;background:#080808;scroll-padding-top:76px}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-img{max-width:100%}
-button.copy:hover{color:#f0c97f}
-#tmap .dark-tiles{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.4)}
-#tmap{width:100%;height:clamp(380px,62vh,640px);background:#171717}
-#tmap .leaflet-control-attribution{background:rgba(8,8,8,.7);color:#ababab;font:400 10px/1.4 Inter,Arial,sans-serif}
-#tmap .leaflet-control-attribution a{color:#ababab}
-#tmap .leaflet-bar{border:1px solid #363636;box-shadow:none}
-#tmap .leaflet-bar a{background:rgba(8,8,8,.85);color:#ffffff;border-bottom-color:#363636}
-#tmap .leaflet-bar a:hover{background:#171717}
-#tmap .locate{width:auto!important;padding:0 12px!important;font:500 13px/30px Inter,Arial,sans-serif!important;white-space:nowrap}
-#tmap .locate.on{color:#f0c97f!important}
-.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#171717;color:#ffffff;box-shadow:0 0 0 1px #363636}
-.leaflet-popup-content{font:400 14px/1.5 Inter,Arial,sans-serif}
-.tlabel{font:500 12.5px/1.1 Inter,Arial,sans-serif;color:#ababab;text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap}
-.tlabel.big{font-size:16px;font-weight:600;color:#ffffff}
-.me-dot{width:14px;height:14px;border-radius:50%;background:#f0c97f;border:3px solid #080808;box-shadow:0 0 0 1px #f0c97f}
-.io .rv{opacity:0;transform:translateY(-12px);transition:opacity .8s cubic-bezier(.455,.03,.515,.955),transform .8s cubic-bezier(.455,.03,.515,.955)}
-.io .rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion: reduce){.io .rv{opacity:1;transform:none;transition:none}}
+/* blocks */
+.blk{background:var(--bg);color:var(--fg);overflow-x:clip;position:relative}
+.w{padding-left:var(--gut-l);padding-right:var(--gut-r);padding-block:clamp(96px,14vw,240px);max-width:1680px;margin-inline:auto}
+.t-char{--bg:var(--char);--fg:var(--paper)}
+.t-paper{--bg:var(--paper);--fg:var(--char)}
+.t-amber{--bg:var(--amber);--fg:var(--char)}
+.t-wax{--bg:var(--wax);--fg:var(--char)}
+.t-grass{--bg:var(--grass);--fg:var(--char)}
+.t-sky{--bg:var(--sky);--fg:var(--char)}
+.t-pink{--bg:var(--pink);--fg:var(--char)}
+.t-violet{--bg:var(--violet);--fg:var(--char)}
 
-.site-hd{position:sticky;top:0;z-index:1000;background:rgba(8,8,8,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #363636;padding-left:clamp(20px,4.2vw,60px);padding-right:clamp(20px,4.2vw,60px)}
-.hd-in{max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}
-.brand{display:inline-flex;align-items:center;gap:10px;color:#ffffff;text-decoration:none;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
-.brand .f{width:28px;height:28px}
-.menu{display:flex;align-items:center;gap:28px}
-.menu ul{display:flex;gap:24px;margin:0;padding:0;list-style:none}
-.menu .nl{color:#ffffff;font-size:15px;font-weight:500;text-decoration:none;padding:8px 0}
-.hd-cta{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:4px;background:#f0c97f;color:#080808!important;font-size:14.5px;font-weight:500;text-decoration:none;white-space:nowrap;transition:opacity .3s cubic-bezier(.455,.03,.515,.955)}
-.hd-cta:hover{opacity:.86}
-.menu-btn{display:none;align-items:center;gap:10px;min-height:44px;padding:0 4px 0 12px;border:0;background:none;color:#ffffff;font:500 15px Inter,Arial,sans-serif;cursor:pointer}
+/* type */
+.disp{font-family:var(--f-display);font-weight:600;letter-spacing:-.045em;line-height:.86;text-wrap:balance}
+.xl{font-size:var(--t-xl)}
+.l{font-size:var(--t-l);line-height:.95}
+.m{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.12}
+.label{font-size:var(--t-label);font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.lede{max-width:46ch}
+.rule{border-top:1px solid color-mix(in oklab,currentColor 45%,transparent)}
+.head{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:clamp(56px,9vw,144px)}
+.head .row{display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;padding-top:10px}
+.head .row p{max-width:44ch}
+@media(min-width:900px){.head.split{grid-template-columns:1.25fr 1fr;align-items:end}}
+.c-amber{color:var(--amber)}.c-wax{color:var(--wax-d)}.c-grass{color:var(--grass)}.c-sky{color:var(--sky-d)}.c-pink{color:var(--pink)}.c-violet{color:var(--violet)}
+.pop span{display:inline-block;transition:color .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.pop span:nth-child(2){transition-delay:.08s}.pop span:nth-child(3){transition-delay:.16s}.pop span:nth-child(4){transition-delay:.24s}.pop span:nth-child(5){transition-delay:.32s}
+.pre .pop span{color:inherit;transform:translateY(.18em) rotate(-2deg)}
+
+/* top bar: a traditional nav that takes on the colors of the block beneath it;
+   each link's hairline fills as you read that section */
+.prog{position:fixed;z-index:1000;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);padding-left:var(--gut-l);padding-right:var(--gut-r);
+  background:var(--bar-bg,var(--amber));color:var(--bar-fg,var(--char));transition:background-color .4s ease,color .4s ease;
+  border-bottom:1px solid color-mix(in oklab,currentColor 14%,transparent)}
+.hd-in{max-width:1680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:60px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:1rem;letter-spacing:-.02em;white-space:nowrap}
+.brand .ava{width:28px;height:28px}
+.menu ol{list-style:none;margin:0;padding:0;display:flex;gap:clamp(14px,1.8vw,28px)}
+.menu a{display:grid;gap:5px;text-decoration:none;color:inherit;padding:8px 0 6px}
+.menu .t{font-size:.9rem;font-weight:500;white-space:nowrap;opacity:.7;transition:opacity .3s ease}
+.menu .bar{height:2px;background:color-mix(in oklab,currentColor 16%,transparent);position:relative;overflow:hidden}
+.menu .bar i{position:absolute;inset:0;background:currentColor;transform-origin:left;transform:scaleX(var(--f,0))}
+.menu a:hover .t,.menu a:focus-visible .t,.menu li.on .t{opacity:1}
+.menu-btn{display:none;align-items:center;gap:10px;min-height:44px;padding:0 2px 0 10px;border:0;background:none;color:inherit;font:500 .95rem var(--f-body);cursor:pointer}
 .bars{position:relative;width:20px;height:14px;display:inline-block}
-.bars i{position:absolute;left:0;width:20px;height:1.5px;background:currentColor;border-radius:2px;transition:transform .3s cubic-bezier(.455,.03,.515,.955),opacity .2s cubic-bezier(.455,.03,.515,.955),top .3s cubic-bezier(.455,.03,.515,.955)}
+.bars i{position:absolute;left:0;width:20px;height:1.5px;background:currentColor;border-radius:2px;transition:transform .3s ease,opacity .2s ease,top .3s ease}
 .bars i:nth-child(1){top:0}.bars i:nth-child(2){top:6px}.bars i:nth-child(3){top:12px}
 .menu-btn[aria-expanded="true"] .bars i:nth-child(1){top:6px;transform:rotate(45deg)}
 .menu-btn[aria-expanded="true"] .bars i:nth-child(2){opacity:0}
 .menu-btn[aria-expanded="true"] .bars i:nth-child(3){top:6px;transform:rotate(-45deg)}
-@media (max-width: 1000px){
+@media(max-width:1080px){
   .menu-btn{display:inline-flex}
-  .menu{position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;background:#080808;border-bottom:1px solid #363636;padding:8px clamp(20px,4.2vw,60px) 24px;visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .3s cubic-bezier(.455,.03,.515,.955),transform .3s cubic-bezier(.455,.03,.515,.955),visibility 0s linear .3s;max-height:calc(100vh - 64px);overflow:auto}
-  .menu.open{visibility:visible;opacity:1;transform:none;transition:opacity .3s cubic-bezier(.455,.03,.515,.955),transform .3s cubic-bezier(.455,.03,.515,.955)}
-  .menu ul{flex-direction:column;gap:0}
-  .menu li{border-top:1px solid #363636}
+  .menu{position:absolute;left:0;right:0;top:100%;background:var(--bar-bg,var(--amber));color:var(--bar-fg,var(--char));
+    padding:4px var(--gut-r) 20px var(--gut-l);border-bottom:1px solid color-mix(in oklab,currentColor 14%,transparent);
+    visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .3s ease,transform .3s ease,visibility 0s linear .3s;max-height:calc(100vh - 60px);overflow:auto}
+  .menu.open{visibility:visible;opacity:1;transform:none;transition:opacity .3s ease,transform .3s ease}
+  .menu ol{flex-direction:column;gap:0}
+  .menu li{border-top:1px solid color-mix(in oklab,currentColor 20%,transparent)}
   .menu li:first-child{border-top:0}
-  .menu .nl{display:block;padding:16px 0;font-size:22px;font-weight:500;letter-spacing:-.01em}
-  .hd-cta{margin-top:16px;justify-content:center;min-height:48px;font-size:16px}
+  .menu a{padding:14px 0}
+  .menu .t{font-family:var(--f-display);font-size:1.5rem;font-weight:600;letter-spacing:-.03em;opacity:1}
+  .menu .bar{display:none}
 }
 @media (prefers-reduced-motion: reduce){.menu,.bars i{transition:none!important}}
-.rm{--rm:clamp(15px,3.9vw,19.7px)}
-.rm > span{gap:6px 12px!important}
-h1,h2{letter-spacing:-0.025em!important}
-.brow{display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #363636}
-.brow .cap{font-size:12.8px;font-weight:550;letter-spacing:.02em;color:#ababab}
-.brow .who{display:inline-flex;align-items:center;gap:8px;font-size:17px}
-.brow .who .f{width:28px;height:28px}
-.brow .pts{color:#ababab;font-variant-numeric:tabular-nums}
-.hop.lead{filter:drop-shadow(0 0 10px rgba(240,201,127,.55))}
+
+
+/* hero */
+.hero{--p:0;background:color-mix(in oklab,var(--amber),var(--wax) calc(var(--p)*100%));color:var(--char)}
+.hero .w{padding-top:calc(104px + env(safe-area-inset-top,0px));padding-bottom:0}
+.hero-top{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.hero-top h1{font-size:clamp(2.3rem,6vw,5.4rem);color:var(--char)}
+.ring{width:clamp(108px,21vw,300px);aspect-ratio:1;max-width:100%}
+.ring svg{width:100%;height:100%;display:block;overflow:visible}
+.ring text{font-family:var(--f-display);font-weight:600;font-size:29px;letter-spacing:.01em;fill:var(--char)}
+.hero-meta{margin-top:clamp(28px,7vw,110px);padding-top:10px;display:flex;justify-content:space-between;gap:10px 32px;flex-wrap:wrap}
+.hero-meta p{max-width:38ch}
+.word{font-family:var(--f-display);font-weight:600;font-size:var(--t-giant);letter-spacing:-.055em;line-height:.8;white-space:nowrap;padding-block:.06em .1em;will-change:transform}
+.word + .word{border-top:1px solid currentColor}
+.word.r{text-align:right}
+.words{margin-top:clamp(24px,5vw,72px);border-top:1px solid currentColor}
+
+/* verse + house */
+.verse{font-size:var(--t-xl)}
+.verse cite{display:block;font:600 var(--t-label)/1.4 var(--f-body);letter-spacing:.09em;text-transform:uppercase;margin-top:22px}
+.facts{display:grid;grid-template-columns:1fr;margin-top:clamp(72px,11vw,176px)}
+.fact{border-top:1px solid currentColor;padding-block:12px 28px;display:grid;gap:8px;align-content:start;min-width:0}
+.fact .v{font-family:var(--f-display);font-weight:700;font-size:var(--t-l);letter-spacing:-.04em;line-height:.95}
+.fact .acts{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{font:600 .82rem/1 var(--f-body);background:transparent;color:inherit;border:1px solid currentColor;border-radius:999px;padding:8px 13px;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--paper);color:var(--char)}
+@media(min-width:900px){.facts{grid-template-columns:1.5fr 1fr 1fr;column-gap:24px}}
+
+/* week */
+.days{display:grid}
+.day{background:var(--bg);color:var(--fg)}
+.day .w{padding-block:clamp(48px,7vw,112px);display:grid;grid-template-columns:1fr;gap:10px 40px}
+.day .num{font-family:var(--f-display);font-weight:600;font-size:clamp(5.5rem,19vw,19rem);letter-spacing:-.06em;line-height:.74;font-variant-numeric:tabular-nums}
+.day .dow{display:flex;justify-content:space-between;border-top:1px solid currentColor;padding-top:8px;margin-bottom:14px}
+.day h3{font-family:var(--f-display);font-weight:600;font-size:var(--t-l);letter-spacing:-.04em;line-height:.95;margin-bottom:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.chip{font-size:var(--t-label);font-weight:600;letter-spacing:.09em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:4px 10px}
+.lines{display:grid}
+.line{display:grid;grid-template-columns:1fr;gap:4px;border-top:1px solid currentColor;padding-block:12px 16px}
+.line > span:last-child{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.12;min-width:0}
+.line a{font-family:var(--f-body);font-size:.85rem;font-weight:600;white-space:nowrap}
+@media(min-width:760px){
+  .day .w{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:start}
+  .line{grid-template-columns:120px 1fr;gap:16px;align-items:baseline}
+}
+@media(min-width:760px) and (min-height:700px){
+  .day{position:sticky;top:0;min-height:min(60vh,520px)}
+}
+
+
+/* rooms */
+.floors{display:grid;grid-template-columns:1fr;gap:clamp(36px,5vw,72px) 40px}
+@media(min-width:900px){.floors{grid-template-columns:1fr 1fr}}
+.floor .label{display:block;margin-bottom:10px}
+.room{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:baseline;border-top:1px solid currentColor;padding-block:16px 22px}
+.room:last-child{border-bottom:1px solid currentColor}
+.room .n{font-family:var(--f-display);font-weight:600;font-size:var(--t-l);letter-spacing:-.05em;line-height:.9;width:1.1em;font-variant-numeric:tabular-nums}
+.room .who{font-family:var(--f-display);font-weight:600;font-size:clamp(1.15rem,2vw,1.9rem);letter-spacing:-.04em;line-height:1;min-width:0}
+.floor:nth-child(1) .room .n{color:var(--amber)}
+.floor:nth-child(2) .room .n{color:var(--pink)}
+
+/* cars: same ruled rows as the rooms list */
+.cars{display:grid}
+.car{display:grid;grid-template-columns:1fr;gap:14px 32px;border-top:1px solid currentColor;padding-block:18px 26px}
+.car:last-child{border-bottom:1px solid currentColor}
+.car .name{display:grid;gap:6px;align-content:start}
+.car h3{font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.2vw,3rem);letter-spacing:-.04em;line-height:1}
+.car .after{font-size:.9rem;opacity:.75}
+.car .leg{display:grid;gap:4px;align-content:start}
+.car .leg b{font-family:var(--f-display);font-weight:500;font-size:clamp(1rem,1.45vw,1.35rem);letter-spacing:-.02em;line-height:1.15}
+.cars-head{display:none}
+@media(min-width:900px){
+  .car{grid-template-columns:1.3fr 1fr 1fr;align-items:baseline}
+  .car .leg .label{display:none}
+  .cars-head{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:32px;padding-bottom:10px}
+}
+
+/* weekend */
+.weekend{--p:0;background:color-mix(in oklab,var(--wax),var(--paper) calc(var(--p)*100%));color:var(--char)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 14px}
+.tile{display:grid;gap:10px;align-content:start;min-width:0;padding-bottom:22px}
+.tile .sq{background:var(--sq);aspect-ratio:1;display:grid;place-items:center;max-width:100%}
+.tile .dot{width:86%;aspect-ratio:1;border-radius:50%;background:var(--dot);color:var(--char);display:grid;place-items:center;font-family:var(--f-display);font-weight:600;font-size:clamp(2.6rem,9vw,8rem);letter-spacing:-.06em;line-height:1;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.tile:hover .dot{transform:scale(1.06)}
+.tile .txt{padding-inline:12px;display:grid;gap:4px}
+.tile h3{font-family:var(--f-display);font-weight:600;font-size:clamp(1.3rem,2.2vw,2rem);letter-spacing:-.04em;line-height:1}
+.tile .booked{justify-self:start;background:var(--char);color:var(--paper);border-radius:999px;padding:4px 10px;font-size:var(--t-label);font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.tile:nth-child(1){--sq:var(--amber);--dot:var(--paper)}
+.tile:nth-child(2){--sq:var(--violet);--dot:var(--grass)}
+.tile:nth-child(3){--sq:var(--grass);--dot:var(--amber)}
+.tile:nth-child(4){--sq:var(--sky);--dot:var(--pink)}
+.tile:nth-child(5){--sq:var(--pink);--dot:var(--sky);grid-column:1/-1}
+.tile:nth-child(5) .sq{aspect-ratio:2/1}
+.tile:nth-child(5) .dot{width:43%}
+@media(min-width:900px){
+  .tiles{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tile:nth-child(5){grid-column:auto}
+  .tile:nth-child(5) .sq{aspect-ratio:1}
+  .tile:nth-child(5) .dot{width:86%}
+  .tile .dot{font-size:clamp(2.6rem,5.2vw,6rem)}
+}
+.two{display:grid;grid-template-columns:1fr;gap:clamp(40px,6vw,96px) 72px;margin-top:clamp(80px,11vw,184px)}
+@media(min-width:900px){.two{grid-template-columns:1fr 1fr}}
+.list{display:grid}
+.list > li{border-top:1px solid currentColor;padding-block:14px 24px;display:grid;gap:4px}
+.list > li:last-child{border-bottom:1px solid currentColor}
+.list h3{font-family:var(--f-display);font-weight:600;font-size:var(--t-m);letter-spacing:-.03em;line-height:1.05;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.list h3 span{font:600 var(--t-label)/1.3 var(--f-body);letter-spacing:.09em;text-transform:uppercase}
+.big-li > li{display:block;font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.14}
+.note{font-size:.92rem;max-width:60ch;margin-top:16px}
+.col h3.sub{font-family:var(--f-display);font-weight:600;font-size:var(--t-l);letter-spacing:-.04em;line-height:.95;margin-bottom:16px}
+.col h3.sub.gap{margin-top:clamp(28px,4vw,48px)}
+
+/* people: little pixel faces from the game */
+.p{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap}
+.ava{width:1.25em;height:1.25em;image-rendering:pixelated;image-rendering:crisp-edges;flex:none;border-radius:50%;background:color-mix(in oklab,currentColor 10%,transparent);object-fit:cover;object-position:50% 100%}
+.room .who .ava,.car h3 .ava{width:1.05em;height:1.05em}
+.ppl{display:inline-flex;flex-wrap:wrap;gap:.15em .55em}
+
+/* map */
+.mapgrid{display:grid;grid-template-columns:1fr;gap:28px 48px;align-items:start}
+@media(min-width:1000px){.mapgrid{grid-template-columns:1.4fr 1fr}}
+.tmap-wrap{margin:0;display:grid;gap:12px}
+#tmap .osm-tiles{filter:saturate(.35) contrast(1.02)}
+#tmap{position:relative;z-index:0;isolation:isolate;width:100%;height:clamp(420px,72vh,760px);background:#e9e7e1;border:1px solid color-mix(in oklab,var(--paper) 30%,transparent)}
+#tmap .leaflet-control-attribution{font:400 10px/1.4 var(--f-body);background:color-mix(in oklab,var(--paper) 85%,transparent);color:var(--char)}
+#tmap .leaflet-control-attribution a{color:var(--char)}
+#tmap .leaflet-bar a{color:var(--char);font-family:var(--f-body)}
+.locate{font:600 .78rem/30px var(--f-body)!important;width:auto!important;padding:0 10px!important;white-space:nowrap}
+.locate.on{background:var(--amber)!important}
+.tlabel{font:600 13px/1.1 var(--f-display);letter-spacing:-.02em;color:var(--char);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff;white-space:nowrap}
+.tlabel.big{font-size:18px;letter-spacing:-.03em}
+.me-dot{width:16px;height:16px;border-radius:50%;background:#2a6fd6;border:3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.tmap-key{display:flex;flex-wrap:wrap;gap:6px 22px;border-top:1px solid currentColor;padding-top:8px;font-size:.9rem}
+.tmap-key span{display:inline-flex;align-items:center;gap:8px}
+.tmap-key i{width:16px;height:11px;display:inline-block;flex:none}
+.tmap-key .k-tgt{background:color-mix(in oklab,var(--amber) 70%,transparent);border:2px solid var(--wax-d)}
+.tmap-key .k-me{width:11px;border-radius:50%;background:#2a6fd6;border:2px solid #fff}
+.steps{counter-reset:s;display:grid;list-style:none;margin:0;padding:0}
+.steps > li{counter-increment:s;display:grid;grid-template-columns:2.2em 1fr;gap:4px 10px;border-top:1px solid currentColor;padding-block:12px 16px}
+.steps > li::before{content:counter(s);font-family:var(--f-display);font-weight:600;font-size:var(--t-m);letter-spacing:-.03em;line-height:1.1;color:var(--amber)}
+.steps b{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.15;display:block;margin-bottom:4px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn.solid{background:var(--amber);color:var(--char);border-color:var(--amber)}
+.btn.solid:hover{background:var(--paper);border-color:var(--paper)}
+
+/* do not call */
+.dnc{--bg:#8E3B2B;--fg:var(--paper);background:var(--bg);color:var(--fg)}
+.dnc .w{padding-block:clamp(72px,10vw,160px)}
+.dnc-list{display:grid}
+.dnc-list li{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;border-top:1px solid currentColor;padding-block:16px 20px}
+.dnc-list li:last-child{border-bottom:1px solid currentColor}
+.dnc-x{font-family:var(--f-display);font-weight:600;font-size:var(--t-m);line-height:1;color:var(--amber)}
+.dnc-a{display:grid;gap:2px;min-width:0}
+.dnc-a b{font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.2vw,3rem);margin-bottom:6px;letter-spacing:-.04em;line-height:1}
+.dnc-m{grid-column:2;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.dnc .btn:hover{background:var(--paper);color:#8E3B2B}
+@media(min-width:900px){.dnc-list li{grid-template-columns:auto 1fr auto}.dnc-m{grid-column:auto;justify-content:flex-end}}
+
+/* service-day cars */
+.svc{display:grid;margin-top:clamp(64px,9vw,140px)}
+.svc-row{display:grid;grid-template-columns:1fr;gap:10px 32px;border-top:1px solid currentColor;padding-block:16px 22px}
+.svc-row:last-child{border-bottom:1px solid currentColor}
+.svc-row h3{font-family:var(--f-display);font-weight:600;font-size:clamp(1.4rem,2.6vw,2.4rem);letter-spacing:-.04em;line-height:1}
+.svc-row .open{opacity:.65}
+.svc-row > span:nth-child(2){font-family:var(--f-display);font-weight:500;font-size:clamp(1rem,1.45vw,1.35rem);letter-spacing:-.02em;line-height:1.2}
+.svc-row > span.open:nth-child(2){font-family:var(--f-body);font-size:var(--t-s);letter-spacing:0}
+.seat{display:inline-block;width:1.25em;height:1.25em;border-radius:50%;border:1.5px dashed currentColor;vertical-align:-.25em;opacity:.6}
+@media(min-width:900px){.svc-row{grid-template-columns:1fr 2fr 1.2fr;align-items:baseline}}
+
+/* road notes */
+.road{display:grid;grid-template-columns:1fr;gap:clamp(40px,6vw,96px) 72px;margin-top:clamp(64px,9vw,140px)}
+@media(min-width:900px){.road{grid-template-columns:1fr 1fr}}
+.road blockquote{font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em;line-height:1.15;border-left:2px solid currentColor;padding-left:16px;margin-top:16px}
+.road blockquote cite{display:block;font:600 var(--t-label)/1.4 var(--f-body);letter-spacing:.09em;text-transform:uppercase;font-style:normal;margin-top:10px}
+
+/* game */
+.cast{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px 8px;align-items:end;margin-top:clamp(40px,6vw,88px)}
+@media(min-width:760px){.cast{grid-template-columns:repeat(15,minmax(0,1fr))}}
+.cast figure{margin:0;display:grid;justify-items:center;gap:6px;min-width:0}
+.cast img{width:auto;max-width:100%;height:clamp(64px,6.4vw,104px);object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.cast figure:hover img{transform:translateY(-14px)}
+.cast figcaption{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.cast .lead img{animation:hop 1.6s ease-in-out infinite}
+@keyframes hop{0%,60%,100%{transform:none}30%{transform:translateY(-16px)}}
+.board{display:grid;margin:14px 0 0;padding:0;list-style:none}
+.board li{display:grid;grid-template-columns:2em 1fr auto;gap:10px;align-items:center;border-top:1px solid currentColor;padding-block:10px;font-family:var(--f-display);font-weight:500;font-size:var(--t-m);letter-spacing:-.02em}
+.board li:last-child{border-bottom:1px solid currentColor}
+.board .r{font:600 var(--t-label)/1 var(--f-body);letter-spacing:.09em}
+.board .s{font-variant-numeric:tabular-nums}
+
+/* footer */
+.foot .w{padding-bottom:clamp(40px,6vw,80px)}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pop span,.tile .dot,.cast img{transition:none;animation:none!important}
+}
 </style>
 </head>
 <body>
-<div style="width: 100%; min-height: 100vh; background: #080808; color: #ffffff; font-family: Inter, Arial, sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased">
-<header class="site-hd">
-<div class="hd-in">
-<a class="brand" href="#top"><span class="f f-travis" style="width: 28px; height: 28px" aria-hidden="true"></span><span>Bible Studies &amp; Bourbon</span></a>
-<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="menu-lbl">Menu</span></button>
-<nav id="site-menu" class="menu" aria-label="Sections">
-<ul><li><a class="nl" href="#week">Week</a></li><li><a class="nl" href="#rooms">Rooms</a></li><li><a class="nl" href="#cars">Cars</a></li><li><a class="nl" href="#weekend">Weekend</a></li><li><a class="nl" href="#service">Service</a></li><li><a class="nl" href="#territory">Territory</a></li><li><a class="nl" href="#game">Game</a></li></ul>
-<a class="hd-cta" href="#dnc">Do-not-call reminder</a>
-</nav>
-</div>
+
+
+<header class="prog">
+  <div class="hd-in">
+    <a class="brand" href="#top"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Bible Studies &amp; Bourbon</a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span>Menu</span></button>
+    <nav id="site-menu" class="menu" aria-label="Sections"><ol>
+    <li><a href="#stay"><span class="t">House</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#week"><span class="t">Week</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#rooms"><span class="t">Rooms</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#cars"><span class="t">Cars</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#weekend"><span class="t">Weekend</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#dnc"><span class="t">Do not call</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#service"><span class="t">Service</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#territory"><span class="t">Territory</span><span class="bar"><i></i></span></a></li>
+    <li><a href="#game"><span class="t">Game</span><span class="bar"><i></i></span></a></li>
+    </ol></nav>
+  </div>
 </header>
-<main>
-<section id="top" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); padding-top: 75px; padding-bottom: 32px">
-<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 0">
-<div class="rv" style="display: flex; flex-direction: column; max-width: 760px">
-<span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab; margin-bottom: 15px">Official trip guide · <span id="countdown">Nov 19–26</span></span>
-<h1 style="margin: 0; font-size: clamp(44px, 5.85vw, 75px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff; margin-bottom: 23px">Bible Studies &amp; Bourbon</h1>
-<p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; margin-bottom: 28px">Fifteen of us in one historic house in Lawrenceburg, Kentucky, working unassigned territory in Spencer and Nelson Counties. November 19–26, 2026.</p>
-<blockquote style="margin: 0; padding-left: 16px; border-left: 2px solid #f0c97f; display: flex; flex-direction: column; gap: 4px"><p style="margin: 0; font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; color: #ffffff">“Here I am! Send me!”</p><cite style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; font-style: normal">Isaiah 6:8</cite></blockquote>
-</div>
-<div class="rv" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; max-width: 620px"><a class="pill" href="#week" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">WEEK</a><a class="pill" href="#rooms" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">ROOMS</a><a class="pill" href="#cars" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">CARS</a><a class="pill" href="#weekend" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">WEEKEND</a><a class="pill" href="#service" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">SERVICE</a><a class="pill" href="#territory" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">TERRITORY</a><a class="pill" href="#game" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">GAME</a><a class="pill" href="#dnc" style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">DO NOT CALL</a></div>
-</div>
+
+<header class="blk hero" id="top" data-mix>
+  <div class="w">
+    <div class="hero-top">
+      <h1 class="disp">Official<br>Trip Guide</h1>
+      <div class="ring" aria-hidden="true">
+        <svg viewBox="0 0 300 300" id="ring"><defs><path id="rp" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"/></defs>
+          <text><textPath href="#rp" textLength="738">HERE I AM! SEND ME! · ISAIAH 6:8 · HERE I AM! SEND ME! ·</textPath></text></svg>
+      </div>
+    </div>
+    <div class="hero-meta rule">
+      <p>Fifteen of us in one historic house in Lawrenceburg, working unassigned territory in Nelson and Spencer Counties.</p>
+      <span class="label">Kentucky · Nov 19–26, 2026 · <span id="countdown">Nov 19</span></span>
+    </div>
+    <p style="margin-top:18px"><a class="btn" href="#dnc" style="background:#8E3B2B;color:var(--paper);border-color:#8E3B2B">Urgent · Do-not-call reminder ↓</a></p>
+  </div>
+  <div class="words" aria-label="Bible Studies and Bourbon">
+    <div class="word" data-slide="-9" aria-hidden="true">Bible Studies</div>
+    <div class="word r" data-slide="9" aria-hidden="true">&amp; Bourbon</div>
+  </div>
+</header>
+
+<section class="blk t-char" id="stay">
+  <div class="w">
+    <blockquote class="disp verse pop"><span class="c-grass">“Here</span> <span>I am!</span><br><span class="c-amber">Send</span> <span class="c-pink">me!”</span><cite>Isaiah 6:8</cite></blockquote>
+    <div class="facts">
+      <div class="fact">
+        <span class="label">The house · Address</span>
+        <span class="v" id="addr">321 S Main St, Lawrenceburg, KY 40342</span>
+        <span class="acts">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=321+S+Main+St+Lawrenceburg+KY+40342" target="_blank" rel="noopener">Open in Maps</a>
+          <button class="btn copy" id="copy-addr" data-copy="321 S Main St, Lawrenceburg, KY 40342">Copy</button>
+        </span>
+      </div>
+      <div class="fact"><span class="label">Check-in</span><span class="v">Thu, Nov 19</span><span>after 3:00 PM</span></div>
+      <div class="fact"><span class="label">Check-out</span><span class="v">Thu, Nov 26</span><span>by 11:00 AM</span></div>
+    </div>
+    <p class="note">Historic home · 10,000 sq ft · hot tub, pool table · 15 adults</p>
+  </div>
 </section>
-<section style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); padding-top: 24px">
-<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 48px clamp(32px, 9vw, 130px); align-items: flex-start">
-<article class="rv card" style="flex: 1.2 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px; position: relative">
-<div class="zoom" style="position: relative; overflow: hidden; border-radius: 8px; background: #171717; aspect-ratio: 16 / 9; display: flex; align-items: flex-end; justify-content: center; padding: 0 24px 28px; box-sizing: border-box">
-<div class="castrow" style="display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 4px; width: 100%; max-width: 760px; align-items: end"><span class="b b-travis" aria-hidden="true"></span><span class="b b-mackenzie" aria-hidden="true"></span><span class="b b-cody" aria-hidden="true"></span><span class="b b-abbie" aria-hidden="true"></span><span class="b b-andy" aria-hidden="true"></span><span class="b b-alyssa" aria-hidden="true"></span><span class="b b-lincoln" aria-hidden="true"></span><span class="b b-ciara" aria-hidden="true"></span><span class="b b-jim" aria-hidden="true"></span><span class="b b-shawn" aria-hidden="true"></span><span class="b b-gary" aria-hidden="true"></span><span class="b b-connie" aria-hidden="true"></span><span class="b b-glenn" aria-hidden="true"></span><span class="b b-wendy" aria-hidden="true"></span><span class="b b-angie" aria-hidden="true"></span></div>
-<span style="position: absolute; top: 20px; left: 20px"><span style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">Nov 19 – 26</span></span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 15px">
-<h2 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">The house: 321 S Main St, Lawrenceburg</h2>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab">A 10,000 sq ft historic home with a hot tub and pool table. Bedrooms are upstairs; the first floor is the shared event space, kitchen and bar. Check in Thu, Nov 19 after 3:00 PM. Check out Thu, Nov 26 by 11:00 AM.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 20px"><a class="tl" href="https://www.google.com/maps/search/?api=1&amp;query=321+S+Main+St+Lawrenceburg+KY+40342" style="display: inline-flex; align-items: center; gap: 6px; color: #ffffff; font-size: 16px; font-weight: 500; text-decoration: none">Open in Maps<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a><button type="button" class="tl copy" data-copy="321 S Main St, Lawrenceburg, KY 40342" style="display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: #ffffff; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Copy address</button></div>
-</div>
-</article>
-<div class="rv" style="flex: 1 1 360px; min-width: 0">
-<h2 style="margin: 0; font-size: clamp(24px, 2.4vw, 30.5px); line-height: 1.2; font-weight: 600; color: #ffffff; margin-bottom: 31px">This week</h2>
-<a class="fi" href="#week" style="display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-top: 1px solid #363636; color: #ffffff; text-decoration: none">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Thu Nov 19 · Arrive</p><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">House opens at 3:00 PM. Dinner on the way down, or pizza when we arrive.</h3></a>
-<a class="fi" href="#week" style="display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-top: 1px solid #363636; color: #ffffff; text-decoration: none">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Fri Nov 20 · Field service</p><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Meeting for service at 9:00 with Travis. Chili tonight from Cody &amp; Abbie and Angie.</h3></a>
-<a class="fi" href="#week" style="display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-top: 1px solid #363636; color: #ffffff; text-decoration: none">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Sun Nov 22 · Open day</p><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Tasting Lab at Castle &amp; Key, 3:15 PM. Otherwise sleep in or explore.</h3></a>
-<a class="fi" href="#week" style="display: flex; flex-direction: column; gap: 8px; padding: 22px 0; border-top: 1px solid #363636; color: #ffffff; text-decoration: none">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Mon Nov 23 · Study tonight</p><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Vodka pasta, then the Watchtower Study conducted by Andy.</h3></a>
-<div style="border-top: 1px solid #363636; padding-top: 22px"><a class="tl" href="#week" style="display: inline-flex; align-items: center; gap: 6px; color: #ffffff; font-size: 16px; font-weight: 500; text-decoration: none">See the whole week<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a></div>
-</div>
-</div>
+
+<section class="blk t-paper" id="week">
+  <div class="w" style="padding-bottom:clamp(28px,4vw,56px)">
+    <div class="head split">
+      <h2 class="disp xl pop"><span>Eight</span> <span class="c-wax">days,</span><br><span>one</span> <span class="c-sky">house.</span></h2>
+      <div class="rule row" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">The week</span>
+        <p>Field service meeting 9:00 AM on service days. Conductors rotate.</p>
+        <p>The territory is about 30–45 minutes from the house. On service days we'll likely pack a lunch and work through into the afternoon before heading back.</p>
+      </div>
+    </div>
+  </div>
+  <div class="days">
+
+    <article class="day t-sky"><div class="w">
+      <div><div class="dow label"><span>Thu</span><span>Nov</span></div><div class="num">19</div></div>
+      <div><h3>Arrive</h3><div class="chips"><span class="chip">Travel</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">3:00 PM</span><span>House opens for check-in</span></div>
+          <div class="line"><span class="label">Dinner</span><span>On the way down, or pizza when we arrive</span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-amber"><div class="w">
+      <div><div class="dow label"><span>Fri</span><span>Nov</span></div><div class="num">20</div></div>
+      <div><h3>Field service</h3><div class="chips"><span class="chip">Service</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Travis</span></div>
+          <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
+          <div class="line"><span class="label">Dinner</span><span>Chili · Cody &amp; Abbie, Angie</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span> <span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span> + 2 open seats <a href="#svc">Service cars</a></span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-grass"><div class="w">
+      <div><div class="dow label"><span>Sat</span><span>Nov</span></div><div class="num">21</div></div>
+      <div><h3>Field service</h3><div class="chips"><span class="chip">Morning</span><span class="chip">Afternoon optional</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Cody</span></div>
+          <div class="line"><span class="label">Afternoon</span><span>Keep going if you'd like, or take the rest of the day easy. <a href="#weekend">A few ideas</a></span></div>
+          <div class="line"><span class="label">Meals</span><span>Eat out or take out</span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-wax"><div class="w">
+      <div><div class="dow label"><span>Sun</span><span>Nov</span></div><div class="num">22</div></div>
+      <div class="side">
+        <div><h3>Open day</h3><div class="chips"><span class="chip">Tasting 3:15</span></div>
+          <div class="lines">
+            <div class="line"><span class="label">3:15 PM</span><span>The Tasting Lab at Castle &amp; Key · 30 min · 4445 McCracken Pike, Frankfort <a href="https://www.google.com/maps/search/?api=1&query=4445+McCracken+Pike+Frankfort+KY+40601" target="_blank" rel="noopener">Open in Maps</a></span></div>
+            <div class="line"><span class="label">Otherwise</span><span>Open. Sleep in or explore. <a href="#weekend">Ideas</a></span></div>
+            <div class="line"><span class="label">Meals</span><span>Eat out or take out</span></div>
+          </div></div>
+      </div>
+    </div></article>
+
+    <article class="day t-pink"><div class="w">
+      <div><div class="dow label"><span>Mon</span><span>Nov</span></div><div class="num">23</div></div>
+      <div><h3>Field service</h3><div class="chips"><span class="chip">Service</span><span class="chip">Study tonight</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Gary</span></div>
+          <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
+          <div class="line"><span class="label">Dinner</span><span>Travis &amp; Mackenzie, Andy &amp; Alyssa · vodka pasta</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
+          <div class="line"><span class="label">Evening</span><span>Watchtower Study · conducted by Andy</span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-violet"><div class="w">
+      <div><div class="dow label"><span>Tue</span><span>Nov</span></div><div class="num">24</div></div>
+      <div><h3>Field service</h3><div class="chips"><span class="chip">Service</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Jim</span></div>
+          <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
+          <div class="line"><span class="label">Dinner</span><span>Gary &amp; Connie, Jim &amp; Shawn · chicken burrito bowls with all the fixings</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-paper"><div class="w">
+      <div><div class="dow label"><span>Wed</span><span>Nov</span></div><div class="num">25</div></div>
+      <div><h3>Field service</h3><div class="chips"><span class="chip">Last service day</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">9:00 AM</span><span>Meeting for service · conducted by Glenn</span></div>
+          <div class="line"><span class="label">Lunch</span><span>Packed, eaten in the territory</span></div>
+          <div class="line"><span class="label">Dinner</span><span>Glenn &amp; Wendy, Lincoln &amp; Ciara · spaghetti, garlic bread and salad</span></div>
+          <div class="line"><span class="label">Car</span><span>Meal team rides together · <span class="ppl"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span> <span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span> + 1 open seat <a href="#svc">Service cars</a></span></div>
+        </div></div>
+    </div></article>
+
+    <article class="day t-char"><div class="w">
+      <div><div class="dow label"><span>Thu</span><span>Nov</span></div><div class="num">26</div></div>
+      <div><h3>Head home</h3><div class="chips"><span class="chip">Travel</span></div>
+        <div class="lines">
+          <div class="line"><span class="label">11:00 AM</span><span>Out of the house. Assignment period ends today.</span></div>
+        </div>
+        <p class="note">Meal teams: once you know what you're making, post it in the group chat so everyone can look forward to it. If your day doesn't work, say so.</p></div>
+    </div></article>
+  </div>
 </section>
-<section id="dnc" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); padding-top: 0; padding-bottom: 75px">
-<a class="rv card hov" href="#service" style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 23px; border: 1px solid #363636; border-radius: 8px; color: #ffffff; text-decoration: none">
-<div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; min-width: 0; flex: 1 1 520px">
-<span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #f0c97f">Do not call</span>
-<span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">The list is printed and in every car. Check it before each street; skip any address on it entirely.</span>
-</div>
-<span class="arr" style="display: inline-flex; color: #ffffff"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-</a>
+
+<section class="blk t-char" id="rooms" style="z-index:1">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl pop"><span>Who</span> <span class="c-amber">sleeps</span><br><span class="c-pink">where.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Rooms</span>
+        <p>Bedrooms are upstairs · first floor is the shared event space, kitchen, bar and pool table</p>
+        <p>This is our best read of the layout from the listing photos and the host's posts. We haven't confirmed exactly which rooms and bathrooms are where, so expect some shuffling once we see the house.</p>
+      </div>
+    </div>
+    <div class="floors">
+      <div class="floor"><span class="label">Second floor</span>
+        <div class="room"><span class="n">5</span><span class="who"><span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> &amp; <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">6</span><span class="who"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> &amp; <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">8</span><span class="who"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> &amp; <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">7</span><span class="who"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span><span class="label">Queen</span></div>
+      </div>
+      <div class="floor"><span class="label">Third floor</span>
+        <div class="room"><span class="n">3</span><span class="who"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> &amp; <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">1</span><span class="who"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> &amp; <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">2</span><span class="who"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> &amp; <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span><span class="label">King</span></div>
+        <div class="room"><span class="n">4</span><span class="who"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> &amp; <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span><span class="label">Queen + full</span></div>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="week" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">The week</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Eight days, one house</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">Meeting for field service is at 9:00 AM on service days, and conductors rotate. The territory is 30–45 minutes away, so pack a lunch and work into the afternoon.</p></div></div>
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 8px 16px; margin: 0 -23px">
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Thu · Nov 19 · Travel</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Arrive</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">3:00 PM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">House opens for check-in</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Dinner</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">On the way down, or pizza when we arrive</span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Fri · Nov 20 · Service</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Field service</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">9:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Meeting for service · Travis</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Lunch</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Packed, eaten in the territory</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Dinner</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Chili · Cody &amp; Abbie, Angie</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Car</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-cody" style="width: 22px; height: 22px" aria-hidden="true"></span>Cody</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-abbie" style="width: 22px; height: 22px" aria-hidden="true"></span>Abbie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-angie" style="width: 22px; height: 22px" aria-hidden="true"></span>Angie</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 20px; height: 20px; border-radius: 9999px; border: 1px dashed #ababab"></span><span role="img" aria-label="Open seat" style="display: inline-block; width: 20px; height: 20px; border-radius: 9999px; border: 1px dashed #ababab"></span></span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Sat · Nov 21 · Service</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Morning service</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">9:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Meeting for service · Cody</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">After</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Keep going, or take the rest of the day easy</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Meals</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Eat out or take out</span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Sun · Nov 22 · Open</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Open day</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">3:15 PM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Tasting Lab at Castle &amp; Key · 30 min</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Otherwise</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Sleep in or explore</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Meals</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Eat out or take out</span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Mon · Nov 23 · Service</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Service, study tonight</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">9:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Meeting for service · Gary</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Dinner</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Vodka pasta · Travis &amp; Mackenzie, Andy &amp; Alyssa</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Car</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-travis" style="width: 22px; height: 22px" aria-hidden="true"></span>Travis</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-mackenzie" style="width: 22px; height: 22px" aria-hidden="true"></span>Mackenzie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-andy" style="width: 22px; height: 22px" aria-hidden="true"></span>Andy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-alyssa" style="width: 22px; height: 22px" aria-hidden="true"></span>Alyssa</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 20px; height: 20px; border-radius: 9999px; border: 1px dashed #ababab"></span></span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Evening</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Watchtower Study · Andy</span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Tue · Nov 24 · Service</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Field service</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">9:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Meeting for service · Jim</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Dinner</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Burrito bowls · Gary &amp; Connie, Jim &amp; Shawn</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Car</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-gary" style="width: 22px; height: 22px" aria-hidden="true"></span>Gary</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-connie" style="width: 22px; height: 22px" aria-hidden="true"></span>Connie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-jim" style="width: 22px; height: 22px" aria-hidden="true"></span>Jim</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-shawn" style="width: 22px; height: 22px" aria-hidden="true"></span>Shawn</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 20px; height: 20px; border-radius: 9999px; border: 1px dashed #ababab"></span></span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Wed · Nov 25 · Service</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Last service day</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">9:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Meeting for service · Glenn</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Dinner</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Spaghetti, garlic bread, salad · Glenn &amp; Wendy, Lincoln &amp; Ciara</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Car</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-glenn" style="width: 22px; height: 22px" aria-hidden="true"></span>Glenn</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-wendy" style="width: 22px; height: 22px" aria-hidden="true"></span>Wendy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-lincoln" style="width: 22px; height: 22px" aria-hidden="true"></span>Lincoln</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.3; white-space: nowrap"><span class="f f-ciara" style="width: 22px; height: 22px" aria-hidden="true"></span>Ciara</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 20px; height: 20px; border-radius: 9999px; border: 1px dashed #ababab"></span></span></div></div></article>
-<article class="rv card hov" style="display: flex; flex-direction: column; gap: 14px; padding: 23px; border-radius: 8px; min-width: 0">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Thu · Nov 26 · Travel</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Head home</h3><div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">11:00 AM</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Out of the house</span></div><div style="display: grid; grid-template-columns: 84px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #363636"><span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding-top: 4px">Note</span><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff">Assignment period ends today</span></div></div></article>
-</div>
-<p class="rv" style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab; margin-top: 32px">Meal teams: post what you're making in the group chat once you know. If your day doesn't work, say so.</p>
-</div>
+
+<section class="blk t-sky" id="cars" style="z-index:1">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl">Who rides<br>with whom.</h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Cars · Proposed</span>
+        <p>This is just a suggestion for who rides with whom.</p>
+      </div>
+    </div>
+    <div class="cars">
+      <div class="cars-head label"><span>Car</span><span>Down · Nov 19</span><span>Back · Nov 26</span></div>
+      <div class="car"><div class="name"><h3>Jim &amp; Shawn's car</h3></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span></b></div></div>
+      <div class="car"><div class="name"><h3>Lincoln &amp; Ciara's car</h3></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span> <span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span></b></div></div>
+      <div class="car"><div class="name"><h3>Angie's car</h3></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span> <span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span> <span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span></b></div></div>
+      <div class="car"><div class="name"><h3>Travis &amp; Mackenzie's car</h3><span class="after">Continuing to Missouri after</span></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span></span></b></div></div>
+      <div class="car"><div class="name"><h3>Andy &amp; Alyssa's car</h3><span class="after">Continuing to Pennsylvania after</span></div>
+        <div class="leg"><span class="label">Down · Nov 19</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span></b></div>
+        <div class="leg"><span class="label">Back · Nov 26</span><b><span class="ppl"><span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span></b></div></div>
+    </div>
+
+    <div class="head split" id="svc" style="margin-top:clamp(80px,11vw,184px);margin-bottom:clamp(28px,4vw,56px)">
+      <h3 class="disp l">Service<br>days.</h3>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">To the territory · Likely 3 cars of 5</span>
+        <p>On the days a team is cooking dinner, the meal team rides together so they can work side by side and head back to cook when it suits them. Everyone else sorts into the other cars that morning.</p>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-row"><h3>Fri 20</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/cody.png" alt="" width="45" height="45">Cody</span> <span class="p"><img class="ava" src="img/p/abbie.png" alt="" width="45" height="45">Abbie</span> <span class="p"><img class="ava" src="img/p/angie.png" alt="" width="45" height="45">Angie</span></span> <span class="seat" aria-hidden="true"></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Chili tonight · 2 cars open</span></div>
+      <div class="svc-row"><h3>Sat 21</h3><span class="open">No meal team · all 3 cars open</span><span class="open">Eat out or take out</span></div>
+      <div class="svc-row"><h3>Mon 23</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/travis.png" alt="" width="45" height="45">Travis</span> <span class="p"><img class="ava" src="img/p/mackenzie.png" alt="" width="45" height="45">Mackenzie</span> <span class="p"><img class="ava" src="img/p/andy.png" alt="" width="45" height="45">Andy</span> <span class="p"><img class="ava" src="img/p/alyssa.png" alt="" width="45" height="45">Alyssa</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Vodka pasta · 2 cars open</span></div>
+      <div class="svc-row"><h3>Tue 24</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/gary.png" alt="" width="45" height="45">Gary</span> <span class="p"><img class="ava" src="img/p/connie.png" alt="" width="45" height="45">Connie</span> <span class="p"><img class="ava" src="img/p/jim.png" alt="" width="45" height="45">Jim</span> <span class="p"><img class="ava" src="img/p/shawn.png" alt="" width="45" height="45">Shawn</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Burrito bowls · 2 cars open</span></div>
+      <div class="svc-row"><h3>Wed 25</h3><span><span class="ppl"><span class="p"><img class="ava" src="img/p/glenn.png" alt="" width="45" height="45">Glenn</span> <span class="p"><img class="ava" src="img/p/wendy.png" alt="" width="45" height="45">Wendy</span> <span class="p"><img class="ava" src="img/p/lincoln.png" alt="" width="45" height="45">Lincoln</span> <span class="p"><img class="ava" src="img/p/ciara.png" alt="" width="45" height="45">Ciara</span></span> <span class="seat" aria-hidden="true"></span></span><span class="open">Spaghetti · 2 cars open</span></div>
+    </div>
+    <p class="note">Dashed circles are open seats in the meal team's car.</p>
+
+    <div class="road">
+      <div class="col">
+        <h3 class="sub">Gas</h3>
+        <ul class="list">
+          <li><h3>Down and back</h3><p>Split within each car. Each car settles up among its own riders for the drive down on Nov 19 and the drive home on Nov 26.</p></li>
+          <li><h3>Territory days</h3><p><b>Save your receipts</b> for the days we drive out to the territory. We'll total them up at the end of the week and split them evenly.</p></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 class="sub">Go easy on fragrance</h3>
+        <ul class="list">
+          <li><p>Some of us are sensitive to strong scents, and we'll be sharing cars for hours on the way down and back. Please skip strong perfume, cologne and air fresheners on the drive, so everyone can ride comfortably.</p>
+          <blockquote>“Let each one keep seeking, not his own advantage, but that of the other person.”<cite>1 Corinthians 10:24</cite></blockquote></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="rooms" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">Rooms</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Who sleeps where</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">Our best read of the layout from the listing photos. Expect some shuffling once we see the house.</p></div></div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 0 clamp(32px, 9vw, 130px)">
-<div><h3 class="rv" style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty; color: #ababab; margin-bottom: 16px">Second floor</h3><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">5</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-jim" style="width: 24px; height: 24px" aria-hidden="true"></span>Jim</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-shawn" style="width: 24px; height: 24px" aria-hidden="true"></span>Shawn</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">6</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-gary" style="width: 24px; height: 24px" aria-hidden="true"></span>Gary</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-connie" style="width: 24px; height: 24px" aria-hidden="true"></span>Connie</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">8</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-travis" style="width: 24px; height: 24px" aria-hidden="true"></span>Travis</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-mackenzie" style="width: 24px; height: 24px" aria-hidden="true"></span>Mackenzie</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">7</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-angie" style="width: 24px; height: 24px" aria-hidden="true"></span>Angie</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Queen</span></div></div>
-<div><h3 class="rv" style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty; color: #ababab; margin-bottom: 16px">Third floor</h3><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">3</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-andy" style="width: 24px; height: 24px" aria-hidden="true"></span>Andy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-alyssa" style="width: 24px; height: 24px" aria-hidden="true"></span>Alyssa</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">1</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-lincoln" style="width: 24px; height: 24px" aria-hidden="true"></span>Lincoln</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-ciara" style="width: 24px; height: 24px" aria-hidden="true"></span>Ciara</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">2</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-glenn" style="width: 24px; height: 24px" aria-hidden="true"></span>Glenn</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-wendy" style="width: 24px; height: 24px" aria-hidden="true"></span>Wendy</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">King</span></div><div class="rv row" style="display: grid; grid-template-columns: clamp(32px, 4vw, 56px) 1fr auto; gap: 12px; align-items: center; padding: 16px 0; border-top: 1px solid #363636">
-<span style="font-size: clamp(22px, 2.4vw, 30.5px); line-height: 1; font-weight: 600; color: #ababab; font-variant-numeric: tabular-nums">4</span>
-<span class="rm" style="font-weight: 500"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-cody" style="width: 24px; height: 24px" aria-hidden="true"></span>Cody</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--rm); line-height: 1.3; white-space: nowrap"><span class="f f-abbie" style="width: 24px; height: 24px" aria-hidden="true"></span>Abbie</span></span></span>
-<span style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Queen + full</span></div></div>
-</div>
-</div>
+
+<section class="blk weekend" id="weekend" data-mix style="z-index:1">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl">Bourbon,<br>maybe.</h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Weekend afternoons · Saturday afternoon and all day Sunday</span>
+        <p>None of this is set in stone. Just some ideas if you're looking for something to do. Go with whoever, do as much or as little as you want, and feel free to suggest your own. Drive times from the house are rough.</p>
+      </div>
+    </div>
+    <div class="label rule" style="padding-block:8px 10px">Minutes from the house</div>
+    <div class="tiles">
+      <div class="tile"><div class="sq"><div class="dot">~10</div></div><div class="txt"><h3>Four Roses</h3><span class="label">Lawrenceburg</span><p>Right outside town. Sundays roughly noon–4.</p></div></div>
+      <div class="tile"><div class="sq"><div class="dot">~10</div></div><div class="txt"><h3>Wild Turkey</h3><span class="label">Lawrenceburg</span><p>Up on the hill over the Kentucky River. Check their site for hours.</p></div></div>
+      <div class="tile"><div class="sq"><div class="dot">~20</div></div><div class="txt"><h3>Castle &amp; Key</h3><span class="label">Near Frankfort</span><span class="booked">Booked · Sun 3:15 PM</span><p>An old stone castle distillery with a garden trail you can walk without a tour. Sundays about 11–5.</p></div></div>
+      <div class="tile"><div class="sq"><div class="dot">~25</div></div><div class="txt"><h3>Woodford Reserve</h3><span class="label">Versailles</span><p>Old stone buildings out in horse country. Tastings by reservation; Sunday about noon–4:30.</p></div></div>
+      <div class="tile"><div class="sq"><div class="dot">~25</div></div><div class="txt"><h3>Buffalo Trace</h3><span class="label">Frankfort</span><p>Big campus with free tours. Sundays 11–5, and it gets busy, so earlier is better.</p></div></div>
+    </div>
+    <p class="note">With 15 of us, tours may need to be split into smaller groups or booked ahead. Pick a designated driver per car.</p>
+
+    <div class="two">
+      <div><h3 class="disp l">Other<br>ideas</h3></div>
+      <div class="col">
+        <ul class="list">
+          <li><h3>Downtown Frankfort <span>~20 min</span></h3><p>Walk the State Capitol and the floral clock, grab bourbon balls at Rebecca Ruth Candy, and poke around the shops along the river.</p></li>
+          <li><h3>Lexington <span>~40 min</span></h3><p>Downtown restaurants and coffee, and you can drive past the horse farms on the way. Keeneland's grounds are worth a stop even with no racing.</p></li>
+          <li><h3>Kentucky Horse Park <span>North of Lexington · ~45 min</span></h3><p>Horses, barns and museums. Winter hours are Fri–Sun, 10–4, so both weekend days work.</p></li>
+          <li><h3>Louisville <span>~1 hr</span></h3><p>A bigger-city day: the riverfront and the walkable Big Four Bridge, the Louisville Slugger Museum, Whiskey Row downtown, or the Kentucky Derby Museum at Churchill Downs.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="cars" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">Cars</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Who rides with whom</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">A suggestion for the drive down on Nov 19 and back on Nov 26.</p></div></div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; padding: 22px 0; border-top: 1px solid #363636; align-items: start">
-<div><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Jim &amp; Shawn's car</h3></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Down · Nov 19</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-gary" style="width: 24px; height: 24px" aria-hidden="true"></span>Gary</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-connie" style="width: 24px; height: 24px" aria-hidden="true"></span>Connie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-jim" style="width: 24px; height: 24px" aria-hidden="true"></span>Jim</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-shawn" style="width: 24px; height: 24px" aria-hidden="true"></span>Shawn</span></span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Back · Nov 26</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-gary" style="width: 24px; height: 24px" aria-hidden="true"></span>Gary</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-connie" style="width: 24px; height: 24px" aria-hidden="true"></span>Connie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-jim" style="width: 24px; height: 24px" aria-hidden="true"></span>Jim</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-shawn" style="width: 24px; height: 24px" aria-hidden="true"></span>Shawn</span></span></div></div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; padding: 22px 0; border-top: 1px solid #363636; align-items: start">
-<div><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Lincoln &amp; Ciara's car</h3></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Down · Nov 19</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-lincoln" style="width: 24px; height: 24px" aria-hidden="true"></span>Lincoln</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-ciara" style="width: 24px; height: 24px" aria-hidden="true"></span>Ciara</span></span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Back · Nov 26</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-lincoln" style="width: 24px; height: 24px" aria-hidden="true"></span>Lincoln</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-ciara" style="width: 24px; height: 24px" aria-hidden="true"></span>Ciara</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-glenn" style="width: 24px; height: 24px" aria-hidden="true"></span>Glenn</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-wendy" style="width: 24px; height: 24px" aria-hidden="true"></span>Wendy</span></span></div></div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; padding: 22px 0; border-top: 1px solid #363636; align-items: start">
-<div><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Angie's car</h3></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Down · Nov 19</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-angie" style="width: 24px; height: 24px" aria-hidden="true"></span>Angie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-glenn" style="width: 24px; height: 24px" aria-hidden="true"></span>Glenn</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-wendy" style="width: 24px; height: 24px" aria-hidden="true"></span>Wendy</span></span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Back · Nov 26</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-angie" style="width: 24px; height: 24px" aria-hidden="true"></span>Angie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-cody" style="width: 24px; height: 24px" aria-hidden="true"></span>Cody</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-abbie" style="width: 24px; height: 24px" aria-hidden="true"></span>Abbie</span></span></div></div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; padding: 22px 0; border-top: 1px solid #363636; align-items: start">
-<div><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Travis &amp; Mackenzie's car</h3><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; margin-top: 6px">On to Missouri after</p></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Down · Nov 19</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-travis" style="width: 24px; height: 24px" aria-hidden="true"></span>Travis</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-mackenzie" style="width: 24px; height: 24px" aria-hidden="true"></span>Mackenzie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-cody" style="width: 24px; height: 24px" aria-hidden="true"></span>Cody</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-abbie" style="width: 24px; height: 24px" aria-hidden="true"></span>Abbie</span></span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Back · Nov 26</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-travis" style="width: 24px; height: 24px" aria-hidden="true"></span>Travis</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-mackenzie" style="width: 24px; height: 24px" aria-hidden="true"></span>Mackenzie</span></span></div></div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; padding: 22px 0; border-top: 1px solid #363636; align-items: start">
-<div><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Andy &amp; Alyssa's car</h3><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; margin-top: 6px">On to Pennsylvania after</p></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Down · Nov 19</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-andy" style="width: 24px; height: 24px" aria-hidden="true"></span>Andy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-alyssa" style="width: 24px; height: 24px" aria-hidden="true"></span>Alyssa</span></span></div>
-<div style="display: flex; flex-direction: column; gap: 10px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Back · Nov 26</p><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-andy" style="width: 24px; height: 24px" aria-hidden="true"></span>Andy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-alyssa" style="width: 24px; height: 24px" aria-hidden="true"></span>Alyssa</span></span></div></div>
-<div style="margin-top: 75px">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 31px">
-<div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px"><h3 style="margin: 0; font-size: clamp(24px, 2.4vw, 30.5px); line-height: 1.2; font-weight: 600; color: #ffffff">Service days</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Likely 3 cars of 5. On days a team is cooking, the meal team rides together so they can work side by side and head back to cook. Everyone else sorts into the other cars that morning. Dashed circles are open seats.</p></div>
-</div>
-<div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 32px; align-items: center; padding: 18px 0; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Fri · Nov 20</p><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-cody" style="width: 24px; height: 24px" aria-hidden="true"></span>Cody</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-abbie" style="width: 24px; height: 24px" aria-hidden="true"></span>Abbie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-angie" style="width: 24px; height: 24px" aria-hidden="true"></span>Angie</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 22px; height: 22px; border-radius: 9999px; border: 1px dashed #ababab"></span><span role="img" aria-label="Open seat" style="display: inline-block; width: 22px; height: 22px; border-radius: 9999px; border: 1px dashed #ababab"></span></div><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Chili · 2 cars open</p></div><div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 32px; align-items: center; padding: 18px 0; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Sat · Nov 21</p><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">No meal team · all 3 cars open</span></div><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Eat out or take out</p></div><div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 32px; align-items: center; padding: 18px 0; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Mon · Nov 23</p><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-travis" style="width: 24px; height: 24px" aria-hidden="true"></span>Travis</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-mackenzie" style="width: 24px; height: 24px" aria-hidden="true"></span>Mackenzie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-andy" style="width: 24px; height: 24px" aria-hidden="true"></span>Andy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-alyssa" style="width: 24px; height: 24px" aria-hidden="true"></span>Alyssa</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 22px; height: 22px; border-radius: 9999px; border: 1px dashed #ababab"></span></div><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Vodka pasta · 2 cars open</p></div><div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 32px; align-items: center; padding: 18px 0; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Tue · Nov 24</p><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-gary" style="width: 24px; height: 24px" aria-hidden="true"></span>Gary</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-connie" style="width: 24px; height: 24px" aria-hidden="true"></span>Connie</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-jim" style="width: 24px; height: 24px" aria-hidden="true"></span>Jim</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-shawn" style="width: 24px; height: 24px" aria-hidden="true"></span>Shawn</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 22px; height: 22px; border-radius: 9999px; border: 1px dashed #ababab"></span></div><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Burrito bowls · 2 cars open</p></div><div class="rv row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 32px; align-items: center; padding: 18px 0; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; color: #f0c97f">Wed · Nov 25</p><div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="display: inline-flex; flex-wrap: wrap; gap: 8px 16px"><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-glenn" style="width: 24px; height: 24px" aria-hidden="true"></span>Glenn</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-wendy" style="width: 24px; height: 24px" aria-hidden="true"></span>Wendy</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-lincoln" style="width: 24px; height: 24px" aria-hidden="true"></span>Lincoln</span><span style="display: inline-flex; align-items: center; gap: 8px; font-size: 16px; line-height: 1.3; white-space: nowrap"><span class="f f-ciara" style="width: 24px; height: 24px" aria-hidden="true"></span>Ciara</span></span> <span role="img" aria-label="Open seat" style="display: inline-block; width: 22px; height: 22px; border-radius: 9999px; border: 1px dashed #ababab"></span></div><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Spaghetti · 2 cars open</p></div>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; margin-top: 75px">
-<div class="rv" style="display: flex; flex-direction: column; gap: 15px; padding-top: 22px; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">On the road</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Gas</h3>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab">Down and back is split within each car. For territory days, <span style="color: #ffffff">save your receipts</span>: we'll total them at the end of the week and split them evenly.</p></div>
-<div class="rv" style="display: flex; flex-direction: column; gap: 15px; padding-top: 22px; border-top: 1px solid #363636">
-<p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">On the road</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff">Go easy on fragrance</h3>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab">Some of us are sensitive to strong scents, and we'll share cars for hours. Please skip strong perfume, cologne and air fresheners on the drive.</p></div>
-</div>
-<figure class="rv" style="margin: 48px 0 0; background: #171717; border-radius: 8px; padding: clamp(32px, 5.9vw, 75px); display: flex; flex-direction: column; gap: 23px">
-<blockquote style="margin: 0; font-size: clamp(26px, 3vw, 38px); line-height: 1.2; font-weight: 500; letter-spacing: -0.01em; color: #ffffff; max-width: 900px">“Let each one keep seeking, not his own advantage, but that of the other person.”</blockquote>
-<figcaption style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">1 Corinthians 10:24</figcaption>
-</figure>
-</div>
+
+<section class="blk dnc" id="dnc">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl"><span>Do not</span><br><span>call.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Urgent · Please read before going out</span>
+        <p>Some householders in our territory have asked not to be visited. We need to respect that every time.</p>
+      </div>
+    </div>
+    <ul class="dnc-list">
+      <li><span class="dnc-x" aria-hidden="true">✕</span><span class="dnc-a"><b>It's printed and in every car.</b><span>Before you head to a street, check it with your car group. If an address is on the list, skip it completely: no knock, no tract, no literature.</span></span></li>
+    </ul>
+  </div>
 </section>
-<section id="weekend" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">Weekend</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Bourbon, maybe</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">Saturday afternoon and all day Sunday. Nothing set in stone: go with whoever, do as much or as little as you like. Pick a designated driver per car.</p></div></div>
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px 16px; margin: 0 -23px">
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Four+Roses+Lawrenceburg+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~10 min · Lawrenceburg</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Four Roses</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Right outside town. Sundays roughly noon to 4.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Wild+Turkey+Lawrenceburg+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~10 min · Lawrenceburg</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Wild Turkey</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Up on the hill over the Kentucky River. Check their site for hours.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=4445+McCracken+Pike+Frankfort+KY+40601" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~20 min · Frankfort</p><span style="margin-left: auto"><span style="display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; background: rgba(240,201,127,0.14); color: #f0c97f; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none; white-space: nowrap">Booked · Sun 3:15</span></span></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Castle &amp; Key</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">An old stone castle distillery with a garden trail you can walk without a tour.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Woodford+Reserve+Versailles+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~25 min · Versailles</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Woodford Reserve</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Old stone buildings out in horse country. Tastings by reservation.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Buffalo+Trace+Frankfort+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~25 min · Frankfort</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Buffalo Trace</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Big campus with free tours. Sundays 11 to 5; earlier is better.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Downtown+Frankfort+Capitol+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~20 min · Capitol</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Downtown Frankfort</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">The Capitol, the floral clock, and bourbon balls at Rebecca Ruth Candy.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Lexington+Keeneland+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~40 min · Keeneland</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Lexington</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Downtown restaurants and coffee, with the horse farms on the way.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-<a class="rv card hov" href="https://www.google.com/maps/search/?api=1&amp;query=Louisville+Riverfront+KY" target="_blank" rel="noopener" style="display: flex; flex-direction: column; gap: 10px; padding: 23px; border-radius: 8px; color: #ffffff; text-decoration: none; min-width: 0">
-<div style="display: flex; align-items: center; gap: 8px"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">~1 hr · Riverfront</p></div>
-<h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Louisville</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Big Four Bridge, the Slugger Museum, Whiskey Row or the Derby Museum.</p>
-<span class="arr" style="display: inline-flex; margin-top: auto; padding-top: 6px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-</div>
-<p class="rv" style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab; margin-top: 32px">With 15 of us, tours may need to be split into smaller groups or booked ahead.</p>
-</div>
+
+<section class="blk t-paper" id="service">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl pop"><span>Door</span> <span class="c-wax">to</span> <span>door.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Service notes</span>
+        <p>From the branch letter, Sept 2, 2026</p>
+      </div>
+    </div>
+    <div class="two" style="margin-top:0">
+      <div class="col">
+        <h3 class="sub">In the territory</h3>
+        <ul class="list big-li">
+          <li>Offer the <i>Enjoy Life Forever!</i> brochure. If the householder already has it, any other literature may be offered.</li>
+          <li>Carry a variety of tracts for not-at-homes and for anyone who doesn't accept literature.</li>
+          <li>Each car will have a box of literature and bags for not-at-homes. Keep anything left at a not-at-home discreet: tucked out of sight, not left in plain view.</li>
+          <li>Each car group will keep a printed copy of the do-not-call list. Check it before working a street. <a href="#dnc">More</a></li>
+          <li>Try to start a Bible study on the first call. Make return visits on strong interest; as time allows, revisit not-at-homes and general interest.</li>
+        </ul>
+        <h3 class="sub gap">If police stop us</h3>
+        <ul class="list big-li">
+          <li>Don't discuss legal rights. Leave politely and promptly if asked.</li>
+          <li>Then Travis and an elder from a neighboring congregation contact the Legal Department.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3 class="sub">Recording interest</h3>
+        <p style="margin-bottom:12px">For anyone who shows interest, note:</p>
+        <ul class="list big-li">
+          <li>Name</li>
+          <li>Address / location</li>
+          <li>City / State / ZIP code</li>
+          <li>Telephone number</li>
+          <li>Placement and remarks</li>
+        </ul>
+        <p class="note">Travis will fill out the S-277 afterward.</p>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="service" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">Service notes</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Door to door</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">From the branch letter, Sept 2, 2026.</p></div></div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 48px clamp(32px, 4vw, 60px)">
-<div class="rv" style="display: flex; flex-direction: column; gap: 12px; min-width: 0"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">In the territory</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff; margin-bottom: 8px">What to offer</h3><ul style="margin: 0; padding: 0; list-style: none"><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Offer the <i>Enjoy Life Forever!</i> brochure. If the householder already has it, any other literature may be offered.</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Carry a variety of tracts for not-at-homes and for anyone who doesn't accept literature.</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Each car has a box of literature and bags for not-at-homes. Keep anything left discreet, tucked out of sight.</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Try to start a Bible study on the first call. Make return visits on strong interest.</li></ul></div>
-<div class="rv" style="display: flex; flex-direction: column; gap: 12px; min-width: 0"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Interest</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff; margin-bottom: 8px">Recording interest</h3><ul style="margin: 0; padding: 0; list-style: none"><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Name</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Address or location</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">City, state and ZIP</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Telephone number</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Placement and remarks · Travis fills out the S-277 afterward</li></ul></div>
-<div class="rv" style="display: flex; flex-direction: column; gap: 12px; min-width: 0"><p style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab">Just in case</p><h3 style="margin: 0; font-size: 23.4px; line-height: 1.3; font-weight: 600; color: #ffffff; margin-bottom: 8px">If police stop us</h3><ul style="margin: 0; padding: 0; list-style: none"><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Don't discuss legal rights. Leave politely and promptly if asked.</li><li style="margin: 0; font-size: 16px; line-height: 1.6; color: #ffffff; color: #ababab; padding: 14px 0; border-top: 1px solid #363636">Then Travis and an elder from a neighboring congregation contact the Legal Department.</li></ul></div>
-</div>
-</div>
+
+<section class="blk t-char" id="territory">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl pop"><span class="c-amber">Our</span> <span>patch</span><br><span>of</span> <span class="c-grass">Kentucky.</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">Territory 2578 · Spencer, Nelson, Bullitt &amp; Jefferson Counties</span>
+        <p>Mostly Spencer County and the north end of Nelson, plus small corners of Bullitt and Jefferson. Traced from the branch's boundary sheet. Roughly 30–45 minutes from the house.</p>
+      </div>
+    </div>
+    <div class="mapgrid">
+      <figure class="tmap-wrap">
+        <div id="tmap" role="region" aria-label="Map of territory 2578"></div>
+        <figcaption class="tmap-key">
+          <span><i class="k-tgt"></i>Our territory</span>
+          <span><i class="k-me"></i>You, after tapping “Where am I?”</span>
+        </figcaption>
+        <noscript><p class="note">The map needs JavaScript. Download the GPX file instead.</p></noscript>
+      </figure>
+      <div style="display:grid;gap:22px">
+        <div>
+          <h3 class="sub disp l" style="margin-bottom:12px">Offline<br>map.</h3>
+          <p class="lede">Signal is spotty out there, and this page needs a connection. Set up <b>Organic Maps</b> before we leave (free, no account) so the boundary and your location show with no signal.</p>
+        </div>
+        <ol class="steps">
+          <li><div><b>Install Organic Maps</b><span class="acts" style="margin-top:8px"><a class="btn" href="https://apps.apple.com/app/id1567437057" target="_blank" rel="noopener">iPhone</a><a class="btn" href="https://play.google.com/store/apps/details?id=app.organicmaps" target="_blank" rel="noopener">Android</a></span></div></li>
+          <li><div><b>Download Kentucky</b>Open the app on Wi-Fi, search “Kentucky” and download the state map.</div></li>
+          <li><div><b>Add our boundary</b>Tap the button below, then open the file in Organic Maps. On iPhone it may land in Downloads or Files first: tap it, then Share → Organic Maps. It saves under Bookmarks &amp; Tracks.<span class="acts" style="margin-top:10px"><a class="btn solid" href="map/territory-2578.gpx" download>Download GPX</a><a class="btn" href="map/territory-2578.kml" download>KML for Google Earth</a></span></div></li>
+          <li><div><b>Test it</b>Turn on airplane mode and open the app. You should still see the map, the boundary and your blue dot.</div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
 </section>
-<section id="territory" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto">
-<div class="rv" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 48px">
-<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 520px; min-width: 0"><span style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">Territory 2578</span><h2 style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">Our patch of Kentucky</h2><p style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab; max-width: 640px">Mostly Spencer County and the north end of Nelson, with small corners of Bullitt and Jefferson. About 30–45 minutes from the house.</p></div></div>
-<div style="display: flex; flex-wrap: wrap; gap: 48px clamp(32px, 9vw, 130px); align-items: flex-start">
-<figure class="rv zoom" style="flex: 1.2 1 480px; min-width: 0; margin: 0; border-radius: 8px; background: #171717; overflow: hidden; position: relative">
-<div id="tmap" role="region" aria-label="Map of territory 2578"></div>
-<noscript><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab; padding: 20px">The map needs JavaScript. Download the GPX file instead.</p></noscript>
-<figcaption style="margin: 0; font-size: 12.8px; line-height: 1.2; font-weight: 550; letter-spacing: 0.02em; text-transform: uppercase; color: #ababab; padding: 14px 20px; border-top: 1px solid #363636">Tap “Where am I?” to check if you're inside the boundary</figcaption>
-</figure>
-<div style="flex: 1 1 360px; min-width: 0">
-<h3 class="rv" style="margin: 0; font-size: clamp(24px, 2.4vw, 30.5px); line-height: 1.2; font-weight: 600; color: #ffffff; margin-bottom: 15px">Offline map</h3>
-<p class="rv" style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab; margin-bottom: 23px">Signal is spotty out there. Set up Organic Maps before we leave (free, no account) so the boundary and your location show with no signal.</p>
-<ol style="margin: 0; padding: 0; list-style: none">
-<li class="rv" style="display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 22px 0; border-top: 1px solid #363636">
-<span style="font-size: 19.7px; font-weight: 600; color: #f0c97f; font-variant-numeric: tabular-nums">01</span>
-<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0"><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Install Organic Maps</h3><div style="display: flex; gap: 20px; flex-wrap: wrap"><a class="tl" href="https://apps.apple.com/app/id1567437057" style="display: inline-flex; align-items: center; gap: 6px; color: #ffffff; font-size: 16px; font-weight: 500; text-decoration: none">iPhone<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a><a class="tl" href="https://play.google.com/store/apps/details?id=app.organicmaps" style="display: inline-flex; align-items: center; gap: 6px; color: #ffffff; font-size: 16px; font-weight: 500; text-decoration: none">Android<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a></div></div></li>
-<li class="rv" style="display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 22px 0; border-top: 1px solid #363636">
-<span style="font-size: 19.7px; font-weight: 600; color: #f0c97f; font-variant-numeric: tabular-nums">02</span>
-<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0"><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Download Kentucky</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Open the app on Wi-Fi, search “Kentucky” and download the state map.</p></div></li>
-<li class="rv" style="display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 22px 0; border-top: 1px solid #363636">
-<span style="font-size: 19.7px; font-weight: 600; color: #f0c97f; font-variant-numeric: tabular-nums">03</span>
-<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0"><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Add our boundary</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Open the file in Organic Maps. On iPhone, tap it in Files, then Share → Organic Maps.</p><div style="display: flex; gap: 12px; flex-wrap: wrap"><a class="btn" href="map/territory-2578.gpx" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; min-height: 44px; box-sizing: border-box; border-radius: 4px; font-size: 16px; line-height: 1.2; font-weight: 500; text-decoration: none; white-space: nowrap; background: #f0c97f; color: #080808">Download GPX<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a><a class="btn" href="map/territory-2578.kml" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; min-height: 44px; box-sizing: border-box; border-radius: 4px; font-size: 16px; line-height: 1.2; font-weight: 500; text-decoration: none; white-space: nowrap; background: transparent; color: #ffffff; box-shadow: inset 0 0 0 1px #363636">KML<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a></div></div></li>
-<li class="rv" style="display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 22px 0; border-top: 1px solid #363636">
-<span style="font-size: 19.7px; font-weight: 600; color: #f0c97f; font-variant-numeric: tabular-nums">04</span>
-<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0"><h3 style="margin: 0; font-size: 19.7px; line-height: 1.4; font-weight: 500; color: #ffffff; text-wrap: pretty">Test it</h3><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Turn on airplane mode. You should still see the map, the boundary and your blue dot.</p></div></li>
-</ol>
-</div>
-</div>
-</div>
+
+<section class="blk t-grass" id="game">
+  <div class="w">
+    <div class="head split">
+      <h2 class="disp xl pop"><span>It's</span> <span>your</span><br><span class="c-wax">door!</span></h2>
+      <div class="rule" style="display:grid;gap:10px;padding-top:10px">
+        <span class="label">A little game for the week</span>
+        <p>Pick yourself, tap to jump, and see how many doors you can make it to. Scores are shared, so everyone sees the same board.</p>
+        <p><b>Whoever holds the high score at the end of the week wins a prize.</b> Practice on the drive down (passengers only).</p>
+        <span class="acts"><a class="btn" href="door/" style="font-size:.95rem;padding:11px 18px">Play now →</a></span>
+      </div>
+    </div>
+    <div class="two" style="margin-top:0">
+      <div><h3 class="disp l">Leader&shy;board</h3></div>
+      <div class="col">
+        <ol class="board" id="board"><li><span class="r">—</span><span>No scores yet. Be the first.</span><span class="s"></span></li></ol>
+      </div>
+    </div>
+    <div class="cast" id="cast">
+      <figure data-n="Travis"><img src="img/b/travis.png" alt="" width="43" height="104" loading="lazy"><figcaption>Travis</figcaption></figure>
+      <figure data-n="Mackenzie"><img src="img/b/mackenzie.png" alt="" width="46" height="104" loading="lazy"><figcaption>Mackenzie</figcaption></figure>
+      <figure data-n="Cody"><img src="img/b/cody.png" alt="" width="45" height="104" loading="lazy"><figcaption>Cody</figcaption></figure>
+      <figure data-n="Abbie"><img src="img/b/abbie.png" alt="" width="48" height="104" loading="lazy"><figcaption>Abbie</figcaption></figure>
+      <figure data-n="Andy"><img src="img/b/andy.png" alt="" width="45" height="104" loading="lazy"><figcaption>Andy</figcaption></figure>
+      <figure data-n="Alyssa"><img src="img/b/alyssa.png" alt="" width="45" height="104" loading="lazy"><figcaption>Alyssa</figcaption></figure>
+      <figure data-n="Lincoln"><img src="img/b/lincoln.png" alt="" width="41" height="104" loading="lazy"><figcaption>Lincoln</figcaption></figure>
+      <figure data-n="Ciara"><img src="img/b/ciara.png" alt="" width="40" height="104" loading="lazy"><figcaption>Ciara</figcaption></figure>
+      <figure data-n="Jim"><img src="img/b/jim.png" alt="" width="48" height="104" loading="lazy"><figcaption>Jim</figcaption></figure>
+      <figure data-n="Shawn"><img src="img/b/shawn.png" alt="" width="47" height="104" loading="lazy"><figcaption>Shawn</figcaption></figure>
+      <figure data-n="Gary"><img src="img/b/gary.png" alt="" width="41" height="104" loading="lazy"><figcaption>Gary</figcaption></figure>
+      <figure data-n="Connie"><img src="img/b/connie.png" alt="" width="40" height="104" loading="lazy"><figcaption>Connie</figcaption></figure>
+      <figure data-n="Glenn"><img src="img/b/glenn.png" alt="" width="43" height="104" loading="lazy"><figcaption>Glenn</figcaption></figure>
+      <figure data-n="Wendy"><img src="img/b/wendy.png" alt="" width="44" height="104" loading="lazy"><figcaption>Wendy</figcaption></figure>
+      <figure data-n="Angie"><img src="img/b/angie.png" alt="" width="43" height="104" loading="lazy"><figcaption>Angie</figcaption></figure>
+    </div>
+  </div>
 </section>
-<section id="game" style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 48px clamp(32px, 9vw, 130px); align-items: center">
-<div class="rv zoom" style="flex: 1 1 420px; min-width: 0; border-radius: 8px; background: #171717; aspect-ratio: 4 / 3; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px 10px; align-content: center; padding: 32px; box-sizing: border-box">
-<span class="b b-travis hop" data-n="Travis" style="justify-self: center; animation-delay: 0.00s" aria-hidden="true"></span><span class="b b-mackenzie hop" data-n="Mackenzie" style="justify-self: center; animation-delay: 0.12s" aria-hidden="true"></span><span class="b b-cody hop" data-n="Cody" style="justify-self: center; animation-delay: 0.24s" aria-hidden="true"></span><span class="b b-abbie hop" data-n="Abbie" style="justify-self: center; animation-delay: 0.36s" aria-hidden="true"></span><span class="b b-andy hop" data-n="Andy" style="justify-self: center; animation-delay: 0.48s" aria-hidden="true"></span><span class="b b-alyssa hop" data-n="Alyssa" style="justify-self: center; animation-delay: 0.60s" aria-hidden="true"></span><span class="b b-lincoln hop" data-n="Lincoln" style="justify-self: center; animation-delay: 0.72s" aria-hidden="true"></span><span class="b b-ciara hop" data-n="Ciara" style="justify-self: center; animation-delay: 0.84s" aria-hidden="true"></span><span class="b b-jim hop" data-n="Jim" style="justify-self: center; animation-delay: 0.96s" aria-hidden="true"></span><span class="b b-shawn hop" data-n="Shawn" style="justify-self: center; animation-delay: 1.08s" aria-hidden="true"></span><span class="b b-gary hop" data-n="Gary" style="justify-self: center; animation-delay: 1.20s" aria-hidden="true"></span><span class="b b-connie hop" data-n="Connie" style="justify-self: center; animation-delay: 1.32s" aria-hidden="true"></span><span class="b b-glenn hop" data-n="Glenn" style="justify-self: center; animation-delay: 1.44s" aria-hidden="true"></span><span class="b b-wendy hop" data-n="Wendy" style="justify-self: center; animation-delay: 1.56s" aria-hidden="true"></span><span class="b b-angie hop" data-n="Angie" style="justify-self: center; animation-delay: 1.68s" aria-hidden="true"></span>
-</div>
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 23px">
-<span class="rv" style="font-size: 19.4px; line-height: 1.4; font-weight: 500; color: #ababab">A little game for the week</span>
-<h2 class="rv" style="margin: 0; font-size: clamp(36px, 4.1vw, 52.5px); line-height: 1.04; font-weight: 600; letter-spacing: -0.01em; color: #ffffff">It's your door!</h2>
-<p class="rv" style="margin: 0; font-size: 19.7px; line-height: 1.5; color: #ffffff; color: #ababab">Pick yourself, tap to jump, and see how many doors you can reach. Scores are shared, so everyone sees the same board. <span style="color: #ffffff">Top score at the end of the week wins a prize.</span></p>
-<ol id="board" class="rv board" style="margin: 0; padding: 0; list-style: none"><li style="padding: 14px 0; border-top: 1px solid #363636; margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">No scores yet. Be the first.</li></ol>
-<div class="rv"><a class="btn" href="door/" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; min-height: 44px; box-sizing: border-box; border-radius: 4px; font-size: 16px; line-height: 1.2; font-weight: 500; text-decoration: none; white-space: nowrap; background: #f0c97f; color: #080808">Play now<span class="arr" style="display: inline-flex"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a></div>
-</div>
-</div>
-</section>
-</main>
-<footer style="width: 100%; box-sizing: border-box; padding-top: 75px; padding-bottom: 75px; padding-left: clamp(20px, 4.2vw, 60px); padding-right: clamp(20px, 4.2vw, 60px); padding-top: 48px; padding-bottom: 48px; border-top: 1px solid #363636">
-<div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center">
-<span style="margin: 0; font-size: 16px; line-height: 1.6; color: #ababab">Bible Studies &amp; Bourbon · Kentucky · Nov 19–26, 2026</span>
-<nav aria-label="Footer" style="display: flex; flex-wrap: wrap; gap: 20px"><a class="nl" href="#week" style="color: #ababab; font-size: 15px; text-decoration: none">Week</a><a class="nl" href="#rooms" style="color: #ababab; font-size: 15px; text-decoration: none">Rooms</a><a class="nl" href="#cars" style="color: #ababab; font-size: 15px; text-decoration: none">Cars</a><a class="nl" href="#weekend" style="color: #ababab; font-size: 15px; text-decoration: none">Weekend</a><a class="nl" href="#service" style="color: #ababab; font-size: 15px; text-decoration: none">Service</a><a class="nl" href="#territory" style="color: #ababab; font-size: 15px; text-decoration: none">Territory</a><a class="nl" href="#game" style="color: #ababab; font-size: 15px; text-decoration: none">Game</a></nav>
-</div>
+
+<footer class="blk t-char foot">
+  <div class="words" style="margin-top:0;border-top:0">
+    <div class="word c-amber" data-slide="-8">See you in</div>
+    <div class="word r" data-slide="8">Kentucky.</div>
+  </div>
+  <div class="w" style="padding-top:0;padding-bottom:clamp(48px,7vw,96px)"></div>
 </footer>
-</div>
+
 <script>
 (function(){
-  var html=document.documentElement;
-  // scroll reveal fallback where scroll-driven animations aren't supported (Safari)
-  if(!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()'))&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-    html.classList.add('io');
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('main .rv').forEach(function(el){if(!el.closest('#top'))io.observe(el)});
-  }
-
-  var mb=document.querySelector('.menu-btn'),mn=document.getElementById('site-menu');
-  if(mb&&mn){
-    var setM=function(o){mb.setAttribute('aria-expanded',o?'true':'false');mb.setAttribute('aria-label',o?'Close menu':'Open menu');mn.classList.toggle('open',o)};
-    mb.addEventListener('click',function(){setM(mb.getAttribute('aria-expanded')!=='true')});
-    mn.addEventListener('click',function(e){if(e.target.closest('a'))setM(false)});
-    addEventListener('keydown',function(e){if(e.key==='Escape'&&mn.classList.contains('open')){setM(false);mb.focus()}});
-    addEventListener('resize',function(){if(innerWidth>1000)setM(false)});
-  }
-
-  var cd=document.getElementById('countdown');
-  if(cd){var start=new Date(2026,10,19),end=new Date(2026,10,26),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),d=Math.round((start-today)/86400000);
-    cd.textContent=d>1?d+' days to go':d===1?'Tomorrow':today<=end?'Happening now':'Trip complete';}
+  var el=document.getElementById('countdown');
+  var start=new Date(2026,10,19), end=new Date(2026,10,26), now=new Date();
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var d=Math.round((start-today)/86400000);
+  if(d>1) el.textContent=d+' days to go';
+  else if(d===1) el.textContent='Tomorrow';
+  else if(today<=end) el.textContent='Happening now';
+  else el.textContent='Trip complete';
 
   document.querySelectorAll('.copy').forEach(function(b){
     b.addEventListener('click',function(){
-      var t=b.getAttribute('data-copy'),lab=b.textContent;
-      var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent=lab},1500)};
-      try{navigator.clipboard.writeText(t).then(done,function(){prompt('Copy the address:',t)})}catch(e){prompt('Copy the address:',t)}
+      var t=b.getAttribute('data-copy');
+      var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)};
+      var sel=function(){var v=document.getElementById('addr');var r=document.createRange();r.selectNodeContents(v);var s=getSelection();s.removeAllRanges();s.addRange(r)};
+      try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
     });
   });
+
 
   // territory map
   var TERR=[[38.10718,-85.43054],[38.10681,-85.42255],[38.10594,-85.41843],[38.10479,-85.41623],[38.10387,-85.41348],[38.10379,-85.41166],[38.1045,-85.41045],[38.10585,-85.40965],[38.10692,-85.40856],[38.10869,-85.40094],[38.10907,-85.40061],[38.11168,-85.40067],[38.11325,-85.4],[38.11455,-85.39981],[38.11514,-85.39914],[38.11651,-85.40063],[38.11827,-85.40095],[38.12102,-85.40303],[38.12213,-85.40337],[38.12335,-85.40495],[38.12538,-85.40653],[38.12645,-85.40678],[38.12672,-85.40539],[38.12753,-85.40477],[38.12862,-85.4067],[38.13057,-85.40875],[38.1403,-85.4164],[38.1439,-85.42163],[38.15,-85.42719],[38.15869,-85.4401],[38.18378,-85.47287],[38.18568,-85.47459],[38.18807,-85.47537],[38.18985,-85.4756],[38.19096,-85.47669],[38.19175,-85.47412],[38.19157,-85.46483],[38.19089,-85.46156],[38.18415,-85.43612],[38.18378,-85.43269],[38.18421,-85.42956],[38.18863,-85.41825],[38.18876,-85.41721],[38.14744,-85.42405],[38.12165,-85.34081],[38.08943,-85.23241],[38.06007,-85.15954],[38.03727,-85.10165],[38.03686,-85.10254],[38.03546,-85.10311],[38.03471,-85.10384],[38.03307,-85.10472],[38.03286,-85.10513],[38.03074,-85.10649],[38.0296,-85.10861],[38.02805,-85.10928],[38.02717,-85.1093],[38.02564,-85.11313],[38.02595,-85.12043],[38.02576,-85.12083],[38.0253,-85.12105],[38.02464,-85.12098],[38.02322,-85.11962],[38.02168,-85.11896],[38.02129,-85.11893],[38.02095,-85.11924],[38.02082,-85.12099],[38.02125,-85.12307],[38.02063,-85.12622],[38.02029,-85.12645],[38.01639,-85.12564],[38.01544,-85.12478],[38.01277,-85.12431],[38.00984,-85.12322],[38.00366,-85.12637],[38.002,-85.12835],[38.00104,-85.12897],[37.99886,-85.1299],[37.99693,-85.12985],[37.99616,-85.13026],[37.9959,-85.1317],[37.99689,-85.13442],[37.99709,-85.13725],[37.99743,-85.1382],[37.99813,-85.13897],[37.99893,-85.1394],[38.00197,-85.13963],[38.00247,-85.13983],[38.00261,-85.14022],[38.00227,-85.1408],[38.00106,-85.14095],[37.99931,-85.14177],[37.9974,-85.14176],[37.99688,-85.14256],[37.99739,-85.14449],[37.99876,-85.14708],[37.9996,-85.15052],[37.99911,-85.15119],[37.99841,-85.15106],[37.99702,-85.14842],[37.99648,-85.14801],[37.99391,-85.15104],[37.989,-85.15081],[37.98836,-85.15126],[37.98813,-85.15221],[37.98842,-85.15324],[37.98891,-85.15359],[37.9906,-85.15408],[37.99171,-85.15476],[37.99299,-85.15623],[37.99272,-85.15858],[37.99057,-85.16189],[37.99062,-85.16272],[37.9913,-85.16365],[37.99216,-85.1639],[37.99455,-85.16311],[37.99517,-85.1631],[37.99652,-85.16344],[37.99756,-85.16401],[37.99837,-85.16349],[37.99939,-85.16202],[38.00049,-85.16112],[38.00152,-85.16147],[38.00162,-85.16361],[38.00141,-85.16466],[38.00052,-85.16516],[37.99877,-85.16835],[37.99758,-85.16936],[37.99429,-85.17006],[37.99187,-85.16824],[37.99136,-85.16819],[37.99094,-85.16864],[37.99007,-85.16855],[37.98717,-85.16617],[37.98646,-85.16638],[37.98528,-85.16723],[37.98316,-85.16771],[37.98137,-85.16922],[37.98032,-85.16895],[37.97968,-85.16814],[37.97822,-85.16854],[37.97641,-85.16786],[37.97473,-85.1677],[37.97346,-85.16813],[37.97292,-85.16805],[37.89766,-85.1528],[37.89682,-85.15384],[37.89622,-85.1541],[37.895,-85.15399],[37.89251,-85.15116],[37.89028,-85.15055],[37.8898,-85.15117],[37.89084,-85.15227],[37.89079,-85.15293],[37.89051,-85.15312],[37.88894,-85.15301],[37.88766,-85.15175],[37.88726,-85.15187],[37.88558,-85.15382],[37.88568,-85.15753],[37.88638,-85.15883],[37.88697,-85.15931],[37.88778,-85.15973],[37.88872,-85.15957],[37.88976,-85.16035],[37.8912,-85.16473],[37.89078,-85.16598],[37.88786,-85.1688],[37.88746,-85.16984],[37.88749,-85.17073],[37.88783,-85.17218],[37.89097,-85.17599],[37.89243,-85.1814],[37.89241,-85.18462],[37.89191,-85.186],[37.89117,-85.18645],[37.88938,-85.1854],[37.88784,-85.18488],[37.88559,-85.18521],[37.88385,-85.1861],[37.88354,-85.18682],[37.88364,-85.18751],[37.88646,-85.19307],[37.88718,-85.19401],[37.88788,-85.19447],[37.88864,-85.19451],[37.88935,-85.19415],[37.89163,-85.19089],[37.89221,-85.19042],[37.89315,-85.19018],[37.89547,-85.19032],[37.89656,-85.19114],[37.89777,-85.1936],[37.89832,-85.19422],[37.90045,-85.19531],[37.9018,-85.19657],[37.90225,-85.19747],[37.90209,-85.19861],[37.90176,-85.19915],[37.90035,-85.19976],[37.89825,-85.19976],[37.89369,-85.19909],[37.88797,-85.19928],[37.8855,-85.19867],[37.88434,-85.1978],[37.88146,-85.19635],[37.87779,-85.19602],[37.87632,-85.19608],[37.8755,-85.1966],[37.87433,-85.19782],[37.87361,-85.19824],[37.8731,-85.19827],[37.8706,-85.196],[37.86918,-85.19559],[37.86553,-85.19363],[37.86428,-85.19348],[37.86389,-85.19355],[37.86316,-85.19425],[37.86293,-85.195],[37.86306,-85.19574],[37.86352,-85.19648],[37.86516,-85.1972],[37.86653,-85.197],[37.86805,-85.19745],[37.86854,-85.19809],[37.86895,-85.19959],[37.8687,-85.20092],[37.86818,-85.20162],[37.86675,-85.20291],[37.86629,-85.20298],[37.86419,-85.20507],[37.86318,-85.20539],[37.86283,-85.20512],[37.86151,-85.20124],[37.86098,-85.20043],[37.85823,-85.1971],[37.85629,-85.19626],[37.85554,-85.1963],[37.85503,-85.1966],[37.85462,-85.19971],[37.85416,-85.20099],[37.85342,-85.20146],[37.85276,-85.20157],[37.8502,-85.20159],[37.84874,-85.20284],[37.84674,-85.20374],[37.84622,-85.20509],[37.84622,-85.20579],[37.84661,-85.20629],[37.84774,-85.20688],[37.85014,-85.20757],[37.85063,-85.20803],[37.85207,-85.21076],[37.85249,-85.2156],[37.85299,-85.21701],[37.85426,-85.21837],[37.85504,-85.21847],[37.85578,-85.21812],[37.85831,-85.21385],[37.85871,-85.21361],[37.86131,-85.21362],[37.86209,-85.21389],[37.86431,-85.21541],[37.86641,-85.21478],[37.87006,-85.2155],[37.87133,-85.21625],[37.8715,-85.21676],[37.87145,-85.21789],[37.87087,-85.21869],[37.86691,-85.21919],[37.86614,-85.21962],[37.86301,-85.22386],[37.86169,-85.22464],[37.85866,-85.22574],[37.85592,-85.22585],[37.85554,-85.22611],[37.85517,-85.22688],[37.85511,-85.22882],[37.85548,-85.23144],[37.85596,-85.23192],[37.85852,-85.23222],[37.86075,-85.2331],[37.86191,-85.23328],[37.86601,-85.23294],[37.86702,-85.23251],[37.86943,-85.22944],[37.86996,-85.22941],[37.8704,-85.22975],[37.87059,-85.2307],[37.86915,-85.2325],[37.86875,-85.23334],[37.86868,-85.23404],[37.86942,-85.23747],[37.86923,-85.23861],[37.86835,-85.23922],[37.86787,-85.2393],[37.86486,-85.23812],[37.8639,-85.23807],[37.86339,-85.23845],[37.86249,-85.24099],[37.86245,-85.24222],[37.86305,-85.24427],[37.86558,-85.24657],[37.86638,-85.24767],[37.86729,-85.24967],[37.86744,-85.25177],[37.86669,-85.25271],[37.86642,-85.25433],[37.86608,-85.25499],[37.86522,-85.25585],[37.86424,-85.25602],[37.86267,-85.255],[37.86044,-85.25595],[37.85955,-85.25591],[37.85765,-85.25132],[37.85392,-85.24651],[37.851,-85.244],[37.84913,-85.24288],[37.84831,-85.24303],[37.84745,-85.2442],[37.84708,-85.2462],[37.84828,-85.25286],[37.84881,-85.25829],[37.84867,-85.25903],[37.84812,-85.25992],[37.84614,-85.26101],[37.8447,-85.26274],[37.84434,-85.26427],[37.84451,-85.26803],[37.84685,-85.26933],[37.84763,-85.27016],[37.84858,-85.27478],[37.84924,-85.27515],[37.85295,-85.27603],[37.85361,-85.27681],[37.8536,-85.27799],[37.85335,-85.27855],[37.85139,-85.28051],[37.84989,-85.28087],[37.84875,-85.28065],[37.8445,-85.2786],[37.84286,-85.27862],[37.83984,-85.27724],[37.83844,-85.27717],[37.83716,-85.2781],[37.8355,-85.28034],[37.83494,-85.28162],[37.83393,-85.28556],[37.83158,-85.28876],[37.83118,-85.29028],[37.83154,-85.29216],[37.83199,-85.29276],[37.8326,-85.29447],[37.83267,-85.29608],[37.83411,-85.29623],[37.83477,-85.29689],[37.83493,-85.29847],[37.83562,-85.29992],[37.83724,-85.30146],[37.83827,-85.30195],[37.83954,-85.30307],[37.84145,-85.30354],[37.84302,-85.30436],[37.84401,-85.30401],[37.84536,-85.30432],[37.84841,-85.30412],[37.84958,-85.3033],[37.85168,-85.30061],[37.85377,-85.29691],[37.8547,-85.29659],[37.86458,-85.29947],[37.86957,-85.30029],[37.87493,-85.30162],[37.87746,-85.30091],[37.87931,-85.30093],[37.88115,-85.30257],[37.88146,-85.30331],[37.88596,-85.30534],[37.89175,-85.30745],[37.89328,-85.30862],[37.89578,-85.30944],[37.89784,-85.3119],[37.90237,-85.31506],[37.90563,-85.31662],[37.90731,-85.31634],[37.90928,-85.3168],[37.91187,-85.31782],[37.9115,-85.3193],[37.91082,-85.32016],[37.91104,-85.32679],[37.91215,-85.32898],[37.91396,-85.3351],[37.91544,-85.33791],[37.91664,-85.34134],[37.92095,-85.34751],[37.92209,-85.34958],[37.92243,-85.35246],[37.92399,-85.35628],[37.92636,-85.3635],[37.92932,-85.37072],[37.93116,-85.37388],[37.9339,-85.38464],[37.93446,-85.39054],[37.93603,-85.39479],[37.93806,-85.3981],[37.94169,-85.40166],[37.94269,-85.40226],[37.94403,-85.40391],[37.94445,-85.40492],[37.9452,-85.40558],[37.94529,-85.40599],[37.94585,-85.40641],[37.94675,-85.40778],[37.94691,-85.40924],[37.94787,-85.41088],[37.94857,-85.41118],[37.94948,-85.41333],[37.95046,-85.41409],[37.95091,-85.41534],[37.9516,-85.41571],[37.9532,-85.41775],[37.95415,-85.41827],[37.95519,-85.41946],[37.95617,-85.41995],[37.95754,-85.42204],[37.95816,-85.42398],[37.95866,-85.42453],[37.95909,-85.42435],[37.96079,-85.42221],[37.96248,-85.41862],[37.96629,-85.41608],[37.96826,-85.41433],[37.9706,-85.41312],[37.97416,-85.41292],[37.9789,-85.41116],[37.97933,-85.41144],[37.98133,-85.41452],[37.98687,-85.41764],[37.99108,-85.41862],[37.99341,-85.42065],[37.99603,-85.42224],[37.99732,-85.42384],[37.9989,-85.424],[38.00171,-85.42309],[38.00461,-85.42436],[38.00694,-85.42441],[38.0113,-85.42773],[38.01387,-85.42812],[38.01521,-85.42881],[38.01894,-85.42868],[38.02328,-85.43051],[38.02446,-85.43197],[38.02703,-85.43143],[38.02842,-85.42973],[38.02927,-85.42649],[38.03157,-85.42446],[38.03353,-85.42424],[38.03526,-85.42301],[38.037,-85.42896],[38.03703,-85.43239],[38.03964,-85.43875],[38.03974,-85.44089],[38.03937,-85.44495],[38.04168,-85.45201],[38.04205,-85.45384],[38.04349,-85.45567],[38.04534,-85.45591],[38.04699,-85.45552],[38.04868,-85.45622],[38.05363,-85.46309],[38.05481,-85.4668],[38.05607,-85.4691],[38.05902,-85.47203],[38.05976,-85.4739],[38.06007,-85.47687],[38.06139,-85.48053],[38.06163,-85.48381],[38.06242,-85.48664],[38.06323,-85.48797],[38.06472,-85.48971],[38.06499,-85.49068],[38.06487,-85.4955],[38.06274,-85.50321],[38.05884,-85.51208],[38.06903,-85.51115],[38.06734,-85.50625],[38.06727,-85.50233],[38.06701,-85.50159],[38.06892,-85.50154],[38.07059,-85.49996],[38.07383,-85.49823],[38.07598,-85.49766],[38.07755,-85.49825],[38.07939,-85.49731],[38.08113,-85.49524],[38.08418,-85.49308],[38.08688,-85.48972],[38.0878,-85.48598],[38.08862,-85.48413],[38.09091,-85.48087],[38.09636,-85.4702],[38.09573,-85.46486],[38.09588,-85.46287],[38.09624,-85.46211],[38.09706,-85.46138],[38.0987,-85.45801],[38.09923,-85.45753],[38.10231,-85.45187],[38.1027,-85.45052],[38.10155,-85.44708],[38.10219,-85.44152],[38.10191,-85.44022],[38.10193,-85.43804],[38.10295,-85.43631],[38.10445,-85.43651],[38.10556,-85.43513],[38.10674,-85.43228],[38.10718,-85.43054]];
   function inside(lat,lng){var c=false;for(var i=0,j=TERR.length-1;i<TERR.length;j=i++){var a=TERR[i],b=TERR[j];if(((a[0]>lat)!==(b[0]>lat))&&(lng<(b[1]-a[1])*(lat-a[0])/(b[0]-a[0])+a[1]))c=!c}return c}
   function initMap(){
     if(!window.L||!document.getElementById('tmap'))return;
-    var map=L.map('tmap',{scrollWheelZoom:false,zoomSnap:.25});
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,className:'dark-tiles',
+    var map=L.map('tmap',{scrollWheelZoom:false,zoomSnap:.25,attributionControl:true});
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,className:'osm-tiles',
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-    var poly=L.polygon(TERR,{color:'#f0c97f',weight:2.5,lineJoin:'round',fillColor:'#f0c97f',fillOpacity:.1}).addTo(map);
+    var poly=L.polygon(TERR,{color:'#A86A55',weight:3,lineJoin:'round',fillColor:'#ECD9B4',fillOpacity:.42}).addTo(map);
     var touched=false,auto=false;
     function fit(){var el=document.getElementById('tmap');if(touched||!el.offsetWidth)return;auto=true;map.invalidateSize();map.fitBounds(poly.getBounds(),{padding:[16,16],animate:false});auto=false}
     fit();
@@ -422,8 +765,8 @@ h1,h2{letter-spacing:-0.025em!important}
     map.on('zoomstart',function(){if(!auto)touched=true});
     if('ResizeObserver' in window)new ResizeObserver(fit).observe(document.getElementById('tmap'));
     addEventListener('pageshow',fit);
-    [['Taylorsville',38.032,-85.343,1],['Bloomfield',37.910,-85.316],['Fairfield',37.934,-85.386],['Mt Washington',38.050,-85.546],['The house · Lawrenceburg',38.037,-84.897]].forEach(function(t){
-      L.marker([t[1],t[2]],{interactive:false,keyboard:false,icon:L.divIcon({className:'tlabel'+(t[3]?' big':''),html:t[0],iconSize:null})}).addTo(map)});
+    var towns=[['Taylorsville',38.032,-85.343,1],['Bloomfield',37.910,-85.316],['Fairfield',37.934,-85.386],['Mt Washington',38.050,-85.546],['The house · Lawrenceburg',38.037,-84.897]];
+    towns.forEach(function(t){L.marker([t[1],t[2]],{interactive:false,keyboard:false,icon:L.divIcon({className:'tlabel'+(t[3]?' big':''),html:t[0],iconSize:null})}).addTo(map)});
     var me=null,acc=null,btn;
     var Loc=L.Control.extend({options:{position:'topleft'},onAdd:function(){
       var d=L.DomUtil.create('div','leaflet-bar');btn=L.DomUtil.create('a','locate',d);btn.href='#';btn.setAttribute('role','button');btn.textContent='Where am I?';
@@ -432,9 +775,10 @@ h1,h2{letter-spacing:-0.025em!important}
     map.addControl(new Loc());
     map.on('locationfound',function(e){
       if(me){map.removeLayer(me);map.removeLayer(acc)}
-      acc=L.circle(e.latlng,{radius:e.accuracy,color:'#f0c97f',weight:1,fillOpacity:.06}).addTo(map);
-      me=L.marker(e.latlng,{icon:L.divIcon({className:'',html:'<div class="me-dot"></div>',iconSize:[14,14],iconAnchor:[7,7]})}).addTo(map);
-      me.bindPopup(inside(e.latlng.lat,e.latlng.lng)?'You’re <b>inside</b> the territory.':'You’re <b>outside</b> the territory.').openPopup();
+      acc=L.circle(e.latlng,{radius:e.accuracy,color:'#2a6fd6',weight:1,fillOpacity:.08}).addTo(map);
+      me=L.marker(e.latlng,{icon:L.divIcon({className:'',html:'<div class="me-dot"></div>',iconSize:[16,16],iconAnchor:[8,8]})}).addTo(map);
+      var inn=inside(e.latlng.lat,e.latlng.lng);
+      me.bindPopup(inn?'You’re <b>inside</b> the territory.':'You’re <b>outside</b> the territory.').openPopup();
       btn.textContent='Where am I?';btn.classList.add('on');
     });
     map.on('locationerror',function(){btn.textContent='Location unavailable';setTimeout(function(){btn.textContent='Where am I?'},2500)});
@@ -442,18 +786,95 @@ h1,h2{letter-spacing:-0.025em!important}
   if(document.readyState==='complete')initMap();else addEventListener('load',initMap);
 
   // shared leaderboard from the game
-  var board=document.getElementById('board');
-  if(board&&window.fetch){
-    var alias={Ciarra:'Ciara'},names=["Travis", "Mackenzie", "Cody", "Abbie", "Andy", "Alyssa", "Lincoln", "Ciara", "Jim", "Shawn", "Gary", "Connie", "Glenn", "Wendy", "Angie"];
+  (function(){
+    var board=document.getElementById('board');if(!board||!window.fetch)return;
+    var alias={Ciarra:'Ciara'};
     fetch('https://scores.blankspac.com/',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){
       if(!d||typeof d!=='object'||d.error)return;
-      var rows=Object.keys(d).map(function(k){return [alias[k]||k,Math.floor(+d[k]||0)]}).filter(function(r){return r[1]>0&&names.indexOf(r[0])>-1}).sort(function(a,b){return b[1]-a[1]}).slice(0,5);
+      var rows=Object.keys(d).map(function(k){return [alias[k]||k,Math.floor(+d[k]||0)]}).filter(function(r){return r[1]>0}).sort(function(a,b){return b[1]-a[1]}).slice(0,5);
       if(!rows.length)return;
-      board.innerHTML=rows.map(function(r,i){var n=r[0];return '<li class="brow"><span class="cap">0'+(i+1)+'</span><span class="who"><span class="f f-'+n.toLowerCase()+'" aria-hidden="true"></span>'+n+'</span><span class="pts">'+r[1].toLocaleString()+' pts</span></li>'}).join('');
-      var lead=document.querySelector('.hop[data-n="'+rows[0][0]+'"]');if(lead)lead.classList.add('lead');
+      board.innerHTML=rows.map(function(r,i){var n=r[0];return '<li><span class="r">'+(i+1)+'</span><span class="p"><img class="ava" src="img/p/'+n.toLowerCase()+'.png" alt="" width="45" height="45">'+n+'</span><span class="s">'+r[1].toLocaleString()+'</span></li>'}).join('');
+      var lead=document.querySelector('.cast [data-n="'+rows[0][0]+'"]');if(lead)lead.classList.add('lead');
     }).catch(function(){});
+  })();
+
+  // menu toggle on narrow screens
+  var mb=document.querySelector('.menu-btn'),mn=document.getElementById('site-menu');
+  if(mb&&mn){
+    var setM=function(o){mb.setAttribute('aria-expanded',o?'true':'false');mb.setAttribute('aria-label',o?'Close menu':'Open menu');mn.classList.toggle('open',o)};
+    mb.addEventListener('click',function(){setM(mb.getAttribute('aria-expanded')!=='true')});
+    mn.addEventListener('click',function(e){if(e.target.closest('a'))setM(false)});
+    addEventListener('keydown',function(e){if(e.key==='Escape'&&mn.classList.contains('open')){setM(false);mb.focus()}});
+    addEventListener('resize',function(){if(innerWidth>1080)setM(false)});
   }
+
+  // progress menu
+  var items=[].slice.call(document.querySelectorAll('.prog li'));
+  var secs=items.map(function(li){return document.querySelector(li.querySelector('a').getAttribute('href'))});
+  var prog=document.querySelector('.prog'), ptick=false;
+  function blockAt(y){
+    var el=document.elementFromPoint(innerWidth/2,y);
+    while(el&&el!==document.body){var bg=getComputedStyle(el).backgroundColor;if(bg&&bg!=='rgba(0, 0, 0, 0)'&&bg!=='transparent')return el;el=el.parentElement}
+    return null;
+  }
+  function progFrame(){
+    ptick=false;
+    var probe=innerHeight*.35;
+    secs.forEach(function(sec,i){
+      var r=sec.getBoundingClientRect();
+      var f=Math.min(1,Math.max(0,(probe-r.top)/Math.max(1,r.height)));
+      items[i].querySelector('i').style.setProperty('--f',f.toFixed(3));
+      items[i].classList.toggle('on',r.top<=probe&&r.bottom>probe);
+    });
+    var h=prog.offsetHeight;
+    prog.style.visibility='hidden';
+    var b=blockAt(h+2);
+    prog.style.visibility='';
+    if(b){var cs=getComputedStyle(b);prog.style.setProperty('--bar-bg',cs.backgroundColor);prog.style.setProperty('--bar-fg',cs.color)}
+  }
+  function preq(){if(!ptick){ptick=true;requestAnimationFrame(progFrame)}}
+  addEventListener('scroll',preq,{passive:true});
+  addEventListener('resize',preq);
+  progFrame();
+
+  var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(calm) return;
+
+  // headline words settle into their colors as each block arrives
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}})},{threshold:.18});
+    document.querySelectorAll('.blk').forEach(function(s){
+      if(s.querySelector('.pop')&&s.getBoundingClientRect().top>innerHeight*.9){s.classList.add('pre');io.observe(s)}
+    });
+  }
+
+  // scroll-linked: sliding words, turning ring, blocks that change color as you pass
+  var slides=[].slice.call(document.querySelectorAll('[data-slide]'));
+  var mixes=[].slice.call(document.querySelectorAll('[data-mix]'));
+  var ring=document.getElementById('ring'), tick=false;
+  function frame(){
+    tick=false;
+    var vh=innerHeight;
+    slides.forEach(function(n){
+      var r=n.getBoundingClientRect();
+      if(r.bottom<-200||r.top>vh+200) return;
+      var p=(r.top+r.height/2)/vh-.5;
+      n.style.transform='translate3d('+(p*parseFloat(n.getAttribute('data-slide'))).toFixed(2)+'vw,0,0)';
+    });
+    mixes.forEach(function(n){
+      var r=n.getBoundingClientRect();
+      if(r.bottom<0||r.top>vh) return;
+      var p=Math.min(1,Math.max(0,(-r.top)/Math.max(1,r.height-vh*.5)));
+      n.style.setProperty('--p',p.toFixed(3));
+    });
+    if(ring) ring.style.transform='rotate('+(scrollY*.12).toFixed(1)+'deg)';
+  }
+  function req(){if(!tick){tick=true;requestAnimationFrame(frame)}}
+  addEventListener('scroll',req,{passive:true});
+  addEventListener('resize',req);
+  frame();
 })();
 </script>
+
 </body>
 </html>
